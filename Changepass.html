@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume IQ | Change Password</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            min-height: 100vh;
+            background: #04131b;
+            color: white;
+            padding: 30px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .riq-title {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .riq-title span {
+            color: #0df0ad;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-btn {
+            background: transparent;
+            color: #0df0ad;
+            border: 1px solid #0df0ad;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #0df0ad;
+            color: #04131b;
+        }
+
+        /* =========================
+           PASSWORD CARD
+        ========================= */
+
+        .password-container {
+            width: 700px;
+            max-width: 100%;
+            margin: 30px auto;
+
+            background: #071f29;
+
+            border: 1px solid #173b46;
+            border-radius: 20px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        /* =========================
+           PASSWORD HEADER
+        ========================= */
+
+        .password-top {
+            text-align: center;
+
+            padding-bottom: 30px;
+
+            border-bottom: 1px solid #173b46;
+        }
+
+        /* =========================
+           LOCK ICON
+        ========================= */
+
+        .lock-icon {
+            width: 80px;
+            height: 80px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            background: #0df0ad;
+            color: #04131b;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 34px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .password-title {
+            margin-top: 18px;
+
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .password-subtitle {
+            margin-top: 7px;
+
+            color: #8da5ad;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-section {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 9px;
+
+            color: #8da5ad;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           PASSWORD INPUT
+        ========================= */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+
+            padding: 14px 48px 14px 15px;
+
+            background: #04131b;
+
+            color: white;
+
+            border: 1px solid #173b46;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        .password-wrapper input:focus {
+            border-color: #0df0ad;
+
+            box-shadow:
+                0 0 0 2px rgba(13, 240, 173, 0.08);
+        }
+
+        .password-wrapper input::placeholder {
+            color: #607982;
+        }
+
+        /* =========================
+           EYE BUTTON
+        ========================= */
+
+        .toggle-password {
+            position: absolute;
+
+            right: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            background: transparent;
+            border: none;
+
+            color: #8da5ad;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            padding: 4px;
+        }
+
+        .toggle-password:hover {
+            color: #0df0ad;
+        }
+
+        /* =========================
+           PASSWORD RULE
+        ========================= */
+
+        .password-rule {
+            margin-top: 8px;
+
+            color: #607982;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+
+            gap: 15px;
+
+            margin-top: 30px;
+        }
+
+        .cancel-btn,
+        .change-btn {
+            padding: 12px 22px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        /* CANCEL */
+
+        .cancel-btn {
+            background: transparent;
+
+            color: #0df0ad;
+
+            border: 1px solid #0df0ad;
+        }
+
+        .cancel-btn:hover {
+            background: #0df0ad;
+
+            color: #04131b;
+        }
+
+        /* CHANGE PASSWORD */
+
+        .change-btn {
+            background: #0df0ad;
+
+            color: #04131b;
+
+            border: 1px solid #0df0ad;
+        }
+
+        .change-btn:hover {
+            background: #16edaa;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
+            display: none;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        .success {
+            color: #0df0ad;
+        }
+
+        .error {
+            color: #ff7070;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header {
+                align-items: flex-start;
+            }
+
+            .riq-title {
+                font-size: 24px;
+            }
+
+            .password-container {
+                padding: 25px 20px;
+            }
+
+            .password-title {
+                font-size: 23px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .cancel-btn,
+            .change-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="header">
+
+        <div class="riq-title">
+            <span>RIQ</span>
+        </div>
+
+        <button class="back-btn" onclick="goBack()">
+            ←
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         PASSWORD CARD
+    ========================= -->
+
+    <div class="password-container">
+
+        <!-- PASSWORD HEADER -->
+
+        <div class="password-top">
+
+            <div class="lock-icon">
+                🔒
+            </div>
+
+            <div class="password-title">
+                Change Your Password
+            </div>
+
+            <div class="password-subtitle">
+                Keep your account secure
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FORM
+        ========================= -->
+
+        <div class="form-section">
+
+            <!-- CURRENT PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="currentPassword">
+                    Current Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="currentPassword"
+                        placeholder="Enter your current password"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        onclick="togglePassword('currentPassword', this)">
+                        Show
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NEW PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="newPassword">
+                    New Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        placeholder="Enter your new password"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        onclick="togglePassword('newPassword', this)">
+                        Show
+                    </button>
+
+                </div>
+
+                <div class="password-rule">
+                    Password must be at least 8 characters.
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm New Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm your new password"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        onclick="togglePassword('confirmPassword', this)">
+                        Show
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 BUTTONS
+            ========================= -->
+
+            <div class="buttons">
+
+                <button
+                    class="cancel-btn"
+                    onclick="cancelPasswordChange()">
+                    Cancel
+                </button>
+
+                <button
+                    class="change-btn"
+                    onclick="changePassword()">
+                    Change Password
+                </button>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                class="message"
+                id="message">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        /* =========================
+           BACK
+        ========================= */
+
+        function goBack() {
+
+            window.history.back();
+
+        }
+
+
+        /* =========================
+           CANCEL
+        ========================= */
+
+        function cancelPasswordChange() {
+
+            window.location.href = "PROFILE.html";
+
+        }
+
+
+        /* =========================
+           SHOW / HIDE PASSWORD
+        ========================= */
+
+        function togglePassword(inputId, button) {
+
+            const input =
+                document.getElementById(inputId);
+
+
+            if (input.type === "password") {
+
+                input.type = "text";
+
+                button.textContent = "Hide";
+
+            } else {
+
+                input.type = "password";
+
+                button.textContent = "Show";
+
+            }
+
+        }
+
+
+        /* =========================
+           CHANGE PASSWORD
+        ========================= */
+
+        function changePassword() {
+
+            const currentPassword =
+                document.getElementById("currentPassword").value;
+
+            const newPassword =
+                document.getElementById("newPassword").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            const message =
+                document.getElementById("message");
+
+
+            /* CLEAR MESSAGE */
+
+            message.style.display = "none";
+
+            message.className = "message";
+
+
+            /* =========================
+               EMPTY FIELD CHECK
+            ========================= */
+
+            if (currentPassword === "") {
+
+                showError(
+                    "Please enter your current password."
+                );
+
+                return;
+
+            }
+
+
+            if (newPassword === "") {
+
+                showError(
+                    "Please enter a new password."
+                );
+
+                return;
+
+            }
+
+
+            if (confirmPassword === "") {
+
+                showError(
+                    "Please confirm your new password."
+                );
+
+                return;
+
+            }
+
+
+            /* =========================
+               PASSWORD LENGTH
+            ========================= */
+
+            if (newPassword.length < 8) {
+
+                showError(
+                    "Password must be at least 8 characters."
+                );
+
+                return;
+
+            }
+
+
+            /* =========================
+               PASSWORD MATCH
+            ========================= */
+
+            if (newPassword !== confirmPassword) {
+
+                showError(
+                    "Passwords do not match."
+                );
+
+                return;
+
+            }
+
+
+            /* =========================
+               DEMO CURRENT PASSWORD
+            =========================
+
+               This is only for frontend testing.
+
+               Demo current password:
+               password123
+
+               Your real website should verify
+               the password using your backend
+               and database.
+            */
+
+            const savedPassword =
+                localStorage.getItem("userPassword");
+
+
+            const actualPassword =
+                savedPassword || "password123";
+
+
+            if (currentPassword !== actualPassword) {
+
+                showError(
+                    "Current password is incorrect."
+                );
+
+                return;
+
+            }
+
+
+            /* =========================
+               SAVE NEW PASSWORD
+            ========================= */
+
+            localStorage.setItem(
+                "userPassword",
+                newPassword
+            );
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+            message.textContent =
+                "Password changed successfully.";
+
+            message.classList.add("success");
+
+            message.style.display = "block";
+
+
+            /* CLEAR PASSWORD FIELDS */
+
+            document.getElementById(
+                "currentPassword"
+            ).value = "";
+
+            document.getElementById(
+                "newPassword"
+            ).value = "";
+
+            document.getElementById(
+                "confirmPassword"
+            ).value = "";
+
+
+            /* =========================
+               RETURN TO PROFILE
+            ========================= */
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "PROFILE.html";
+
+            }, 1500);
+
+        }
+
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        function showError(text) {
+
+            const message =
+                document.getElementById("message");
+
+            message.textContent = text;
+
+            message.classList.add("error");
+
+            message.style.display = "block";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

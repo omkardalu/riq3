@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resume IQ | How It Works</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background: #04131b;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    top: -180px;
+    left: -180px;
+    background: rgba(13, 240, 173, 0.08);
+    filter: blur(120px);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    right: -180px;
+    bottom: -150px;
+    background: rgba(13, 240, 173, 0.06);
+    filter: blur(120px);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: 100%;
+    height: 105px;
+    padding: 0 4.3%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(3,17,25,0.95);
+    position: relative;
+    z-index: 20;
+}
+
+.logo {
+    display:flex;
+    align-items:center;
+    gap:15px;
+    font-size:29px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.logo-icon {
+    width:48px;
+    height:55px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+}
+
+.logo-icon .fa-file-lines {
+    font-size:45px;
+}
+
+.logo-icon .fa-magnifying-glass {
+    position:absolute;
+    right:-3px;
+    bottom:2px;
+    font-size:19px;
+    background:#04131b;
+}
+
+.nav-links {
+    display:flex;
+    align-items:center;
+    gap:52px;
+}
+
+.nav-links a {
+    color:#d9e4e9;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:500;
+    position:relative;
+    padding:39px 0 30px;
+    transition:.3s;
+}
+
+.nav-links a:hover {
+    color:#12efad;
+}
+
+.nav-links a.active {
+    color:white;
+}
+
+.nav-links a.active::after {
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:16px;
+    width:100%;
+    height:5px;
+    background:#0df0a9;
+    box-shadow:0 0 12px #0df0a9;
+}
+
+.menu {
+    position:fixed;
+    top:35px;
+    right:25px;
+    z-index:9999;
+}
+
+.menu-button {
+    width:45px;
+    height:40px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+}
+
+.menu-button span {
+    display:block;
+    width:25px;
+    height:3px;
+    background:white;
+    border-radius:5px;
+}
+
+.dropdown {
+    display:none;
+    position:absolute;
+    top:45px;
+    right:0;
+    width:130px;
+    background:#071f29;
+    border:1px solid #0df0ad;
+    border-radius:8px;
+    padding:5px;
+}
+
+.dropdown button {
+    display:block;
+    width:100%;
+    padding:10px;
+    background:transparent;
+    border:none;
+    color:white;
+    text-align:left;
+    font-size:15px;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.dropdown button:hover {
+    background:#0df0ad;
+    color:#04131b;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    width: 100%;
+    max-width: 1250px;
+    margin: auto;
+    padding: 100px 30px 80px;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    max-width: 820px;
+    margin: 0 auto 85px;
+    text-align: center;
+}
+
+.hero-label {
+    display: inline-block;
+
+    padding: 8px 16px;
+    margin-bottom: 22px;
+
+    border: 1px solid rgba(13, 240, 173, 0.25);
+    border-radius: 30px;
+
+    color: #0df0ad;
+    background: rgba(13, 240, 173, 0.05);
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 6vw, 68px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+}
+
+.hero h1 span {
+    color: #0df0ad;
+}
+
+.hero p {
+    max-width: 690px;
+    margin: auto;
+
+    color: #91a5ad;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   PROCESS
+========================= */
+
+.process {
+    position: relative;
+    max-width: 1000px;
+    margin: auto;
+}
+
+
+/* Vertical line */
+
+.process::before {
+    content: "";
+    position: absolute;
+
+    left: 28px;
+    top: 30px;
+    bottom: 30px;
+
+    width: 1px;
+
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        #173b46,
+        #0df0ad,
+        #173b46,
+        transparent
+    );
+}
+
+
+/* =========================
+   STEP
+========================= */
+
+.step {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 30px;
+
+    margin-bottom: 28px;
+}
+
+.step:last-child {
+    margin-bottom: 0;
+}
+
+
+/* Number */
+
+.step-number {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #071f29;
+    border: 1px solid #24505c;
+
+    color: #0df0ad;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    position: relative;
+    z-index: 2;
+
+    box-shadow: 0 0 0 7px #04131b;
+}
+
+
+/* Content Card */
+
+.step-content {
+    padding: 30px 34px;
+
+    background: rgba(7, 31, 41, 0.72);
+
+    border: 1px solid #173b46;
+    border-radius: 18px;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.step-content:hover {
+    transform: translateX(6px);
+
+    border-color: rgba(13, 240, 173, 0.45);
+
+    background: rgba(8, 38, 49, 0.9);
+}
+
+.step-content h2 {
+    font-size: 20px;
+    font-weight: 700;
+
+    margin-bottom: 11px;
+
+    color: #ffffff;
+}
+
+.step-content p {
+    color: #8da5ad;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    max-width: 760px;
+}
+
+
+/* Highlight */
+
+.highlight {
+    color: #0df0ad;
+    font-weight: 600;
+}
+
+
+/* =========================
+   BOTTOM CTA
+========================= */
+
+.cta {
+    margin: 100px auto 0;
+
+    max-width: 1000px;
+
+    padding: 65px 40px;
+
+    text-align: center;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(13, 240, 173, 0.22);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(13,240,173,0.08),
+            rgba(7,31,41,0.8)
+        );
+}
+
+.cta h2 {
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+
+    margin-bottom: 15px;
+
+    letter-spacing: -1px;
+}
+
+.cta h2 span {
+    color: #0df0ad;
+}
+
+.cta p {
+    color: #8da5ad;
+    font-size: 15px;
+    margin-bottom: 28px;
+}
+
+
+/* Button */
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 190px;
+    height: 52px;
+
+    padding: 0 28px;
+
+    border-radius: 10px;
+
+    background: #0df0ad;
+    color: #04131b;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+.cta-button:hover {
+    background: #16edaa;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    margin-top: 80px;
+    padding: 25px 7%;
+
+    border-top: 1px solid rgba(255,255,255,0.06);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: #61777f;
+    font-size: 12px;
+}
+
+.footer-logo {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.footer-logo span {
+    color: #0df0ad;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .main {
+        padding: 75px 20px 60px;
+    }
+
+    .hero {
+        margin-bottom: 60px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .process::before {
+        left: 22px;
+    }
+
+    .step {
+        grid-template-columns: 44px 1fr;
+        gap: 18px;
+    }
+
+    .step-number {
+        width: 44px;
+        height: 44px;
+        font-size: 11px;
+    }
+
+    .step-content {
+        padding: 24px;
+    }
+
+    .step-content h2 {
+        font-size: 18px;
+    }
+
+    .step-content p {
+        font-size: 13px;
+    }
+
+    .cta {
+        padding: 45px 25px;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .navbar {
+        height: 70px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .nav-links a:nth-child(1) {
+        display: none;
+    }
+
+    .main {
+        padding-top: 60px;
+    }
+
+  /* .hero-label {
+        font-size: 50px;
+   }*/
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .step {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .process::before {
+        display: none;
+    }
+
+    .step-number {
+        width: 42px;
+        height: 42px;
+    }
+
+    .step-content:hover {
+        transform: none;
+    }
+
+    .cta {
+        margin-top: 70px;
+    }
+}.small-title {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #55f5d0;
+            margin-bottom: 15px;
+        }
+         
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content:flex-start;
+            margin-top:50px; 
+            margin-left: 50px;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-btn {
+            background: transparent;
+            color: #0df0ad;
+
+            border: 1px solid #0df0ad;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #0df0ad;
+            color: #04131b;
+        }
+</style>
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+        <button class="back-btn" onclick="goBack()">
+            ←
+        </button>
+
+    </div>
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="small-title">
+            HOW IT WORKS
+        </div>
+
+        <h1>
+            From Resume Uploads
+            <br>
+            to <span>Better Screening</span>
+        </h1>
+
+        <p>
+            Resume IQ brings the entire screening process into one place —
+            from setting job requirements to reviewing candidate results.
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================
+         PROCESS
+    ========================= -->
+
+    <section class="process">
+
+
+        <!-- STEP 01 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <div class="step-content">
+
+                <h2>
+                    Start With What You Need
+                </h2>
+
+                <p>
+                    Tell Resume IQ what you are looking for.
+                    Add the skills and requirements that matter for the role,
+                    and they become the reference for the entire screening process.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 02 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <div class="step-content">
+
+                <h2>
+                    Bring Your Resumes Together
+                </h2>
+
+                <p>
+                    No need to open and check resumes one at a time.
+                    Upload your entire collection of resumes in one go.
+                    There is no fixed file-count limit — the total upload
+                    can be up to <span class="highlight">10 GB</span>.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 03 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <div class="step-content">
+
+                <h2>
+                    Let RIQ Do the Checking
+                </h2>
+
+                <p>
+                    Once the resumes are uploaded, Resume IQ goes through
+                    them and checks the information against your requirements.
+                    Skills, experience, education, projects, and relevant
+                    keywords are taken into account.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 04 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                04
+            </div>
+
+            <div class="step-content">
+
+                <h2>
+                    See the Score at a Glance
+                </h2>
+
+                <p>
+                    Every resume gets an <span class="highlight">ATS score</span>
+                    that shows how closely it matches the requirements.
+                    You can also see which skills are present and which
+                    ones are missing.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 05 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                05
+            </div>
+
+            <div class="step-content">
+
+                <h2>
+                    Compare Everyone in One View
+                </h2>
+
+                <p>
+                    Instead of switching between different resumes,
+                    see all applicants together. Compare their scores
+                    and match percentages and get a quick view of the
+                    screening results.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 06 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                06
+            </div>
+
+            <div class="step-content">
+
+                <h2>
+                    Open Any Applicant
+                </h2>
+
+                <p>
+                    Want to know more about someone? Select their profile
+                    to see the details found in their resume — including
+                    education, experience, projects, strengths, missing
+                    skills, weaknesses, and suggestions.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 07 -->
+
+        <div class="step">
+
+            <div class="step-number">
+                07
+            </div>
+
+            <div class="step-content">
+
+                <h2>
+                    Make the Next Step Easier
+                </h2>
+
+                <p>
+                    With the important information already organized,
+                    you can spend less time sorting through resumes and
+                    more time focusing on the candidates who match
+                    your requirements.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         CTA
+    ========================= -->
+
+    <section class="cta">
+
+        <h2>
+            SMARTER SCREENING.
+            <span>FASTER HIRING.</span>
+        </h2>
+
+        <p>
+            Your resumes in. Clear results out.
+        </p>
+
+        <a href="UPLOAD.html" class="cta-button">
+            START SCREENING
+        </a>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div class="footer-logo">
+        RESUME <span>IQ</span>
+    </div>
+
+    <div>
+         Resume Screening
+    </div>
+
+</footer>
+
+
+
+<script>
+
+     function goBack() {
+
+            window.history.back();
+
+        }
+function profile(){
+    window.location.href = "PROFILE.html";
+}
+
+const menuButton = document.getElementById("menuButton");
+const dropdown = document.getElementById("dropdown");
+
+menuButton.addEventListener("click", function () {
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
+});
+
+document.getElementById("profileButton").addEventListener("click", function () {
+    window.location.href = "profile.html";
+});
+
+document.getElementById("logoutButton").addEventListener("click", function () {
+    window.location.href = "login.html";
+});
+</script>
+</body>
+</html>

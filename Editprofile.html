@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume IQ | Edit Profile</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            min-height: 100vh;
+            background: #04131b;
+            color: white;
+            padding: 30px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .riq-title {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .riq-title span {
+            color: #0df0ad;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-btn {
+            background: transparent;
+            color: #0df0ad;
+            border: 1px solid #0df0ad;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #0df0ad;
+            color: #04131b;
+        }
+
+        /* =========================
+           PROFILE CARD
+        ========================= */
+
+        .profile-container {
+            width: 700px;
+            max-width: 100%;
+            margin: 30px auto;
+            background: #071f29;
+            border: 1px solid #173b46;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        /* =========================
+           PROFILE TOP
+        ========================= */
+
+        .profile-top {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #173b46;
+        }
+
+        /* =========================
+           COMPANY ICON
+        ========================= */
+
+        .company-icon {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            background: #0df0ad;
+            color: #04131b;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .company-name {
+            margin-top: 15px;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .username {
+            margin-top: 6px;
+            color: #8da5ad;
+            font-size: 14px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-section {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: #8da5ad;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 15px;
+
+            background: #04131b;
+            color: white;
+
+            border: 1px solid #173b46;
+            border-radius: 8px;
+
+            outline: none;
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #0df0ad;
+            box-shadow: 0 0 0 2px rgba(13, 240, 173, 0.08);
+        }
+
+        .form-group input::placeholder {
+            color: #607982;
+        }
+
+        /* =========================
+           ACCOUNT STATUS
+        ========================= */
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 17px 5px;
+
+            border-top: 1px solid #173b46;
+            border-bottom: 1px solid #173b46;
+
+            margin-top: 5px;
+        }
+
+        .status-label {
+            color: #8da5ad;
+            font-size: 14px;
+        }
+
+        .status-value {
+            color: #0df0ad;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cancel-btn,
+        .save-btn {
+            padding: 12px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        /* CANCEL */
+
+        .cancel-btn {
+            background: transparent;
+            color: #0df0ad;
+            border: 1px solid #0df0ad;
+        }
+
+        .cancel-btn:hover {
+            background: #0df0ad;
+            color: #04131b;
+        }
+
+        /* SAVE */
+
+        .save-btn {
+            background: #0df0ad;
+            color: #04131b;
+            border: 1px solid #0df0ad;
+        }
+
+        .save-btn:hover {
+            background: #16edaa;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            color: #0df0ad;
+        }
+
+        .error {
+            color: #ff7070;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header {
+                align-items: flex-start;
+            }
+
+            .riq-title {
+                font-size: 24px;
+            }
+
+            .profile-container {
+                padding: 25px 20px;
+            }
+
+            .company-name {
+                font-size: 23px;
+            }
+
+            .form-group input {
+                padding: 13px;
+            }
+
+            .status-row {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .cancel-btn,
+            .save-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="header">
+
+        <div class="riq-title">
+            <span>RIQ</span>
+        </div>
+
+        <button class="back-btn" onclick="goBack()">
+            ←
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         PROFILE CARD
+    ========================= -->
+
+    <div class="profile-container">
+
+        <!-- COMPANY HEADER -->
+
+        <div class="profile-top">
+
+            <div class="company-icon">
+                C
+            </div>
+
+            <div class="company-name" id="companyTitle">
+                ABC Technologies
+            </div>
+
+            <div class="username" id="usernameTitle">
+                @abctech
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             EDIT FORM
+        ========================= -->
+
+        <div class="form-section">
+
+            <!-- COMPANY NAME -->
+
+            <div class="form-group">
+
+                <label for="companyName">
+                    Company Name
+                </label>
+
+                <input
+                    type="text"
+                    id="companyName"
+                    value="ABC Technologies"
+                    placeholder="Enter company name"
+                >
+
+            </div>
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    value="@abctech"
+                    placeholder="Enter username"
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    value="company@example.com"
+                    placeholder="Enter company email"
+                >
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    value="+91 98765 43210"
+                    placeholder="Enter phone number"
+                >
+
+            </div>
+
+
+            <!-- ACCOUNT STATUS -->
+
+            <div class="status-row">
+
+                <span class="status-label">
+                    Account Status
+                </span>
+
+                <span class="status-value">
+                    Active
+                </span>
+
+            </div>
+
+
+            <!-- =========================
+                 BUTTONS
+            ========================= -->
+
+            <div class="buttons">
+
+                <button
+                    class="cancel-btn"
+                    onclick="cancelEdit()">
+                    Cancel
+                </button>
+
+                <button
+                    class="save-btn"
+                    onclick="saveProfile()">
+                    Save Changes
+                </button>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                class="message"
+                id="message">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        /* =========================
+           BACK
+        ========================= */
+
+        function goBack() {
+
+            window.history.back();
+
+        }
+
+
+        /* =========================
+           CANCEL EDIT
+        ========================= */
+
+        function cancelEdit() {
+
+            window.location.href = "profile.html";
+
+        }
+
+
+        /* =========================
+           SAVE PROFILE
+        ========================= */
+
+        function saveProfile() {
+
+            const companyName =
+                document.getElementById("companyName").value.trim();
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const phone =
+                document.getElementById("phone").value.trim();
+
+            const message =
+                document.getElementById("message");
+
+
+            /* CLEAR OLD MESSAGE */
+
+            message.style.display = "none";
+            message.className = "message";
+
+
+            /* VALIDATION */
+
+            if (companyName === "") {
+
+                showError("Please enter company name.");
+                return;
+
+            }
+
+
+            if (username === "") {
+
+                showError("Please enter username.");
+                return;
+
+            }
+
+
+            if (email === "") {
+
+                showError("Please enter email address.");
+                return;
+
+            }
+
+
+            if (!email.includes("@")) {
+
+                showError("Please enter a valid email address.");
+                return;
+
+            }
+
+
+            if (phone === "") {
+
+                showError("Please enter phone number.");
+                return;
+
+            }
+
+
+            /* UPDATE HEADER */
+
+            document.getElementById("companyTitle").textContent =
+                companyName;
+
+            document.getElementById("usernameTitle").textContent =
+                username.startsWith("@")
+                    ? username
+                    : "@" + username;
+
+
+            /* SUCCESS MESSAGE */
+
+            message.textContent =
+                "Profile updated successfully.";
+
+            message.classList.add("success");
+            message.style.display = "block";
+
+
+            /*
+                Demo storage.
+
+                This saves the edited values in the browser.
+                Later, your database/backend can replace this.
+            */
+
+            localStorage.setItem(
+                "companyName",
+                companyName
+            );
+
+            localStorage.setItem(
+                "username",
+                username
+            );
+
+            localStorage.setItem(
+                "email",
+                email
+            );
+
+            localStorage.setItem(
+                "phone",
+                phone
+            );
+
+
+            /* GO BACK AFTER SHORT DELAY */
+
+            setTimeout(function () {
+
+                window.location.href = "PROFILE.html";
+
+            }, 1200);
+
+        }
+
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        function showError(text) {
+
+            const message =
+                document.getElementById("message");
+
+            message.textContent = text;
+
+            message.classList.add("error");
+
+            message.style.display = "block";
+
+        }
+
+
+        /* =========================
+           LOAD SAVED DATA
+        ========================= */
+
+        window.onload = function () {
+
+            const savedCompany =
+                localStorage.getItem("companyName");
+
+            const savedUsername =
+                localStorage.getItem("username");
+
+            const savedEmail =
+                localStorage.getItem("email");
+
+            const savedPhone =
+                localStorage.getItem("phone");
+
+
+            if (savedCompany) {
+
+                document.getElementById("companyName").value =
+                    savedCompany;
+
+                document.getElementById("companyTitle").textContent =
+                    savedCompany;
+
+            }
+
+
+            if (savedUsername) {
+
+                document.getElementById("username").value =
+                    savedUsername;
+
+                document.getElementById("usernameTitle").textContent =
+                    savedUsername.startsWith("@")
+                        ? savedUsername
+                        : "@" + savedUsername;
+
+            }
+
+
+            if (savedEmail) {
+
+                document.getElementById("email").value =
+                    savedEmail;
+
+            }
+
+
+            if (savedPhone) {
+
+                document.getElementById("phone").value =
+                    savedPhone;
+
+            }
+
+        };
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RIQ | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(13, 240, 173, 0.10), transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(0, 150, 180, 0.12), transparent 30%),
+                #04131b;
+        }
+
+        /* LOGIN BOX */
+
+        .login-box {
+            width: 380px;
+            padding: 40px 35px;
+            background: rgba(7, 31, 41, 0.92);
+            border: 1px solid #164655;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        /* LOGO */
+
+        .logo {
+            text-align: center;
+            color: white;
+            font-size: 34px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+        }
+
+        .logo span {
+            color: #0df0ad;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7896a1;
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 35px;
+        }
+
+        /* TITLE */
+
+        h2 {
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* FLOATING FIELD */
+
+        .input-box {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 55px;
+            padding: 0 15px;
+            background: transparent;
+            border: 1px solid #315866;
+            border-radius: 10px;
+            outline: none;
+            color: white;
+            font-size: 15px;
+            transition: 0.3s ease;
+        }
+
+        .input-box label {
+            position: absolute;
+            left: 15px;
+            top: 17px;
+            color: #7896a1;
+            font-size: 14px;
+            pointer-events: none;
+            transition: 0.25s ease;
+            background: #071f29;
+            padding: 0 5px;
+        }
+
+        /* WHEN INPUT IS FOCUSED */
+
+        .input-box input:focus {
+            border-color: #0df0ad;
+            box-shadow: 0 0 0 1px rgba(13, 240, 173, 0.15);
+        }
+
+        .input-box input:focus + label,
+        .input-box input:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 12px;
+            color: #0df0ad;
+            font-size: 12px;
+        }
+
+        /* PASSWORD */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 50px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 15px;
+            top: 18px;
+            color: #7896a1;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .show-password:hover {
+            color: #0df0ad;
+        }
+
+        /* LOGIN BUTTON */
+
+        .login-btn {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 10px;
+            background: #0df0ad;
+            color: #04131b;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .login-btn:hover {
+            background: #16edaa;
+            transform: translateY(-2px);
+        }
+
+        /* CREATE ACCOUNT */
+
+        .create-account {
+            text-align: center;
+            margin-top: 25px;
+            color: #7896a1;
+            font-size: 13px;
+        }
+
+        .create-account a {
+            color: #0df0ad;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <!-- LOGO -->
+        <div class="logo">
+            R<span>I</span>Q
+        </div>
+
+        <div class="subtitle">
+            RESUME IQ
+        </div>
+
+        <h2>Welcome Back</h2>
+
+        <form>
+
+            <!-- USERNAME -->
+            <div class="input-box">
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder=" "
+                    required
+                >
+
+                <label for="username">
+                    Username
+                </label>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="input-box password-wrapper">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder=" "
+                    required
+                >
+
+                <label for="password">
+                    Password
+                </label>
+
+                <span
+                    class="show-password"
+                    onclick="togglePassword()"
+                >
+                    Show
+                </span>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+            <button onclick="homepage()"
+                type="submit"
+                class="login-btn"
+            >
+                Login
+            </button>
+
+        </form>
+
+
+        <!-- CREATE ACCOUNT -->
+        <div class="create-account">
+
+            Don't have an account?
+            <a href="CREATE ACCOUNT.html">Create Account</a>
+
+        </div>
+
+    </div>
+
+
+    <script>      function homepage(){
+          
+  window.location.href = "HOMEPAGE.HTML";
+}
+
+        function togglePassword() {
+         
+
+
+            const password =
+                document.getElementById("password");
+
+            const button =
+                document.querySelector(".show-password");
+
+            if (password.type === "password") {
+
+                password.type = "text";
+                button.textContent = "Hide";
+
+            } else {
+
+                password.type = "password";
+                button.textContent = "Show";
+
+            }
+        }
+
+    </script>
+
+</body>
+</html>
+

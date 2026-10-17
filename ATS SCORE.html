@@ -1,0 +1,1603 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resume IQ | Applicants</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #04131b;
+    color: white;
+    padding: 40px;
+}
+
+
+/* =========================
+   RIQ HEADER
+========================= */
+
+.riq-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.riq-title span {
+    color: #0df0ad;
+    font-weight: 700;
+}
+
+.riq-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.riq-subtitle {
+    color: #8da5ad;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    width: 90%;
+    margin: 25px auto;
+    overflow-x: auto;
+    background: #08232d;
+    border-radius: 15px;
+    padding: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #0df0ad;
+    color: #04131b;
+    padding: 15px;
+    text-align: center;
+}
+
+td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #23414b;
+}
+
+.applicant-row {
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.applicant-row:hover {
+    background: #0d303b;
+}
+
+.ats {
+    font-weight: bold;
+    color: #0df0ad;
+}
+
+.matched {
+    color: #45e69a;
+    font-weight: bold;
+}
+
+.unmatched {
+    color: #ff7777;
+    font-weight: bold;
+}
+
+
+/* =========================
+   VIEW BUTTON
+========================= */
+
+.view-btn {
+    background: transparent;
+    color: #0df0ad;
+    border: 1px solid #0df0ad;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.view-btn:hover {
+    background: #0df0ad;
+    color: #04131b;
+}
+
+
+/* =========================
+   DETAILS
+========================= */
+
+.details {
+    display: none;
+    width: 90%;
+    margin: auto;
+    animation: slideIn .35s ease;
+}
+
+@keyframes slideIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-btn {
+    background: transparent;
+    color: #0df0ad;
+    border: 1px solid #0df0ad;
+    padding: 10px 18px;
+    border-radius: 9px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.back-btn:hover {
+    background: #0df0ad;
+    color: #04131b;
+}
+
+
+/* =========================
+   PROFILE HEADER
+========================= */
+
+.profile-header {
+    background: #071f29;
+    border: 1px solid #173b46;
+    border-radius: 18px;
+    padding: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+
+    background: #0df0ad;
+    color: #04131b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.profile-name {
+    font-size: 24px;
+    margin: 0;
+}
+
+.profile-email {
+    color: #8da5ad;
+    margin-top: 5px;
+}
+
+
+/* =========================
+   SCORE CARDS
+========================= */
+
+.score-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.score-card {
+    background: #071f29;
+    border: 1px solid #173b46;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.score-card p {
+    color: #8da5ad;
+    margin: 0 0 8px;
+    font-size: 13px;
+}
+
+.big-score {
+    font-size: 30px;
+    font-weight: 700;
+    color: #0df0ad;
+}
+
+
+/* =========================
+   INFORMATION
+========================= */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.info-card {
+    background: #071f29;
+    border: 1px solid #173b46;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.info-card h3 {
+    margin-top: 0;
+    color: #0df0ad;
+    font-size: 17px;
+}
+
+.info-card p {
+    color: #b6c8ce;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   SKILLS
+========================= */
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-heading {
+    color: #8da5ad;
+    font-size: 12px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   MATCHED SKILLS
+========================= */
+
+.matched-skill {
+    background: rgba(69, 230, 154, 0.10);
+    border: 1px solid #45e69a;
+    color: #45e69a;
+
+    padding: 8px 13px;
+    border-radius: 20px;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   MISSING SKILLS
+========================= */
+
+.missing-skill {
+    background: rgba(255, 119, 119, 0.10);
+    border: 1px solid #ff7777;
+    color: #ff7777;
+
+    padding: 8px 13px;
+    border-radius: 20px;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   UPLOAD MORE
+========================= */
+
+.upload-more-container {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 30px;
+    padding-bottom: 10px;
+}
+
+.upload-more-btn {
+    background: #0df0ad;
+    color: #04131b;
+
+    border: none;
+
+    padding: 13px 28px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.upload-more-btn:hover {
+    background: #16edaa;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 700px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .details,
+    .table-container {
+        width: 100%;
+    }
+
+    .score-grid,
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 700px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================== -->
+<!-- APPLICANT LIST -->
+<!-- ===================================================== -->
+
+<section id="applicantList">
+
+
+    <div class="riq-header">
+
+        <div>
+
+            <h1 class="riq-title">
+                Applicant <span>Analysis</span>
+            </h1>
+
+            <div class="riq-subtitle">
+                &nbsp;&nbsp;Click an applicant to view complete resume analysis
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Applicant Name</th>
+                    <th>ATS Score</th>
+                    <th>Matched Percentage</th>
+                    <th>Unmatched Percentage</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                <!-- ================================================= -->
+                <!-- RAHUL -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Rahul Kumar"
+                    data-email="rahul@example.com"
+                    data-phone="+91 98765 43210"
+                    data-location="Hyderabad, Telangana"
+
+                    data-score="92%"
+                    data-matched="88%"
+                    data-unmatched="12%"
+
+                    data-education="B.Tech in Computer Science | XYZ Engineering College | Graduation: 2027"
+
+                    data-experience="Frontend Developer Intern | 6 Months Experience | Worked on responsive web applications and UI development."
+
+                    data-projects="AI Resume Analyzer | Student Management System | E-Commerce Website"
+
+                    data-strengths="Strong technical skills | Good project experience | Relevant educational background"
+
+                    data-weaknesses="Missing some required keywords | Limited professional experience | Resume formatting can be improved"
+
+                    data-suggestions="Add more job-specific keywords, quantify project achievements, and improve the professional summary."
+
+                    data-matched-skills="Python,HTML,CSS,JavaScript,SQL,Git,REST API"
+
+                    data-missing-skills="React,Docker,AWS,TypeScript">
+
+
+                    <td>Rahul Kumar</td>
+
+                    <td class="ats">92%</td>
+
+                    <td class="matched">88%</td>
+
+                    <td class="unmatched">12%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- PRIYA -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Priya Sharma"
+                    data-email="priya@example.com"
+                    data-phone="+91 98765 12345"
+                    data-location="Bengaluru, Karnataka"
+
+                    data-score="87%"
+                    data-matched="82%"
+                    data-unmatched="18%"
+
+                    data-education="B.Tech in Information Technology | ABC Engineering College | Graduation: 2027"
+
+                    data-experience="Java Developer Intern | 8 Months Experience | Worked on backend applications and database integration."
+
+                    data-projects="Student Management System | Banking Application | Library Management System"
+
+                    data-strengths="Good Java knowledge | Strong SQL skills | Good database understanding"
+
+                    data-weaknesses="Limited React experience | Missing cloud technologies | Needs more frontend experience"
+
+                    data-suggestions="Add Spring Boot and cloud-related skills. Include measurable achievements from projects."
+
+                    data-matched-skills="Java,HTML,CSS,SQL,Git"
+
+                    data-missing-skills="Spring Boot,React,Docker,AWS">
+
+
+                    <td>Priya Sharma</td>
+
+                    <td class="ats">87%</td>
+
+                    <td class="matched">82%</td>
+
+                    <td class="unmatched">18%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- ARJUN -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Arjun Reddy"
+                    data-email="arjun@example.com"
+                    data-phone="+91 99887 66554"
+                    data-location="Hyderabad, Telangana"
+
+                    data-score="81%"
+                    data-matched="76%"
+                    data-unmatched="24%"
+
+                    data-education="B.Tech in Computer Science | DEF University | Graduation: 2027"
+
+                    data-experience="Web Developer Intern | 5 Months Experience | Developed responsive websites and JavaScript applications."
+
+                    data-projects="Portfolio Website | Online Shopping Website | Task Management App"
+
+                    data-strengths="Good JavaScript skills | Strong Git knowledge | Good web development fundamentals"
+
+                    data-weaknesses="Missing backend technologies | Limited cloud experience | Needs more React knowledge"
+
+                    data-suggestions="Learn React and Node.js and add backend projects to the resume."
+
+                    data-matched-skills="Python,JavaScript,SQL,Git"
+
+                    data-missing-skills="React,Node.js,Docker,AWS">
+
+
+                    <td>Arjun Reddy</td>
+
+                    <td class="ats">81%</td>
+
+                    <td class="matched">76%</td>
+
+                    <td class="unmatched">24%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- SNEHA -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Sneha Patel"
+                    data-email="sneha@example.com"
+                    data-phone="+91 91234 56789"
+                    data-location="Mumbai, Maharashtra"
+
+                    data-score="95%"
+                    data-matched="91%"
+                    data-unmatched="9%"
+
+                    data-education="B.Tech in Computer Science | XYZ Institute of Technology | Graduation: 2027"
+
+                    data-experience="Full Stack Developer Intern | 1 Year Experience | Developed full-stack web applications."
+
+                    data-projects="AI Resume Analyzer | E-Commerce Platform | Job Portal"
+
+                    data-strengths="Excellent technical skills | Strong project portfolio | Good full-stack knowledge"
+
+                    data-weaknesses="Limited AWS experience | Needs more DevOps knowledge"
+
+                    data-suggestions="Add AWS certification and demonstrate deployment experience."
+
+                    data-matched-skills="Python,HTML,CSS,JavaScript,React,SQL,Git"
+
+                    data-missing-skills="Docker,AWS">
+
+
+                    <td>Sneha Patel</td>
+
+                    <td class="ats">95%</td>
+
+                    <td class="matched">91%</td>
+
+                    <td class="unmatched">9%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- VIKRAM -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Vikram Singh"
+                    data-email="vikram@example.com"
+                    data-phone="+91 90000 12345"
+                    data-location="Delhi, India"
+
+                    data-score="73%"
+                    data-matched="68%"
+                    data-unmatched="32%"
+
+                    data-education="B.Tech in Information Technology | ABC University | Graduation: 2027"
+
+                    data-experience="Web Development Intern | 4 Months Experience | Worked on HTML, CSS and JavaScript projects."
+
+                    data-projects="Personal Portfolio | College Management Website"
+
+                    data-strengths="Good HTML and CSS skills | Basic JavaScript knowledge"
+
+                    data-weaknesses="Missing Python | Missing React | Limited backend experience"
+
+                    data-suggestions="Learn Python, React and Node.js and build full-stack projects."
+
+                    data-matched-skills="HTML,CSS,JavaScript,SQL"
+
+                    data-missing-skills="React,Python,Node.js,Docker,AWS">
+
+
+                    <td>Vikram Singh</td>
+
+                    <td class="ats">73%</td>
+
+                    <td class="matched">68%</td>
+
+                    <td class="unmatched">32%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- ANANYA -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Ananya Rao"
+                    data-email="ananya@example.com"
+                    data-phone="+91 93456 78901"
+                    data-location="Chennai, Tamil Nadu"
+
+                    data-score="89%"
+                    data-matched="85%"
+                    data-unmatched="15%"
+
+                    data-education="B.Tech in Computer Science | LMN College | Graduation: 2027"
+
+                    data-experience="Frontend Developer Intern | 7 Months Experience | Developed responsive React applications."
+
+                    data-projects="Food Delivery Website | Resume Builder | Portfolio Website"
+
+                    data-strengths="Strong React knowledge | Good UI development skills | Good JavaScript skills"
+
+                    data-weaknesses="Limited backend experience | Limited cloud knowledge"
+
+                    data-suggestions="Add backend technologies and cloud deployment projects."
+
+                    data-matched-skills="Python,React,HTML,CSS,SQL,Git"
+
+                    data-missing-skills="Docker,AWS,TypeScript">
+
+
+                    <td>Ananya Rao</td>
+
+                    <td class="ats">89%</td>
+
+                    <td class="matched">85%</td>
+
+                    <td class="unmatched">15%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- KARTHIK -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Karthik Naidu"
+                    data-email="karthik@example.com"
+                    data-phone="+91 87654 32109"
+                    data-location="Vijayawada, Andhra Pradesh"
+
+                    data-score="78%"
+                    data-matched="71%"
+                    data-unmatched="29%"
+
+                    data-education="B.Tech in Computer Science | PQR Engineering College | Graduation: 2027"
+
+                    data-experience="C++ Developer Intern | 6 Months Experience | Worked on software development projects."
+
+                    data-projects="Inventory Management System | Banking System"
+
+                    data-strengths="Strong C++ knowledge | Good SQL skills | Good problem-solving skills"
+
+                    data-weaknesses="Limited Python | Missing React | Missing cloud technologies"
+
+                    data-suggestions="Learn Python, React and cloud technologies and add web projects."
+
+                    data-matched-skills="C++,HTML,CSS,SQL,Git"
+
+                    data-missing-skills="Python,React,Node.js,Docker,AWS">
+
+
+                    <td>Karthik Naidu</td>
+
+                    <td class="ats">78%</td>
+
+                    <td class="matched">71%</td>
+
+                    <td class="unmatched">29%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- MEERA -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Meera Das"
+                    data-email="meera@example.com"
+                    data-phone="+91 98761 23456"
+                    data-location="Kolkata, West Bengal"
+
+                    data-score="93%"
+                    data-matched="89%"
+                    data-unmatched="11%"
+
+                    data-education="B.Tech in Computer Science | STU University | Graduation: 2027"
+
+                    data-experience="Full Stack Developer Intern | 10 Months Experience | Developed web applications using React and Python."
+
+                    data-projects="AI Resume Analyzer | E-Commerce Platform | Chat Application"
+
+                    data-strengths="Excellent React skills | Strong Python knowledge | Good database skills"
+
+                    data-weaknesses="Limited AWS knowledge | Limited DevOps experience"
+
+                    data-suggestions="Add Docker and AWS deployment experience to improve the resume."
+
+                    data-matched-skills="Python,JavaScript,React,SQL,Git,HTML,CSS"
+
+                    data-missing-skills="Docker,AWS">
+
+
+                    <td>Meera Das</td>
+
+                    <td class="ats">93%</td>
+
+                    <td class="matched">89%</td>
+
+                    <td class="unmatched">11%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- ADITYA -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Aditya Verma"
+                    data-email="aditya@example.com"
+                    data-phone="+91 90909 11223"
+                    data-location="Pune, Maharashtra"
+
+                    data-score="84%"
+                    data-matched="79%"
+                    data-unmatched="21%"
+
+                    data-education="B.Tech in Computer Engineering | UVW College | Graduation: 2027"
+
+                    data-experience="Java Developer Intern | 6 Months Experience | Developed Java applications and database systems."
+
+                    data-projects="Banking Application | Employee Management System | Library System"
+
+                    data-strengths="Good Java skills | Good Python knowledge | Strong SQL knowledge"
+
+                    data-weaknesses="Missing React | Limited Spring Boot experience | Limited cloud knowledge"
+
+                    data-suggestions="Learn React and Spring Boot and add cloud deployment projects."
+
+                    data-matched-skills="Java,Python,HTML,CSS,SQL"
+
+                    data-missing-skills="React,Spring Boot,Docker,AWS">
+
+
+                    <td>Aditya Verma</td>
+
+                    <td class="ats">84%</td>
+
+                    <td class="matched">79%</td>
+
+                    <td class="unmatched">21%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- NEHA -->
+                <!-- ================================================= -->
+
+                <tr class="applicant-row"
+
+                    data-name="Neha Reddy"
+                    data-email="neha@example.com"
+                    data-phone="+91 95555 66778"
+                    data-location="Warangal, Telangana"
+
+                    data-score="90%"
+                    data-matched="86%"
+                    data-unmatched="14%"
+
+                    data-education="B.Tech in Computer Science | RST Engineering College | Graduation: 2027"
+
+                    data-experience="Frontend Developer Intern | 9 Months Experience | Developed responsive websites and JavaScript applications."
+
+                    data-projects="Resume Builder | Online Store | Student Portal"
+
+                    data-strengths="Strong frontend skills | Good JavaScript knowledge | Good SQL knowledge"
+
+                    data-weaknesses="Limited React experience | Limited AWS knowledge"
+
+                    data-suggestions="Add React, TypeScript and AWS projects to strengthen the resume."
+
+                    data-matched-skills="Python,HTML,CSS,JavaScript,SQL,Git"
+
+                    data-missing-skills="React,Docker,AWS,TypeScript">
+
+
+                    <td>Neha Reddy</td>
+
+                    <td class="ats">90%</td>
+
+                    <td class="matched">86%</td>
+
+                    <td class="unmatched">14%</td>
+
+                    <td>
+                        <button class="view-btn">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- APPLICANT DETAILS -->
+<!-- ===================================================== -->
+
+<section class="details" id="applicantDetails">
+
+
+    <button class="back-btn" id="backBtn">
+        ← Back to Applicants
+    </button>
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-header">
+
+        <div class="avatar" id="avatar">
+            RK
+        </div>
+
+        <div>
+
+            <h2 class="profile-name" id="detailName">
+                Applicant
+            </h2>
+
+            <div class="profile-email" id="detailEmail">
+                applicant@example.com
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCORE -->
+
+    <div class="score-grid">
+
+
+        <div class="score-card">
+
+            <p>ATS Score</p>
+
+            <div class="big-score" id="detailScore">
+                0%
+            </div>
+
+        </div>
+
+
+        <div class="score-card">
+
+            <p>Matched Percentage</p>
+
+            <div class="big-score" id="detailMatched">
+                0%
+            </div>
+
+        </div>
+
+
+        <div class="score-card">
+
+            <p>Unmatched Percentage</p>
+
+            <div class="big-score" id="detailUnmatched">
+                0%
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- INFORMATION GRID -->
+
+    <div class="info-grid">
+
+
+        <!-- PERSONAL -->
+
+        <div class="info-card">
+
+            <h3>👤 Personal Information</h3>
+
+            <p>
+
+                <strong>Name:</strong>
+                <span id="infoName"></span>
+
+                <br>
+
+                <strong>Email:</strong>
+                <span id="infoEmail"></span>
+
+                <br>
+
+                <strong>Phone:</strong>
+                <span id="infoPhone"></span>
+
+                <br>
+
+                <strong>Location:</strong>
+                <span id="infoLocation"></span>
+
+            </p>
+
+        </div>
+
+
+
+        <!-- EDUCATION -->
+
+        <div class="info-card">
+
+            <h3>🎓 Education</h3>
+
+            <p id="infoEducation"></p>
+
+        </div>
+
+
+
+        <!-- MATCHED -->
+
+        <div class="info-card">
+
+            <h3>✓ Matched Skills</h3>
+
+            <div class="skill-heading">
+                Skills found in the applicant's resume
+            </div>
+
+            <div class="skills" id="matchedSkills"></div>
+
+        </div>
+
+
+
+        <!-- MISSING -->
+
+        <div class="info-card">
+
+            <h3>✕ Mismatched / Missing Skills</h3>
+
+            <div class="skill-heading">
+                Required skills not found in the resume
+            </div>
+
+            <div class="skills" id="missingSkills"></div>
+
+        </div>
+
+
+
+        <!-- EXPERIENCE -->
+
+        <div class="info-card">
+
+            <h3>💼 Experience</h3>
+
+            <p id="infoExperience"></p>
+
+        </div>
+
+
+
+        <!-- PROJECTS -->
+
+        <div class="info-card">
+
+            <h3>🚀 Projects</h3>
+
+            <p id="infoProjects"></p>
+
+        </div>
+
+
+
+        <!-- WEAKNESSES -->
+
+        <div class="info-card">
+
+            <h3>⚠️ Weaknesses</h3>
+
+            <p id="infoWeaknesses"></p>
+
+        </div>
+
+
+
+        <!-- STRENGTHS -->
+
+        <div class="info-card">
+
+            <h3>💪 Strengths</h3>
+
+            <p id="infoStrengths"></p>
+
+        </div>
+
+
+
+        <!-- AI SUGGESTIONS -->
+
+        <div class="info-card">
+
+            <h3>🤖 AI Suggestions</h3>
+
+            <p id="infoSuggestions"></p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- UPLOAD MORE -->
+
+    <div class="upload-more-container">
+
+        <button
+            class="upload-more-btn"
+            onclick="goToUploadPage()">
+
+            Upload More Resumes
+
+        </button>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   GET ELEMENTS
+===================================================== */
+
+const rows =
+    document.querySelectorAll(".applicant-row");
+
+const applicantList =
+    document.getElementById("applicantList");
+
+const applicantDetails =
+    document.getElementById("applicantDetails");
+
+
+const detailName =
+    document.getElementById("detailName");
+
+const detailEmail =
+    document.getElementById("detailEmail");
+
+const detailScore =
+    document.getElementById("detailScore");
+
+const detailMatched =
+    document.getElementById("detailMatched");
+
+const detailUnmatched =
+    document.getElementById("detailUnmatched");
+
+
+const infoName =
+    document.getElementById("infoName");
+
+const infoEmail =
+    document.getElementById("infoEmail");
+
+const infoPhone =
+    document.getElementById("infoPhone");
+
+const infoLocation =
+    document.getElementById("infoLocation");
+
+const infoEducation =
+    document.getElementById("infoEducation");
+
+const infoExperience =
+    document.getElementById("infoExperience");
+
+const infoProjects =
+    document.getElementById("infoProjects");
+
+const infoStrengths =
+    document.getElementById("infoStrengths");
+
+const infoWeaknesses =
+    document.getElementById("infoWeaknesses");
+
+const infoSuggestions =
+    document.getElementById("infoSuggestions");
+
+
+const avatar =
+    document.getElementById("avatar");
+
+
+const matchedSkills =
+    document.getElementById("matchedSkills");
+
+const missingSkills =
+    document.getElementById("missingSkills");
+
+
+
+/* =====================================================
+   CLICK APPLICANT
+===================================================== */
+
+rows.forEach(row => {
+
+
+    row.addEventListener("click", function(event) {
+
+
+        /* =============================================
+           GET APPLICANT DATA
+        ============================================= */
+
+        const name =
+            this.dataset.name;
+
+        const email =
+            this.dataset.email;
+
+        const phone =
+            this.dataset.phone;
+
+        const location =
+            this.dataset.location;
+
+        const score =
+            this.dataset.score;
+
+        const matched =
+            this.dataset.matched;
+
+        const unmatched =
+            this.dataset.unmatched;
+
+        const education =
+            this.dataset.education;
+
+        const experience =
+            this.dataset.experience;
+
+        const projects =
+            this.dataset.projects;
+
+        const strengths =
+            this.dataset.strengths;
+
+        const weaknesses =
+            this.dataset.weaknesses;
+
+        const suggestions =
+            this.dataset.suggestions;
+
+
+
+        /* =============================================
+           BASIC DETAILS
+        ============================================= */
+
+        detailName.textContent =
+            name;
+
+        detailEmail.textContent =
+            email;
+
+        detailScore.textContent =
+            score;
+
+        detailMatched.textContent =
+            matched;
+
+        detailUnmatched.textContent =
+            unmatched;
+
+
+
+        /* =============================================
+           PERSONAL INFORMATION
+        ============================================= */
+
+        infoName.textContent =
+            name;
+
+        infoEmail.textContent =
+            email;
+
+        infoPhone.textContent =
+            phone;
+
+        infoLocation.textContent =
+            location;
+
+
+
+        /* =============================================
+           EDUCATION
+        ============================================= */
+
+        infoEducation.innerHTML =
+            education.replace(/\|/g, "<br>");
+
+
+
+        /* =============================================
+           EXPERIENCE
+        ============================================= */
+
+        infoExperience.innerHTML =
+            experience.replace(/\|/g, "<br>");
+
+
+
+        /* =============================================
+           PROJECTS
+        ============================================= */
+
+        infoProjects.innerHTML =
+            projects.replace(/\|/g, "<br>• ");
+
+
+
+        /* =============================================
+           STRENGTHS
+        ============================================= */
+
+        infoStrengths.innerHTML =
+            strengths.replace(/\|/g, "<br>• ");
+
+
+
+        /* =============================================
+           WEAKNESSES
+        ============================================= */
+
+        infoWeaknesses.innerHTML =
+            weaknesses.replace(/\|/g, "<br>• ");
+
+
+
+        /* =============================================
+           AI SUGGESTIONS
+        ============================================= */
+
+        infoSuggestions.textContent =
+            suggestions;
+
+
+
+        /* =============================================
+           AVATAR
+        ============================================= */
+
+        avatar.textContent =
+            name
+            .split(" ")
+            .map(word => word[0])
+            .join("")
+            .substring(0, 2)
+            .toUpperCase();
+
+
+
+        /* =============================================
+           MATCHED SKILLS
+        ============================================= */
+
+        matchedSkills.innerHTML = "";
+
+
+        const matchedList =
+            this.dataset.matchedSkills
+            .split(",");
+
+
+        matchedList.forEach(skill => {
+
+
+            if (skill.trim() === "") {
+                return;
+            }
+
+
+            const skillElement =
+                document.createElement("span");
+
+
+            skillElement.className =
+                "matched-skill";
+
+
+            skillElement.textContent =
+                "✓ " + skill.trim();
+
+
+            matchedSkills.appendChild(
+                skillElement
+            );
+
+        });
+
+
+
+        /* =============================================
+           MISSING SKILLS
+        ============================================= */
+
+        missingSkills.innerHTML = "";
+
+
+        const missingList =
+            this.dataset.missingSkills
+            .split(",");
+
+
+        missingList.forEach(skill => {
+
+
+            if (skill.trim() === "") {
+                return;
+            }
+
+
+            const skillElement =
+                document.createElement("span");
+
+
+            skillElement.className =
+                "missing-skill";
+
+
+            skillElement.textContent =
+                "✕ " + skill.trim();
+
+
+            missingSkills.appendChild(
+                skillElement
+            );
+
+        });
+
+
+
+        /* =============================================
+           SHOW DETAILS
+        ============================================= */
+
+        applicantList.style.display =
+            "none";
+
+
+        applicantDetails.style.display =
+            "block";
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+
+    });
+
+});
+
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+document
+.getElementById("backBtn")
+.addEventListener("click", function() {
+
+
+    applicantDetails.style.display =
+        "none";
+
+
+    applicantList.style.display =
+        "block";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+
+});
+
+
+
+/* =====================================================
+   UPLOAD MORE RESUMES
+===================================================== */
+
+function goToUploadPage() {
+
+    window.location.href =
+        "UPLOAD.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+

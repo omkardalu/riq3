@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RIQ | Company Details</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #04131b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: #071f29;
+            border: 1px solid #164655;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .logo span {
+            color: #0df0ad;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #91abb5;
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
+
+        h1 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #91abb5;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        label span {
+            color: #0df0ad;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 9px;
+            border: 1px solid #245365;
+            background: #061a23;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #66818c;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #0df0ad;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #071f29;
+            color: white;
+        }
+
+        .button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 9px;
+            background: #0df0ad;
+            color: #04131b;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .button:hover {
+            background: #16edaa;
+            transform: translateY(-1px);
+        }
+
+        .login {
+            text-align: center;
+            margin-top: 22px;
+            color: #91abb5;
+            font-size: 14px;
+        }
+
+        .login a {
+            color: #0df0ad;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 25px 20px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="logo">
+            R<span>I</span>Q
+        </div>
+
+        <div class="subtitle">
+            RESUME IQ
+        </div>
+
+        <h1>Company Details</h1>
+
+        <p class="description">
+            Enter your company information to create your account.
+        </p>
+
+        <form id="companyForm">
+
+            <!-- Company Name -->
+            <div class="form-group">
+                <label for="companyName">
+                    Company Name <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="companyName"
+                    name="companyName"
+                    placeholder="Enter company name"
+                    required
+                >
+            </div>
+
+            <!-- Company Email -->
+            <div class="form-group">
+                <label for="companyEmail">
+                    Company E-mail <span>*</span>
+                </label>
+
+                <input
+                    type="email"
+                    id="companyEmail"
+                    name="companyEmail"
+                    placeholder="Enter company e-mail"
+                    required
+                >
+            </div>
+
+            <!-- Company Phone Number -->
+            <div class="form-group">
+                <label for="companyPhone">
+                    Company Phone Number <span>*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    id="companyPhone"
+                    name="companyPhone"
+                    placeholder="Enter company phone number"
+                    required
+                >
+            </div>
+
+            <!-- Company Address -->
+            <div class="form-group">
+                <label for="companyAddress">
+                    Company Address <span>*</span>
+                </label>
+
+                <textarea
+                    id="companyAddress"
+                    name="companyAddress"
+                    placeholder="Enter complete company address"
+                    required
+                ></textarea>
+            </div>
+
+            <!-- Industry -->
+            <div class="form-group">
+                <label for="industry">
+                    Industry <span>*</span>
+                </label>
+
+                <select id="industry" name="industry" required>
+                    <option value="">Select industry</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="Software">Software</option>
+                    <option value="Finance">Finance & Banking</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Education">Education</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Telecommunications">Telecommunications</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <button type="submit" onclick="login()" class="button">
+              NEXT
+            </button>
+
+        </form>
+
+        <div class="login">
+            Already have an account?
+            <a href="login.html">Login</a>
+        </div>
+
+    </div>
+
+    <script>
+        function login(){
+          
+  window.location.href = "CRLOG.html";
+}
+           function homepage(){
+          
+  window.location.href = "HOMEPAGE.HTML";
+}
+        document.getElementById("companyForm").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const companyName = document.getElementById("companyName").value;
+            const companyEmail = document.getElementById("companyEmail").value;
+            const companyPhone = document.getElementById("companyPhone").value;
+            const companyAddress = document.getElementById("companyAddress").value;
+            const industry = document.getElementById("industry").value;
+
+            console.log("Company Name:", companyName);
+            console.log("Company Email:", companyEmail);
+            console.log("Company Phone:", companyPhone);
+            console.log("Company Address:", companyAddress);
+            console.log("Industry:", industry);
+
+            alert("Company details submitted successfully!");
+        });
+    </script>
+
+</body>
+</html>
+

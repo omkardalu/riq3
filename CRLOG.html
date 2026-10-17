@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RIQ Login</title>
+
+<!-- Font Awesome for Eye Icons -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   HTML & BODY
+========================= */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    background: #021c26;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+
+/* =========================
+   BLURRED BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+
+    inset: -60px;
+
+    background:
+
+        radial-gradient(
+            circle at 18% 5%,
+            rgba(0, 255, 190, 0.60) 0%,
+            rgba(0, 190, 160, 0.20) 10%,
+            transparent 20%
+        ),
+
+        radial-gradient(
+            circle at 11% 73%,
+            rgba(0, 230, 170, 0.40) 0%,
+            rgba(0, 160, 130, 0.15) 10%,
+            transparent 21%
+        ),
+
+        radial-gradient(
+            ellipse at 91% 47%,
+            rgba(0, 255, 180, 0.65) 0%,
+            rgba(0, 210, 160, 0.35) 12%,
+            rgba(0, 100, 120, 0.15) 25%,
+            transparent 39%
+        ),
+
+        radial-gradient(
+            circle at 78% 75%,
+            rgba(0, 100, 150, 0.25),
+            transparent 35%
+        ),
+
+        #021c26;
+
+    filter: blur(35px);
+
+    transform: scale(1.08);
+}
+
+
+/* =========================
+   SOFT GLOW
+========================= */
+
+.background::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at 20% 0%,
+            rgba(0, 255, 190, 0.25),
+            transparent 15%
+        ),
+
+        radial-gradient(
+            circle at 10% 72%,
+            rgba(0, 255, 180, 0.18),
+            transparent 16%
+        ),
+
+        radial-gradient(
+            ellipse at 92% 45%,
+            rgba(0, 255, 180, 0.30),
+            transparent 25%
+        );
+
+    filter: blur(50px);
+}
+
+
+/* =========================
+   LOGIN BOX
+========================= */
+
+.login-box {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 450px;
+
+    padding: 45px 50px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    border: 1px solid rgba(255, 255, 255, 0.30);
+
+    border-radius: 25px;
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35);
+
+    color: white;
+}
+
+
+/* =========================
+   LOGIN TITLE
+========================= */
+
+.login-box h2 {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    font-size: 36px;
+
+    font-weight: bold;
+
+    color: white;
+}
+
+
+/* =========================
+   INPUT BOX
+========================= */
+
+.input-box {
+
+    margin-bottom: 22px;
+
+}
+
+
+/* =========================
+   LABEL
+========================= */
+
+.input-box label {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 16px;
+
+    color: white;
+}
+
+
+/* =========================
+   PASSWORD CONTAINER
+========================= */
+
+.password-container {
+
+    position: relative;
+
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+.input-box input {
+
+    width: 100%;
+
+    padding: 16px 18px;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    border: 1px solid rgba(255, 255, 255, 0.40);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    color: white;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+
+}
+
+
+/* Password input needs space for eye */
+
+.password-container input {
+
+    padding-right: 50px;
+
+}
+
+
+/* =========================
+   PLACEHOLDER
+========================= */
+
+.input-box input::placeholder {
+
+    color: rgba(255, 255, 255, 0.70);
+
+}
+
+
+/* =========================
+   INPUT FOCUS
+========================= */
+
+.input-box input:focus {
+
+    border-color: white;
+
+    background: rgba(255, 255, 255, 0.20);
+
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.15);
+
+}
+
+
+/* =========================
+   EYE ICON
+========================= */
+
+.password-eye {
+
+    position: absolute;
+
+    right: 16px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+}
+
+
+/* Eye hover */
+
+.password-eye:hover {
+
+    color: white;
+
+    transform: translateY(-50%) scale(1.08);
+
+}
+
+
+/* =========================
+   PASSWORD ERROR
+========================= */
+
+.password-error {
+
+    display: none;
+
+    margin-top: 8px;
+
+    font-size: 14px;
+
+    color: #ff7b7b;
+
+}
+
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
+
+.button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #0df0ad;
+
+    color: #04131b;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+/* =========================
+   BUTTON HOVER
+========================= */
+
+.button:hover {
+
+    background: #16edaa;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(13, 240, 173, 0.20);
+
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 500px) {
+
+    .login-box {
+
+        width: 90%;
+
+        padding: 40px 25px;
+
+    }
+
+    .login-box h2 {
+
+        font-size: 30px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- BACKGROUND -->
+
+<div class="background"></div>
+
+
+<!-- REGISTER FORM -->
+
+<div class="login-box">
+
+    <h2>REGISTER</h2>
+
+
+    <form id="registerForm">
+
+
+        <!-- USERNAME -->
+
+        <div class="input-box">
+
+            <label for="username">
+                Create username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter username"
+                required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="input-box">
+
+            <label for="password">
+                Create password
+            </label>
+
+            <div class="password-container">
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    required
+                >
+
+                <i
+                    class="fa-solid fa-eye password-eye"
+                    id="eyeIcon"
+                    onclick="togglePassword('password', 'eyeIcon')">
+                </i>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="input-box">
+
+            <label for="confirmPassword">
+                Confirm password
+            </label>
+
+            <div class="password-container">
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Re-enter password"
+                    required
+                >
+
+                <i
+                    class="fa-solid fa-eye password-eye"
+                    id="confirmEyeIcon"
+                    onclick="togglePassword('confirmPassword', 'confirmEyeIcon')">
+                </i>
+
+            </div>
+
+            <div id="passwordError" class="password-error">
+                Passwords do not match.
+            </div>
+
+        </div>
+
+
+        <!-- SUBMIT BUTTON -->
+
+        <button
+            id="create"
+            type="submit"
+            class="button">
+
+            Create account
+
+        </button>
+
+
+    </form>
+
+</div>
+
+
+<script>
+
+/* =========================
+   REGISTER FORM
+========================= */
+
+document.getElementById("registerForm").addEventListener("submit", function(event) {
+
+    /* Stop normal form submission */
+    event.preventDefault();
+
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+    const passwordError =
+        document.getElementById("passwordError");
+
+
+    /* =========================
+       CHECK PASSWORD MATCH
+    ========================= */
+
+    if (password !== confirmPassword) {
+
+        passwordError.style.display = "block";
+
+        return;
+    }
+
+
+    /* Hide error */
+
+    passwordError.style.display = "none";
+
+
+    /* =========================
+       ACCOUNT CREATED
+    ========================= */
+
+    alert("Account Successfully Created.");
+
+
+    /* Go to homepage */
+
+    window.location.href = "homepage.html";
+
+});
+
+
+/* =========================
+   PASSWORD SHOW / HIDE
+========================= */
+
+function togglePassword(passwordId, eyeId) {
+
+    const password =
+        document.getElementById(passwordId);
+
+    const eyeIcon =
+        document.getElementById(eyeId);
+
+
+    if (password.type === "password") {
+
+        /* SHOW PASSWORD */
+
+        password.type = "text";
+
+        eyeIcon.classList.remove("fa-eye");
+
+        eyeIcon.classList.add("fa-eye-slash");
+
+    }
+
+    else {
+
+        /* HIDE PASSWORD */
+
+        password.type = "password";
+
+        eyeIcon.classList.remove("fa-eye-slash");
+
+        eyeIcon.classList.add("fa-eye");
+
+    }
+
+}
+
+</script>
+
+
+</body>
+</html>
+```

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume IQ - Features</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            background: #021c26;
+            color: white;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           FEATURES SECTION
+        ========================= */
+
+        .section {
+            padding: 100px 40px;
+            text-align: center;
+        }
+
+
+        /* =========================
+           SMALL TITLE
+        ========================= */
+
+        .small-title {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #55f5d0;
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================
+           MAIN HEADING
+        ========================= */
+
+        .section h2 {
+            font-size: 42px;
+            margin-bottom: 55px;
+            color: white;
+        }
+
+
+        /* =========================
+           FEATURES GRID
+        ========================= */
+
+        .features-grid {
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 25px;
+        }
+
+
+        /* =========================
+           FEATURE CARD
+        ========================= */
+
+        .feature-card {
+
+            padding: 35px 25px;
+
+            min-height: 250px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.20);
+
+            border-radius: 20px;
+
+            backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 8px 30px
+                rgba(0, 0, 0, 0.25);
+
+            transition:
+                0.3s ease;
+        }
+
+
+        /* =========================
+           CARD HOVER
+        ========================= */
+
+        .feature-card:hover {
+
+            transform:
+                translateY(-10px);
+
+            border-color:
+                rgba(85, 245, 208, 0.60);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 255, 190, 0.15);
+        }
+
+
+        /* =========================
+           ICON
+        ========================= */
+
+        .feature-card i {
+
+            font-size: 42px;
+
+            color: #55f5d0;
+
+            margin-bottom: 25px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .feature-card:hover i {
+
+            transform:
+                scale(1.15);
+
+        }
+
+
+        /* =========================
+           CARD TITLE
+        ========================= */
+
+        .feature-card h3 {
+
+            font-size: 22px;
+
+            margin-bottom: 15px;
+
+            color: white;
+        }
+
+
+        /* =========================
+           CARD DESCRIPTION
+        ========================= */
+
+        .feature-card p {
+
+            font-size: 15px;
+
+            line-height: 1.7;
+
+            color:
+                rgba(255, 255, 255, 0.70);
+        }
+
+
+        /* =========================
+           RESPONSIVE - TABLET
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .features-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* =========================
+           RESPONSIVE - MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .section {
+
+                padding: 70px 20px;
+            }
+
+
+            .section h2 {
+
+                font-size: 30px;
+
+                margin-bottom: 40px;
+            }
+
+
+            .features-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .feature-card {
+
+                min-height: auto;
+            }
+
+        }
+          /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content:flex-start;
+            margin-top:50px; 
+            margin-left: 50px;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-btn {
+            background: transparent;
+            color: #0df0ad;
+
+            border: 1px solid #0df0ad;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #0df0ad;
+            color: #04131b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="header">
+
+        <button class="back-btn" onclick="goBack()">
+            ←
+        </button>
+
+    </div>
+    <!-- =========================
+         FEATURES SECTION
+    ========================= -->
+
+    <section
+        id="features"
+        class="section"
+    >
+
+
+        <p class="small-title">
+            POWERFUL FEATURES
+        </p>
+
+
+        <h2>
+            Everything Your Resume Needs
+        </h2>
+
+
+        <div class="features-grid">
+
+
+            <!-- FEATURE 1 -->
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-robot"></i>
+
+                <h3>
+                    AI Analysis
+                </h3>
+
+                <p>
+                    Analyze your resume using
+                    intelligent AI-powered techniques.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 2 -->
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <h3>
+                    Resume Score
+                </h3>
+
+                <p>
+                    Get an easy-to-understand score
+                    for your resume.
+                </p>
+
+            </div>
+
+            
+            <!-- FEATURE 3 -->
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-key"></i>
+
+                <h3>
+                    ATS Keywords
+                </h3>
+
+                <p>
+                    Find missing keywords that can
+                    improve ATS compatibility.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 4 -->
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-file-circle-check"></i>
+
+                <h3>
+                   Mutli-Tasking
+                </h3>
+
+                <p>
+                    Analyze  upto 10GB Resumes at a time 
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</body>
+
+
+<script>
+      function goBack() {
+
+            window.history.back();
+
+        }
+</script>
+</html>
