@@ -1,0 +1,16 @@
+# Local PostgreSQL:  docker compose up -d db
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: riq
+      POSTGRES_PASSWORD: riq
+      POSTGRES_DB: riq
+    ports: ["5432:5432"]
+    volumes: [riq_pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U riq"]
+      interval: 5s
+      retries: 10
+volumes:
+  riq_pgdata:
