@@ -1276,16 +1276,12 @@ footer {
             Home
         </a>
 
-        <a href="FEATURES.html">
+        <a href="features.html">
             Features
         </a>
 
-        <a href="HOW IT WORKS.html">
+        <a href="how-it-works.html">
             How It Works
-        </a>
-
-         <a href="">
-            
         </a>
 
     </nav>
@@ -1307,7 +1303,7 @@ footer {
 
     <div class="dropdown" id="dropdown">
 
-        <button onclick="profile()" id="profileButton">
+        <button id="profileButton">
             Profile
         </button>
 
@@ -1718,16 +1714,15 @@ footer {
 
 <script>
     
-        function profile(){
-          
-  window.location.href = "PROFILE.html";
+        function profile() {
+    window.location.href = "profile.html";
 }
     document.getElementById("logoutButton").addEventListener("click", function () {
 
-    let confirmLogout = confirm("Are you sure you want to logout?");
+    const confirmLogout = confirm("Are you sure you want to logout?");
 
     if (confirmLogout) {
-        window.location.href = "LOGIN.html";
+        window.location.href = "login.html";
     }
 
 });
@@ -1765,20 +1760,11 @@ document.getElementById("profileButton").addEventListener("click", function () {
 });
 
 
-/* LOGOUT */
-
-document.getElementById("logoutButton").addEventListener("click", function () {
-
-    window.location.href = "login.html";
-
-});
-
-
 /* =====================================================
    FILE UPLOAD
 ===================================================== */
-     function goToUploadPage() {
-  window.location.href = "UPLOAD.html";
+    function goToUploadPage() {
+    window.location.href = "upload.html";
 }
 
 const fileInput =
