@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RESUME IQ | Resume Analyzer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family: "Inter", Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(13, 240, 173, 0.08),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(13, 240, 173, 0.06),
+                    transparent 30%
+                ),
+                #001b18;
+
+            color: white;
+
+            padding: 45px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+
+        /* ========================================
+           TITLE
+        ======================================== */
+
+        .logo-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .logo-title h1 {
+            display: inline-block;
+
+            color: white;
+
+            font-size: 48px;
+            font-weight: 800;
+
+            letter-spacing: 5px;
+
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 10px;
+        }
+
+        .logo-title p {
+            margin-top: 18px;
+
+            color: #8fa9a4;
+
+            font-size: 14px;
+
+            letter-spacing: 1px;
+        }
+        .logo-title span {
+            color: #0df0ad;
+        }
+
+
+        /* ========================================
+           MAIN TOP SECTION
+        ======================================== */
+
+        .top-section {
+
+            display: grid;
+
+            grid-template-columns: 1.35fr 0.85fr;
+
+            gap: 35px;
+
+            align-items: stretch;
+        }
+
+
+        /* ========================================
+           REQUIRED SKILLS
+        ======================================== */
+
+        .skills-section {
+
+            background: rgba(3, 34, 30, 0.82);
+
+            border: 1px solid rgba(13, 240, 173, 0.30);
+
+            border-radius: 24px;
+
+            padding: 35px;
+
+            min-height: 520px;
+
+            display: flex;
+            flex-direction: column;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.20);
+
+            backdrop-filter: blur(15px);
+        }
+
+        .skills-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 12px;
+        }
+
+        .skills-header i {
+
+            color: #0df0ad;
+
+            font-size: 22px;
+        }
+
+        .skills-header h2 {
+
+            color: white;
+
+            font-size: 25px;
+
+            font-weight: 700;
+        }
+
+        .skills-description {
+
+            color: #8fa9a4;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* ========================================
+           REQUIRED SKILLS TEXTAREA
+        ======================================== */
+
+        #requiredSkills {
+
+            width: 100%;
+
+            flex: 1;
+
+            min-height: 350px;
+
+            resize: vertical;
+
+            padding: 22px;
+
+            border-radius: 17px;
+
+            border: 1px solid rgba(13, 240, 173, 0.35);
+
+            background: rgba(0, 15, 14, 0.75);
+
+            color: white;
+
+            font-family: "Inter", Arial, sans-serif;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            outline: none;
+
+            transition: 0.25s ease;
+        }
+
+        #requiredSkills::placeholder {
+            color: #627a75;
+        }
+
+        #requiredSkills:focus {
+
+            border-color: #0df0ad;
+
+            box-shadow:
+                0 0 0 3px rgba(13, 240, 173, 0.07);
+        }
+
+
+        /* ========================================
+           SKILLS PREVIEW
+        ======================================== */
+
+        .skills-preview {
+
+            margin-top: 18px;
+
+            padding: 12px 15px;
+
+            border-radius: 12px;
+
+            background: rgba(13, 240, 173, 0.05);
+
+            border: 1px solid rgba(13, 240, 173, 0.12);
+
+            color: #91aaa5;
+
+            font-size: 13px;
+
+            min-height: 40px;
+        }
+
+        .skills-preview strong {
+            color: #0df0ad;
+        }
+
+
+        /* ========================================
+           RIGHT SIDE
+        ======================================== */
+
+        .right-section {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 35px;
+        }
+
+
+        /* ========================================
+           UPLOAD CARD
+        ======================================== */
+
+        .upload-section {
+
+            flex: 1;
+
+            min-height: 245px;
+
+            background: rgba(3, 34, 30, 0.82);
+
+            border: 1px solid rgba(13, 240, 173, 0.30);
+
+            border-radius: 24px;
+
+            padding: 35px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.20);
+
+            backdrop-filter: blur(15px);
+        }
+
+
+        /* ========================================
+           UPLOAD ICON
+        ======================================== */
+
+        .upload-icon {
+
+            width: 65px;
+            height: 65px;
+
+            border-radius: 17px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(13, 240, 173, 0.08);
+
+            border: 1px solid rgba(13, 240, 173, 0.20);
+
+            margin-bottom: 18px;
+        }
+
+        .upload-icon i {
+
+            color: #0df0ad;
+
+            font-size: 26px;
+        }
+
+        .upload-section h2 {
+
+            font-size: 23px;
+
+            margin-bottom: 8px;
+        }
+
+        .upload-section p {
+
+            color: #819b96;
+
+            font-size: 13px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* ========================================
+           UPLOAD BUTTON
+        ======================================== */
+
+        .upload-btn {
+
+            width: 100%;
+
+            max-width: 350px;
+
+            height: 68px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            background: #0df0ad;
+
+            color: #001b18;
+
+            font-family: "Inter", Arial, sans-serif;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .upload-btn i {
+            margin-right: 8px;
+        }
+
+        .upload-btn:hover {
+
+            filter: brightness(1.08);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ========================================
+           GET STARTED CARD
+        ======================================== */
+
+        .get-started-section {
+
+            flex: 1;
+
+            min-height: 245px;
+
+            background: rgba(3, 34, 30, 0.82);
+
+            border: 1px solid rgba(13, 240, 173, 0.30);
+
+            border-radius: 24px;
+
+            padding: 35px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.20);
+
+            backdrop-filter: blur(15px);
+        }
+
+        .get-started-section h2 {
+
+            font-size: 22px;
+
+            margin-bottom: 8px;
+        }
+
+        .get-started-section p {
+
+            color: #819b96;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* ========================================
+           GET STARTED BUTTON
+        ======================================== */
+
+        .get-started-btn {
+
+            width: 100%;
+
+            max-width: 350px;
+
+            height: 68px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            background: #0df0ad;
+
+            color: #001b18;
+
+            font-family: "Inter", Arial, sans-serif;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .get-started-btn i {
+            margin-right: 8px;
+        }
+
+        .get-started-btn:hover {
+
+            filter: brightness(1.08);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ========================================
+           FILE INFORMATION
+        ======================================== */
+
+        .file-information {
+
+            margin-top: 35px;
+
+            width: 100%;
+
+            background: rgba(3, 34, 30, 0.72);
+
+            border: 1px solid rgba(13, 240, 173, 0.20);
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            display: none;
+        }
+
+        .file-information.show {
+            display: block;
+        }
+
+
+        /* ========================================
+           FILE STATS
+        ======================================== */
+
+        .file-stats {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 50px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 20px;
+        }
+
+        .stat {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+        .stat-label {
+
+            color: #718b86;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+
+            color: #0df0ad;
+
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+
+        /* ========================================
+           FILE LIST
+        ======================================== */
+
+        #fileList {
+
+            margin-top: 15px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+            text-align: left;
+        }
+
+
+        /* ========================================
+           INDIVIDUAL FILE ROW
+        ======================================== */
+
+        .file-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 12px 14px;
+
+            background: rgba(0, 15, 14, 0.55);
+
+            border-radius: 12px;
+
+            border: 1px solid rgba(13, 240, 173, 0.08);
+
+            color: #c5d4d1;
+
+            font-size: 13px;
+        }
+
+        .file-item-name {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            min-width: 0;
+
+            flex: 1;
+        }
+
+        .file-item-name i {
+
+            color: #0df0ad;
+
+            flex-shrink: 0;
+        }
+
+        .file-item-name span {
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+        .file-size {
+
+            color: #78928d;
+
+            white-space: nowrap;
+        }
+
+
+        /* ========================================
+           DELETE PARTICULAR RESUME BUTTON
+        ======================================== */
+
+        .delete-file-btn {
+
+            width: 38px;
+
+            height: 38px;
+
+            flex-shrink: 0;
+
+            border-radius: 9px;
+
+            border: 1px solid rgba(255, 100, 100, 0.25);
+
+            background: rgba(255, 70, 70, 0.06);
+
+            color: #ff8585;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: 0.2s ease;
+        }
+
+        .delete-file-btn:hover {
+
+            background: rgba(255, 70, 70, 0.15);
+
+            border-color: rgba(255, 100, 100, 0.55);
+
+            color: #ff5f5f;
+
+            transform: scale(1.05);
+        }
+
+
+        /* ========================================
+           CLEAR ALL BUTTON
+        ======================================== */
+
+        .clear-btn {
+
+            margin-top: 20px;
+
+            padding: 11px 22px;
+
+            border-radius: 10px;
+
+            border: 1px solid rgba(255, 100, 100, 0.25);
+
+            background: transparent;
+
+            color: #ff8d8d;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .clear-btn:hover {
+
+            background: rgba(255, 100, 100, 0.08);
+
+            border-color: rgba(255, 100, 100, 0.45);
+        }
+
+
+        /* ========================================
+           STORAGE WARNING
+        ======================================== */
+
+        .storage-warning {
+
+            margin-top: 12px;
+
+            color: #ff9b9b;
+
+            font-size: 13px;
+
+            display: none;
+        }
+
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 900px) {
+
+            body {
+                padding: 25px;
+            }
+
+            .top-section {
+
+                grid-template-columns: 1fr;
+
+                gap: 25px;
+            }
+
+            .skills-section {
+
+                min-height: 450px;
+            }
+
+            #requiredSkills {
+
+                min-height: 300px;
+            }
+
+            .right-section {
+
+                gap: 25px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 18px;
+            }
+
+            .logo-title h1 {
+
+                font-size: 35px;
+
+                letter-spacing: 3px;
+            }
+
+            .skills-section,
+            .upload-section,
+            .get-started-section {
+
+                padding: 25px;
+            }
+
+            .skills-section {
+
+                min-height: 400px;
+            }
+
+            #requiredSkills {
+
+                min-height: 270px;
+
+                font-size: 14px;
+            }
+
+            .file-stats {
+
+                gap: 25px;
+            }
+
+            .file-item {
+
+                gap: 8px;
+            }
+
+            .file-size {
+
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ========================================
+         TITLE
+    ======================================== -->
+
+    <div class="logo-title">
+
+        <h1>RESUME <span>IQ</span></h1>
+
+        <p>
+            RESUME ANALYSIS SYSTEM
+        </p>
+
+    </div>
+
+
+
+    <!-- ========================================
+         MAIN SECTION
+    ======================================== -->
+
+    <div class="top-section">
+
+
+        <!-- ====================================
+             LEFT - REQUIRED SKILLS
+        ==================================== -->
+
+        <div class="skills-section">
+
+            <div class="skills-header">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <h2>REQUIRED SKILLS</h2>
+
+            </div>
+
+
+            <p class="skills-description">
+
+                Enter the skills required for the job.
+                These skills will be used by Resume IQ
+                during resume analysis and ATS scoring.
+
+            </p>
+
+
+            <textarea
+                id="requiredSkills"
+                placeholder="Enter required skills here...
+
+Example:
+
+Python
+Java
+HTML
+CSS
+JavaScript
+React
+Node.js
+SQL
+Git
+Machine Learning
+Communication
+Problem Solving
+
+You can enter as many skills as required."
+                oninput="updateSkillsPreview()"
+            ></textarea>
+
+
+            <div
+                class="skills-preview"
+                id="skillsPreview"
+            >
+
+                <strong>Required Skills:</strong>
+
+                No skills entered yet.
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ====================================
+             RIGHT SIDE
+        ==================================== -->
+
+        <div class="right-section">
+
+
+            <!-- ==================================
+                 UPLOAD RESUMES
+            ================================== -->
+
+            <div class="upload-section">
+
+                <div class="upload-icon">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                </div>
+
+
+                <h2>
+                    UPLOAD RESUMES
+                </h2>
+
+
+                <p>
+                    Upload any number of resumes
+                    within the 10 GB total storage limit.
+                </p>
+
+
+                <input
+                    type="file"
+                    id="resumeFile"
+                    multiple
+                    accept=".pdf,.doc,.docx"
+                    hidden
+                    onchange="handleFiles(this.files)"
+                >
+
+
+                <button
+                    type="button"
+                    class="upload-btn"
+                    onclick="openFilePicker()"
+                >
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                    Upload Resumes
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 GET STARTED
+            ================================== -->
+
+            <div class="get-started-section">
+
+                <h2>
+                    READY TO ANALYZE?
+                </h2>
+
+
+                <p>
+                    Upload resumes and enter the required
+                    skills before starting the analysis.
+                </p>
+
+
+                <button
+                    type="button"
+                    class="get-started-btn"
+                    onclick="startAnalysis()"
+                >
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    Get Started
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================
+         FILE INFORMATION
+    ======================================== -->
+
+    <div
+        class="file-information"
+        id="fileInformation"
+    >
+
+
+        <div class="file-stats">
+
+
+            <div class="stat">
+
+                <span class="stat-label">
+                    Resumes Selected
+                </span>
+
+                <span
+                    class="stat-value"
+                    id="fileCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="stat-label">
+                    Total Storage
+                </span>
+
+                <span
+                    class="stat-value"
+                    id="totalStorage"
+                >
+                    0 MB
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="stat-label">
+                    Storage Limit
+                </span>
+
+                <span class="stat-value">
+                    10 GB
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILE LIST -->
+
+        <div id="fileList"></div>
+
+
+        <div
+            class="storage-warning"
+            id="storageWarning"
+        >
+            Total resume storage cannot exceed 10 GB.
+        </div>
+
+
+        <!-- CLEAR ALL -->
+
+        <button
+            type="button"
+            class="clear-btn"
+            onclick="clearFileList()"
+        >
+
+            <i class="fa-solid fa-trash"></i>
+
+            Clear All Resumes
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    /* ========================================
+       RESUME STORAGE
+    ======================================== */
+
+    let selectedFiles = [];
+
+    const MAX_TOTAL_SIZE =
+        10 * 1024 * 1024 * 1024; // 10 GB
+
+
+
+    /* ========================================
+       OPEN FILE PICKER
+    ======================================== */
+
+    function openFilePicker() {
+
+        document
+            .getElementById("resumeFile")
+            .click();
+
+    }
+
+
+
+    /* ========================================
+       HANDLE FILES
+    ======================================== */
+
+    function handleFiles(files) {
+
+        const allowedExtensions = [
+            ".pdf",
+            ".doc",
+            ".docx"
+        ];
+
+
+        const newFiles = Array.from(files);
+
+
+        /* Check extensions */
+
+        for (let file of newFiles) {
+
+            const fileName =
+                file.name.toLowerCase();
+
+
+            const valid =
+                allowedExtensions.some(
+                    extension =>
+                        fileName.endsWith(extension)
+                );
+
+
+            if (!valid) {
+
+                alert(
+                    "Invalid file: " +
+                    file.name +
+                    "\n\nOnly PDF, DOC and DOCX files are allowed."
+                );
+
+                return;
+            }
+
+        }
+
+
+        /* Add files */
+
+        const filesToAdd = [];
+
+
+        newFiles.forEach(file => {
+
+            const duplicate =
+                selectedFiles.some(
+                    existingFile =>
+                        existingFile.name === file.name &&
+                        existingFile.size === file.size
+                );
+
+
+            if (!duplicate) {
+
+                filesToAdd.push(file);
+
+            }
+
+        });
+
+
+        /* Check 10 GB */
+
+        const currentSize =
+            selectedFiles.reduce(
+                (total, file) =>
+                    total + file.size,
+                0
+            );
+
+
+        const newFilesSize =
+            filesToAdd.reduce(
+                (total, file) =>
+                    total + file.size,
+                0
+            );
+
+
+        if (
+            currentSize + newFilesSize >
+            MAX_TOTAL_SIZE
+        ) {
+
+            alert(
+                "The total resume storage cannot exceed 10 GB."
+            );
+
+            return;
+        }
+
+
+        /* Add files */
+
+        selectedFiles =
+            selectedFiles.concat(filesToAdd);
+
+
+        displayFiles();
+
+
+        /*
+         * Reset the input so the same
+         * file can be selected again
+         * after deletion.
+         */
+
+        document.getElementById(
+            "resumeFile"
+        ).value = "";
+
+    }
+
+
+
+    /* ========================================
+       DISPLAY FILES
+    ======================================== */
+
+    function displayFiles() {
+
+        const fileInformation =
+            document.getElementById(
+                "fileInformation"
+            );
+
+
+        const fileList =
+            document.getElementById(
+                "fileList"
+            );
+
+
+        const fileCount =
+            document.getElementById(
+                "fileCount"
+            );
+
+
+        const totalStorage =
+            document.getElementById(
+                "totalStorage"
+            );
+
+
+        const storageWarning =
+            document.getElementById(
+                "storageWarning"
+            );
+
+
+        fileList.innerHTML = "";
+
+
+        /* No files */
+
+        if (selectedFiles.length === 0) {
+
+            fileInformation.classList.remove(
+                "show"
+            );
+
+            return;
+        }
+
+
+        fileInformation.classList.add(
+            "show"
+        );
+
+
+        /* File count */
+
+        fileCount.textContent =
+            selectedFiles.length;
+
+
+        /* Total storage */
+
+        const totalSize =
+            selectedFiles.reduce(
+                (total, file) =>
+                    total + file.size,
+                0
+            );
+
+
+        totalStorage.textContent =
+            formatFileSize(totalSize);
+
+
+        /* Storage warning */
+
+        if (totalSize >= MAX_TOTAL_SIZE) {
+
+            storageWarning.style.display =
+                "block";
+
+        } else {
+
+            storageWarning.style.display =
+                "none";
+
+        }
+
+
+
+        /* ====================================
+           CREATE FILE ROWS
+        ==================================== */
+
+        selectedFiles.forEach(
+            (file, index) => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "file-item";
+
+
+                item.innerHTML = `
+
+                    <div class="file-item-name">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                        <span
+                            title="${escapeHTML(file.name)}"
+                        >
+                            ${escapeHTML(file.name)}
+                        </span>
+
+                    </div>
+
+
+                    <span class="file-size">
+
+                        ${formatFileSize(file.size)}
+
+                    </span>
+
+
+                    <button
+                        type="button"
+                        class="delete-file-btn"
+                        title="Delete this resume"
+                        onclick="deleteResume(${index})"
+                    >
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </button>
+
+                `;
+
+
+                fileList.appendChild(item);
+
+            }
+        );
+
+    }
+
+
+
+    /* ========================================
+       DELETE PARTICULAR RESUME
+    ======================================== */
+
+    function deleteResume(index) {
+
+        if (
+            index < 0 ||
+            index >= selectedFiles.length
+        ) {
+
+            return;
+        }
+
+
+        const fileName =
+            selectedFiles[index].name;
+
+
+        const confirmDelete =
+            confirm(
+                'Delete "' +
+                fileName +
+                '" from the selected resumes?'
+            );
+
+
+        if (!confirmDelete) {
+
+            return;
+        }
+
+
+        /*
+         * Remove only the selected
+         * resume from the array.
+         */
+
+        selectedFiles.splice(
+            index,
+            1
+        );
+
+
+        /* Refresh the display */
+
+        displayFiles();
+
+    }
+
+
+
+    /* ========================================
+       REQUIRED SKILLS
+    ======================================== */
+
+    function getRequiredSkills() {
+
+        const input =
+            document.getElementById(
+                "requiredSkills"
+            ).value;
+
+
+        /*
+         * Accept:
+         *
+         * Skill 1, Skill 2, Skill 3
+         *
+         * OR
+         *
+         * Skill 1
+         * Skill 2
+         * Skill 3
+         */
+
+        const skills =
+            input
+                .split(/,|\n/)
+                .map(
+                    skill =>
+                        skill.trim()
+                )
+                .filter(
+                    skill =>
+                        skill.length > 0
+                );
+
+
+        /* Remove duplicates */
+
+        const uniqueSkills = [];
+
+
+        skills.forEach(skill => {
+
+            const exists =
+                uniqueSkills.some(
+                    existing =>
+                        existing.toLowerCase() ===
+                        skill.toLowerCase()
+                );
+
+
+            if (!exists) {
+
+                uniqueSkills.push(skill);
+
+            }
+
+        });
+
+
+        return uniqueSkills;
+
+    }
+
+
+
+    /* ========================================
+       SKILLS PREVIEW
+    ======================================== */
+
+    function updateSkillsPreview() {
+
+        const skills =
+            getRequiredSkills();
+
+
+        const preview =
+            document.getElementById(
+                "skillsPreview"
+            );
+
+
+        if (skills.length === 0) {
+
+            preview.innerHTML = `
+                <strong>Required Skills:</strong>
+                No skills entered yet.
+            `;
+
+            return;
+        }
+
+
+        preview.innerHTML = `
+            <strong>Required Skills:</strong>
+            ${skills.length} skill(s) entered.
+        `;
+
+    }
+
+
+
+    /* ========================================
+       START ANALYSIS
+    ======================================== */
+
+    function startAnalysis() {
+
+        /* Check resume */
+
+        if (
+            selectedFiles.length === 0
+        ) {
+
+            alert(
+                "Please upload at least one resume before starting the analysis."
+            );
+
+            return;
+        }
+
+
+        /* Get skills */
+
+        const requiredSkills =
+            getRequiredSkills();
+
+
+        /* Check skills */
+
+        if (
+            requiredSkills.length === 0
+        ) {
+
+            alert(
+                "Please enter at least one required skill."
+            );
+
+            return;
+        }
+
+
+        /* Save skills */
+
+        localStorage.setItem(
+            "requiredSkills",
+            JSON.stringify(
+                requiredSkills
+            )
+        );
+
+
+        /* Save count */
+
+        localStorage.setItem(
+            "resumeCount",
+            selectedFiles.length
+        );
+
+
+        /* Console */
+
+        console.log(
+            "Selected Resumes:",
+            selectedFiles
+        );
+
+
+        console.log(
+            "Required Skills:",
+            requiredSkills
+        );
+
+
+        /*
+         * Later this information
+         * can be sent to Flask
+         * using FormData.
+         */
+
+        alert(
+
+            "Analysis setup completed!\n\n" +
+
+            "Resumes: " +
+            selectedFiles.length +
+
+            "\n\nRequired Skills:\n" +
+
+            requiredSkills.join(", ")
+
+        );
+
+    }
+
+
+
+    /* ========================================
+       CLEAR ALL RESUMES
+    ======================================== */
+
+    function clearFileList() {
+
+        const confirmClear =
+            confirm(
+                "Delete all selected resumes?"
+            );
+
+
+        if (!confirmClear) {
+
+            return;
+        }
+
+
+        selectedFiles = [];
+
+
+        document.getElementById(
+            "resumeFile"
+        ).value = "";
+
+
+        displayFiles();
+
+    }
+
+
+
+    /* ========================================
+       FORMAT FILE SIZE
+    ======================================== */
+
+    function formatFileSize(bytes) {
+
+        if (bytes === 0) {
+
+            return "0 Bytes";
+
+        }
+
+
+        const units = [
+            "Bytes",
+            "KB",
+            "MB",
+            "GB",
+            "TB"
+        ];
+
+
+        const i =
+            Math.floor(
+                Math.log(bytes) /
+                Math.log(1024)
+            );
+
+
+        return (
+
+            parseFloat(
+
+                (
+                    bytes /
+                    Math.pow(1024, i)
+
+                ).toFixed(2)
+
+            )
+
+            +
+
+            " " +
+
+            units[i]
+
+        );
+
+    }
+
+
+
+    /* ========================================
+       ESCAPE HTML
+    ======================================== */
+
+    function escapeHTML(value) {
+
+        return value
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+
+    /* ========================================
+       INITIALIZE
+    ======================================== */
+
+    updateSkillsPreview();
+
+</script>
+
+</body>
+</html>
