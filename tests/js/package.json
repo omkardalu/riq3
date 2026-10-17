@@ -1,0 +1,7 @@
+{
+  "name": "riq-frontend-smoke",
+  "private": true,
+  "type": "module",
+  "scripts": { "smoke": "node smoke.mjs" },
+  "devDependencies": { "jsdom": "^26.0.0" }
+}

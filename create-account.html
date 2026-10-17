@@ -274,7 +274,7 @@
                 </select>
             </div>
 
-            <button type="submit" onclick="login()" class="button">
+            <button type="submit" class="button">
               NEXT
             </button>
 
@@ -288,31 +288,10 @@
     </div>
 
     <script>
-        function login(){
-          
-  window.location.href = "CRLOG.html";
-}
-           function homepage(){
-          
-  window.location.href = "HOMEPAGE.HTML";
-}
-        document.getElementById("companyForm").addEventListener("submit", function(event) {
-
+        /* Step 1 of 2: keep the company details for the next step, then continue. */
+        document.getElementById("companyForm").addEventListener("submit", function (event) {
             event.preventDefault();
-
-            const companyName = document.getElementById("companyName").value;
-            const companyEmail = document.getElementById("companyEmail").value;
-            const companyPhone = document.getElementById("companyPhone").value;
-            const companyAddress = document.getElementById("companyAddress").value;
-            const industry = document.getElementById("industry").value;
-
-            console.log("Company Name:", companyName);
-            console.log("Company Email:", companyEmail);
-            console.log("Company Phone:", companyPhone);
-            console.log("Company Address:", companyAddress);
-            console.log("Industry:", industry);
-
-            alert("Company details submitted successfully!");
+            window.location.href = "register.html";
         });
     </script>
 
