@@ -47,6 +47,6 @@ def run_suite(base_url: str, pattern: str, fixtures: Path):
 
 
 @needs_node
-@pytest.mark.parametrize("suite", ["phase2.test.mjs", "phase3.test.mjs"])
+@pytest.mark.parametrize("suite", ["phase2.test.mjs", "phase3.test.mjs", "phase4.test.mjs"])
 def test_frontend_suite(live_server, fixtures_dir, suite):
     run_suite(live_server, suite, fixtures_dir)

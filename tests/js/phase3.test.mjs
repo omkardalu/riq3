@@ -113,7 +113,7 @@ test("get started validates input, then saves the job setup", async () => {
   b.fill("#jobTitle", "Backend Dev");
   b.fill("#jobDescription", "Build APIs with Python and SQL.");
   await b.click("#startButton");
-  assert.match(b.text("#pageMessage"), /Job setup saved/);
+  assert.match(b.text("#pageMessage"), /Analysis finished/);
   const jobs = (await b.api("GET", "/api/jobs")).body.jobs;
   assert.equal(jobs.length, 1);
   assert.deepEqual(jobs[0].required_skills, ["Python", "SQL", "Git"]);

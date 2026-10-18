@@ -2,6 +2,7 @@ from flask import Flask
 
 
 def register_blueprints(app: Flask) -> None:
+    from .analyses import bp as analyses_bp
     from .auth import bp as auth_bp
     from .health import bp as health_bp
     from .jobs import bp as jobs_bp
@@ -13,3 +14,4 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(profile_bp)
     app.register_blueprint(resumes_bp)
     app.register_blueprint(jobs_bp)
+    app.register_blueprint(analyses_bp)

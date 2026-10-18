@@ -840,6 +840,16 @@
         .mini-btn:hover { background: rgba(13,240,173,.12); }
         .empty-note { text-align: center; color: #8fb3a8; padding: 14px; font-size: 14px; }
         #pageMessage { max-width: 900px; margin: 0 auto 16px; }
+        #analysisResults { max-width: 900px; margin: 24px auto 0; }
+        #analysisResults h3 { color: #0df0ad; margin-bottom: 10px; }
+        .result-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; margin-bottom: 8px; border-radius: 12px;
+                      border: 1px solid rgba(13,240,173,.25); background: rgba(0,15,14,.6); flex-wrap: wrap; }
+        .result-row.bad { border-color: rgba(255,107,107,.5); }
+        .result-name { flex: 1; min-width: 160px; overflow-wrap: anywhere; }
+        .result-score { font-weight: 700; color: #0df0ad; min-width: 64px; text-align: right; }
+        .result-note { flex-basis: 100%; font-size: 13px; color: #ffb0b0; }
+        .result-links { margin-top: 14px; text-align: center; }
+        .result-links a { color: #0df0ad; }
     </style>
     <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
@@ -920,6 +930,8 @@ Machine Learning"></textarea>
             </div>
         </div>
     </div>
+
+    <div id="analysisResults" aria-live="polite" style="display:none"></div>
 
     <!-- SAVED RESUMES -->
     <div class="file-information show" id="fileInformation">
@@ -1145,7 +1157,42 @@ Machine Learning"></textarea>
     $("startButton").addEventListener("click", startAnalysis);
 
     function onJobSaved(job, resumeIds) {
-        say("Job setup saved (" + job.required_skills.length + " skills, " + resumeIds.length + " resume(s) selected).", "success");
+        var box = $("analysisResults"), rows = [], done = 0;
+        box.style.display = "block";
+        $("startButton").disabled = true;
+
+        function paint(final) {
+            var html = "<h3>" + (final ? "Analysis results" : "Analyzing " + Math.min(done + 1, resumeIds.length) + " of " + resumeIds.length + "...") + "</h3>";
+            rows.forEach(function (r) {
+                var ok = r.status === "completed";
+                html += '<div class="result-row' + (ok ? "" : " bad") + '">' +
+                    '<span class="result-name">' + RIQ.escapeHTML(r.name) + "</span>" +
+                    '<span class="result-score">' + (ok ? r.score + "/100" : (r.status === "unsupported" ? "Unsupported" : "Failed")) + "</span>" +
+                    (ok ? '<span class="file-status">' + r.matched + " of " + job.required_skills.length + " skills</span>" : '<span class="result-note">' + RIQ.escapeHTML(r.note) + "</span>") +
+                    "</div>";
+            });
+            if (final) html += '<div class="result-links"><a href="ats-score.html">Open the results page &rarr;</a></div>';
+            box.innerHTML = html;
+        }
+
+        function next(i) {
+            if (i >= resumeIds.length) {
+                $("startButton").disabled = false;
+                paint(true);
+                var good = rows.filter(function (r) { return r.status === "completed"; }).length;
+                return say("Analysis finished: " + good + " of " + rows.length + " resume(s) scored.", good ? "success" : "error");
+            }
+            paint(false);
+            RIQ.api("/api/analyses", { method: "POST", json: { job_id: job.id, resume_id: resumeIds[i] } }).then(function (data) {
+                var a = data.analysis;
+                rows.push({ name: a.candidate_name || a.filename, status: a.status, score: a.score, matched: a.matched_skills.length, note: a.error_message || "" });
+            }).catch(function (err) {
+                var r = resumes.filter(function (x) { return x.id === resumeIds[i]; })[0];
+                rows.push({ name: r ? r.filename : "Resume " + resumeIds[i], status: "failed", note: err.message });
+            }).then(function () { done++; next(i + 1); });
+        }
+        say("Job setup saved. Analyzing " + resumeIds.length + " resume(s)...", "info");
+        next(0);
     }
 
     /* ---------- init ---------- */
