@@ -1091,7 +1091,7 @@ Machine Learning"></textarea>
             q.status = "failed";
             q.message = err.code === "duplicate_file" ? "Already uploaded." : err.message;
             /* network drops and 5xx are safe to retry: the server rejects duplicate content, so no double saves */
-            q.retryable = err.code === "network" || err.status >= 500;
+            q.retryable = err.code === "network" || err.status >= 500 || err.status === 429;
         }).then(function () {
             running--; render(); pump();
         });

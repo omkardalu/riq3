@@ -27,6 +27,17 @@ def live_server(app):
 
 
 @pytest.fixture(scope="module")
+def down_server(app):
+    """A server whose database is unreachable (to test outage behaviour in the browser)."""
+    bad = create_app("testing", {"SQLALCHEMY_DATABASE_URI": "postgresql+psycopg://x:y@127.0.0.1:1/nope?connect_timeout=1",
+                                 "WTF_CSRF_ENABLED": True})
+    srv = make_server("127.0.0.1", 0, bad, threaded=True)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    yield f"http://127.0.0.1:{srv.server_port}"
+    srv.shutdown()
+
+
+@pytest.fixture(scope="module")
 def fixtures_dir(tmp_path_factory):
     from files import SAMPLE_LINES, make_blank_pdf, make_docx, make_pdf
 
@@ -38,16 +49,16 @@ def fixtures_dir(tmp_path_factory):
     return d
 
 
-def run_suite(base_url: str, pattern: str, fixtures: Path):
+def run_suite(base_url: str, pattern: str, fixtures: Path, down_url: str = ""):
     import os
 
-    env = {**os.environ, "BASE_URL": base_url, "FIXTURES_DIR": str(fixtures)}
+    env = {**os.environ, "BASE_URL": base_url, "BASE_URL_DOWN": down_url, "FIXTURES_DIR": str(fixtures)}
     r = subprocess.run(["node", "--test", "--test-reporter=spec", pattern], cwd=JS_DIR, env=env,
                        capture_output=True, text=True, timeout=300)
     assert r.returncode == 0, r.stdout[-6000:] + r.stderr[-2000:]
 
 
 @needs_node
-@pytest.mark.parametrize("suite", ["phase2.test.mjs", "phase3.test.mjs", "phase4.test.mjs", "phase5.test.mjs", "phase6.test.mjs"])
-def test_frontend_suite(live_server, fixtures_dir, suite):
-    run_suite(live_server, suite, fixtures_dir)
+@pytest.mark.parametrize("suite", ["phase2.test.mjs", "phase3.test.mjs", "phase4.test.mjs", "phase5.test.mjs", "phase6.test.mjs", "phase7.test.mjs"])
+def test_frontend_suite(live_server, down_server, fixtures_dir, suite):
+    run_suite(live_server, suite, fixtures_dir, down_server)

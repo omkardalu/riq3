@@ -13,7 +13,7 @@ coverage_structure  = signals present / 6   (email, phone, experience, education
 """
 from __future__ import annotations
 
-from .candidate import parse_candidate, split_sections
+from .candidate import parse_candidate
 from .skills import jd_keywords, match_jd_terms, match_skills
 
 SCORING_VERSION = "v1"

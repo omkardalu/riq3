@@ -1,10 +1,10 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, current_app, jsonify, request
 from sqlalchemy import func, or_
 
 from ..analysis.engine import run_analysis
 from ..auth import get_owned_or_404, login_required
 from ..errors import ApiError
-from ..extensions import db
+from ..extensions import db, limiter
 from ..models import ANALYSIS_STATUSES, Analysis, JobDescription, Resume
 from ..validation import json_body
 
@@ -19,6 +19,7 @@ def _int(value, name):
 
 
 @bp.post("")
+@limiter.limit(lambda: current_app.config["ANALYSIS_RATE_LIMIT"])
 @login_required
 def create_analysis(user):
     data = json_body()

@@ -4,7 +4,6 @@ from flask import Blueprint, current_app, jsonify
 from sqlalchemy import func
 
 from ..auth import get_owned_or_404, login_required
-from ..errors import ApiError
 from ..extensions import db
 from ..models import Analysis, JobDescription
 from ..validation import json_body, raise_if, text

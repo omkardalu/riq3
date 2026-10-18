@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 
-from flask import Flask, jsonify, request
+from flask import Flask, g, jsonify, request
 from flask_wtf.csrf import CSRFError
 from sqlalchemy.exc import OperationalError, SQLAlchemyError
 from werkzeug.exceptions import HTTPException
@@ -33,6 +33,8 @@ def error_response(status: int, code: str, message: str, fields: dict | None = N
     body: dict = {"code": code, "message": message}
     if fields:
         body["fields"] = fields
+    if status >= 500:
+        body["request_id"] = getattr(g, "request_id", "-")  # lets support find the matching log line
     resp = jsonify({"error": body})
     resp.status_code = status
     return resp

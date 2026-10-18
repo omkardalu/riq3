@@ -1,12 +1,12 @@
 import logging
 from datetime import datetime, timezone
 
-from flask import Blueprint, current_app, jsonify
+from flask import Blueprint, current_app, jsonify, request
 from flask_wtf.csrf import generate_csrf
 from sqlalchemy import func, or_
 from sqlalchemy.exc import IntegrityError
 
-from ..auth import current_user, hash_password, login_required, login_user, logout_user, verify_password
+from ..auth import current_user, hash_password, login_user, logout_user, verify_password
 from ..errors import ApiError
 from ..extensions import db, limiter
 from ..models import User
@@ -77,7 +77,7 @@ def login():
                        {"username": "Required" if not identifier else "", "password": "Required" if not password else ""})
     user = db.session.query(User).filter(or_(User.username == identifier, func.lower(User.email) == identifier)).first()
     if not verify_password(user, password) or not user.is_active:
-        log.warning("failed login for identifier=%r", identifier[:40])
+        log.warning("failed login ip=%s", request.remote_addr)
         raise ApiError(401, "invalid_credentials", "Incorrect username or password.")
     user.last_login_at = datetime.now(timezone.utc)
     db.session.commit()

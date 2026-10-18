@@ -76,6 +76,8 @@ class Config:
     RATELIMIT_HEADERS_ENABLED = True
     LOGIN_RATE_LIMIT = os.environ.get("LOGIN_RATE_LIMIT", "10 per minute")
     REGISTER_RATE_LIMIT = os.environ.get("REGISTER_RATE_LIMIT", "10 per hour")
+    UPLOAD_RATE_LIMIT = os.environ.get("UPLOAD_RATE_LIMIT", "120 per minute")
+    ANALYSIS_RATE_LIMIT = os.environ.get("ANALYSIS_RATE_LIMIT", "300 per minute")
 
     TRUST_PROXY = _bool("TRUST_PROXY", False)
     LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")

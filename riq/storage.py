@@ -22,7 +22,7 @@ MAX_DOCX_UNCOMPRESSED = 100 * 1024 * 1024  # zip-bomb guard
 
 def user_dir(user_id: int) -> Path:
     d = Path(current_app.config["UPLOAD_FOLDER"]) / str(user_id)
-    d.mkdir(parents=True, exist_ok=True)
+    d.mkdir(mode=0o700, parents=True, exist_ok=True)
     return d
 
 
@@ -66,6 +66,7 @@ def save_bytes(user_id: int, ext: str, data: bytes) -> str:
     target = path_for(user_id, stored, ext)
     tmp = target.with_suffix(target.suffix + ".part")
     tmp.write_bytes(data)
+    os.chmod(tmp, 0o600)  # owner-only
     os.replace(tmp, target)  # atomic: no half-written resume is ever visible
     return stored
 

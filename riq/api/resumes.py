@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from .. import storage
 from ..auth import get_owned_or_404, login_required
 from ..errors import ApiError
-from ..extensions import db
+from ..extensions import db, limiter
 from ..models import Resume
 
 bp = Blueprint("resumes", __name__, url_prefix="/api/resumes")
@@ -32,6 +32,7 @@ def list_resumes(user):
 
 
 @bp.post("")
+@limiter.limit(lambda: current_app.config["UPLOAD_RATE_LIMIT"])
 @login_required
 def upload_resume(user):
     cfg = current_app.config

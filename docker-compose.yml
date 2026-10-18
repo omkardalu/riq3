@@ -7,7 +7,9 @@ services:
       POSTGRES_PASSWORD: riq
       POSTGRES_DB: riq
     ports: ["5432:5432"]
-    volumes: [riq_pgdata:/var/lib/postgresql/data]
+    volumes:
+      - riq_pgdata:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U riq"]
       interval: 5s

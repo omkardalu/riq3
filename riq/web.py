@@ -4,8 +4,10 @@ from __future__ import annotations
 from urllib.parse import quote
 
 from flask import Blueprint, abort, current_app, redirect, request, send_from_directory
+from sqlalchemy.exc import SQLAlchemyError
 
 from .auth import current_user
+from .extensions import db
 
 web_bp = Blueprint("web", __name__)
 
@@ -14,9 +16,21 @@ PROTECTED_PAGES = {"homepage", "upload", "ats-score", "profile", "edit-profile",
 AUTH_PAGES = {"login", "create-account", "register"}  # pointless once signed in
 
 
+def _signed_in(database_required: bool) -> bool:
+    """Public pages must still load when the database is down (treated as signed out);
+    protected pages need the database, so the error propagates to a clean 503."""
+    try:
+        return current_user() is not None
+    except SQLAlchemyError:
+        db.session.rollback()
+        if database_required:
+            raise
+        return False
+
+
 @web_bp.get("/")
 def index():
-    return redirect("/homepage.html" if current_user() else "/login.html")
+    return redirect("/homepage.html" if _signed_in(False) else "/login.html")
 
 
 @web_bp.get("/favicon.ico")
@@ -28,7 +42,7 @@ def favicon():
 def page(page: str):
     if page not in PUBLIC_PAGES | PROTECTED_PAGES:
         abort(404)
-    signed_in = current_user() is not None
+    signed_in = _signed_in(database_required=page in PROTECTED_PAGES)
     if page in PROTECTED_PAGES and not signed_in:
         return redirect(f"/login.html?next={quote(request.path)}")
     if page in AUTH_PAGES and signed_in:
