@@ -134,8 +134,10 @@ def test_db_constraints_reject_bad_score_and_status(db_session):
 
 
 def test_production_config_requires_secrets(monkeypatch):
+    from riq.config import _DEV_SECRET, ProductionConfig
+
     monkeypatch.delenv("DATABASE_URL", raising=False)
-    from riq.config import ProductionConfig
+    monkeypatch.setattr(ProductionConfig, "SECRET_KEY", _DEV_SECRET)  # independent of any local .env
 
     with pytest.raises(RuntimeError, match="SECRET_KEY"):
         ProductionConfig.validate()

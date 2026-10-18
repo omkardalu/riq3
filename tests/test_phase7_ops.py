@@ -178,3 +178,15 @@ def test_demo_command_is_idempotent_and_refuses_production(app, tmp_path):
         assert not (tmp_path / "b").exists()
     finally:
         app.config["ENV_NAME"] = "testing"
+
+
+def test_the_placeholder_secret_from_env_example_is_rejected_in_production(monkeypatch):
+    """Copying .env.example to production without editing SECRET_KEY must not start the app."""
+    line = next(ln for ln in (BASE_DIR / ".env.example").read_text().splitlines() if ln.startswith("SECRET_KEY="))
+    placeholder = line.split("=", 1)[1].split("#")[0].strip()
+    assert len(placeholder) >= 32, "this is exactly the case the length check alone would let through"
+    monkeypatch.setenv("DATABASE_URL", "postgresql://u:p@db/riq")
+    monkeypatch.setattr(ProductionConfig, "SECRET_KEY", placeholder)
+    monkeypatch.setattr(ProductionConfig, "SESSION_COOKIE_SECURE", True)
+    with pytest.raises(RuntimeError, match="placeholder"):
+        ProductionConfig.validate()

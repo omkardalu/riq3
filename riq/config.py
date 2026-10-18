@@ -112,8 +112,10 @@ class ProductionConfig(Config):
     @classmethod
     def validate(cls) -> None:
         problems = []
-        if cls.SECRET_KEY == _DEV_SECRET or len(cls.SECRET_KEY) < 32:
-            problems.append("SECRET_KEY must be set to a random value of at least 32 characters")
+        key = cls.SECRET_KEY
+        if key == _DEV_SECRET or "change-me" in key.lower() or len(key) < 32:
+            problems.append("SECRET_KEY must be set to a random value of at least 32 characters "
+                            "(not the placeholder from .env.example)")
         if "DATABASE_URL" not in os.environ:
             problems.append("DATABASE_URL must be set")
         if not cls.SESSION_COOKIE_SECURE:
