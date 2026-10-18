@@ -179,7 +179,9 @@
            REQUIRED SKILLS TEXTAREA
         ======================================== */
 
-        #requiredSkills {
+        #requiredSkills,
+        #jobDescription,
+        #jobTitle {
 
             width: 100%;
 
@@ -210,11 +212,15 @@
             transition: 0.25s ease;
         }
 
-        #requiredSkills::placeholder {
+        #requiredSkills::placeholder,
+        #jobDescription::placeholder,
+        #jobTitle::placeholder {
             color: #627a75;
         }
 
-        #requiredSkills:focus {
+        #requiredSkills:focus,
+        #jobDescription:focus,
+        #jobTitle:focus {
 
             border-color: #0df0ad;
 
@@ -755,7 +761,9 @@
                 min-height: 450px;
             }
 
-            #requiredSkills {
+            #requiredSkills,
+        #jobDescription,
+        #jobTitle {
 
                 min-height: 300px;
             }
@@ -792,7 +800,9 @@
                 min-height: 400px;
             }
 
-            #requiredSkills {
+            #requiredSkills,
+        #jobDescription,
+        #jobTitle {
 
                 min-height: 270px;
 
@@ -815,971 +825,333 @@
             }
         }
 
+    
+        #jobDescription { flex: none; min-height: 150px; margin-top: 8px; }
+        #jobTitle { flex: none; min-height: 0; resize: none; padding: 14px 18px; margin-top: 8px; font-family: inherit; font-size: 15px; }
+        .field-label { display: block; margin-top: 18px; font-size: 13px; letter-spacing: .5px; color: #9fd9c7; text-transform: uppercase; }
+        .page-nav { display: flex; gap: 18px; justify-content: center; margin: 4px 0 22px; font-size: 14px; }
+        .page-nav a { color: #0df0ad; text-decoration: none; }
+        .page-nav a:hover { text-decoration: underline; }
+        .file-status { font-size: 12px; white-space: nowrap; color: #9fd9c7; }
+        .file-status.failed { color: #ff8a8a; }
+        .file-item input[type="checkbox"] { accent-color: #0df0ad; width: 18px; height: 18px; flex: none; }
+        .file-item.failed { border-color: rgba(255,107,107,.5); }
+        .mini-btn { background: transparent; color: #0df0ad; border: 1px solid rgba(13,240,173,.5); border-radius: 8px; padding: 5px 10px; cursor: pointer; font-size: 12px; }
+        .mini-btn:hover { background: rgba(13,240,173,.12); }
+        .empty-note { text-align: center; color: #8fb3a8; padding: 14px; font-size: 14px; }
+        #pageMessage { max-width: 900px; margin: 0 auto 16px; }
     </style>
+    <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
 
 
 <body>
-
 <div class="container">
 
-
-    <!-- ========================================
-         TITLE
-    ======================================== -->
-
     <div class="logo-title">
-
         <h1>RESUME <span>IQ</span></h1>
-
-        <p>
-            RESUME ANALYSIS SYSTEM
-        </p>
-
+        <p>RESUME ANALYSIS SYSTEM</p>
     </div>
 
+    <nav class="page-nav" aria-label="Page navigation">
+        <a href="homepage.html">&larr; Home</a>
+        <a href="ats-score.html">View Results</a>
+    </nav>
 
-
-    <!-- ========================================
-         MAIN SECTION
-    ======================================== -->
+    <div id="pageMessage" class="riq-banner"></div>
 
     <div class="top-section">
 
-
-        <!-- ====================================
-             LEFT - REQUIRED SKILLS
-        ==================================== -->
-
+        <!-- LEFT - JOB SETUP -->
         <div class="skills-section">
-
             <div class="skills-header">
-
                 <i class="fa-solid fa-list-check"></i>
-
                 <h2>REQUIRED SKILLS</h2>
-
             </div>
-
-
             <p class="skills-description">
-
-                Enter the skills required for the job.
-                These skills will be used by Resume IQ
-                during resume analysis and ATS scoring.
-
+                Enter the skills required for the job (one per line or comma-separated).
+                Resume IQ checks each resume for these skills and uses them for the ATS score.
             </p>
 
-
-            <textarea
-                id="requiredSkills"
+            <textarea id="requiredSkills" aria-label="Required skills"
                 placeholder="Enter required skills here...
-
 Example:
-
 Python
-Java
-HTML
-CSS
 JavaScript
 React
-Node.js
 SQL
 Git
-Machine Learning
-Communication
-Problem Solving
+Machine Learning"></textarea>
 
-You can enter as many skills as required."
-                oninput="updateSkillsPreview()"
-            ></textarea>
-
-
-            <div
-                class="skills-preview"
-                id="skillsPreview"
-            >
-
-                <strong>Required Skills:</strong>
-
-                No skills entered yet.
-
+            <div class="skills-preview" id="skillsPreview">
+                <strong>Required Skills:</strong> No skills entered yet.
             </div>
 
+            <label class="field-label" for="jobTitle">Job title (optional)</label>
+            <textarea id="jobTitle" rows="1" maxlength="150" placeholder="e.g. Frontend Developer"></textarea>
+
+            <label class="field-label" for="jobDescription">Job description (optional)</label>
+            <textarea id="jobDescription" maxlength="20000"
+                placeholder="Paste the job description. Its key terms are matched against each resume as well."></textarea>
         </div>
 
-
-
-        <!-- ====================================
-             RIGHT SIDE
-        ==================================== -->
-
+        <!-- RIGHT SIDE -->
         <div class="right-section">
 
-
-            <!-- ==================================
-                 UPLOAD RESUMES
-            ================================== -->
-
             <div class="upload-section">
+                <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <h2>UPLOAD RESUMES</h2>
+                <p id="uploadHelp">Upload PDF or DOCX resumes.</p>
 
-                <div class="upload-icon">
-
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-
-                </div>
-
-
-                <h2>
-                    UPLOAD RESUMES
-                </h2>
-
-
-                <p>
-                    Upload any number of resumes
-                    within the 10 GB total storage limit.
-                </p>
-
-
-                <input
-                    type="file"
-                    id="resumeFile"
-                    multiple
-                    accept=".pdf,.doc,.docx"
-                    hidden
-                    onchange="handleFiles(this.files)"
-                >
-
-
-                <button
-                    type="button"
-                    class="upload-btn"
-                    onclick="openFilePicker()"
-                >
-
+                <input type="file" id="resumeFile" multiple accept=".pdf,.docx" hidden>
+                <button type="button" class="upload-btn" id="uploadButton">
                     <i class="fa-solid fa-folder-open"></i>
-
                     Upload Resumes
-
                 </button>
-
             </div>
-
-
-
-            <!-- ==================================
-                 GET STARTED
-            ================================== -->
 
             <div class="get-started-section">
-
-                <h2>
-                    READY TO ANALYZE?
-                </h2>
-
-
-                <p>
-                    Upload resumes and enter the required
-                    skills before starting the analysis.
-                </p>
-
-
-                <button
-                    type="button"
-                    class="get-started-btn"
-                    onclick="startAnalysis()"
-                >
-
+                <h2>READY TO ANALYZE?</h2>
+                <p>Upload resumes and enter the required skills before starting the analysis.</p>
+                <button type="button" class="get-started-btn" id="startButton">
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
-
                     Get Started
-
                 </button>
-
             </div>
-
         </div>
-
     </div>
 
-
-
-    <!-- ========================================
-         FILE INFORMATION
-    ======================================== -->
-
-    <div
-        class="file-information"
-        id="fileInformation"
-    >
-
-
+    <!-- SAVED RESUMES -->
+    <div class="file-information show" id="fileInformation">
         <div class="file-stats">
-
-
             <div class="stat">
-
-                <span class="stat-label">
-                    Resumes Selected
-                </span>
-
-                <span
-                    class="stat-value"
-                    id="fileCount"
-                >
-                    0
-                </span>
-
+                <span class="stat-label">Resumes Saved</span>
+                <span class="stat-value" id="fileCount">0</span>
             </div>
-
-
             <div class="stat">
-
-                <span class="stat-label">
-                    Total Storage
-                </span>
-
-                <span
-                    class="stat-value"
-                    id="totalStorage"
-                >
-                    0 MB
-                </span>
-
+                <span class="stat-label">Storage Used</span>
+                <span class="stat-value" id="totalStorage">0 B</span>
             </div>
-
-
             <div class="stat">
-
-                <span class="stat-label">
-                    Storage Limit
-                </span>
-
-                <span class="stat-value">
-                    10 GB
-                </span>
-
+                <span class="stat-label">Storage Limit</span>
+                <span class="stat-value" id="storageLimit">&mdash;</span>
             </div>
-
         </div>
 
+        <div id="fileList" aria-live="polite"></div>
 
-        <!-- FILE LIST -->
+        <div class="storage-warning" id="storageWarning">Your resume storage is almost full.</div>
 
-        <div id="fileList"></div>
-
-
-        <div
-            class="storage-warning"
-            id="storageWarning"
-        >
-            Total resume storage cannot exceed 10 GB.
-        </div>
-
-
-        <!-- CLEAR ALL -->
-
-        <button
-            type="button"
-            class="clear-btn"
-            onclick="clearFileList()"
-        >
-
+        <button type="button" class="clear-btn" id="clearButton">
             <i class="fa-solid fa-trash"></i>
-
-            Clear All Resumes
-
+            Delete All Resumes
         </button>
-
     </div>
-
 </div>
 
-
-
+<script src="/assets/js/riq.js"></script>
 <script>
-
-    /* ========================================
-       RESUME STORAGE
-    ======================================== */
-
-    let selectedFiles = [];
-
-    const MAX_TOTAL_SIZE =
-        10 * 1024 * 1024 * 1024; // 10 GB
-
-
-
-    /* ========================================
-       OPEN FILE PICKER
-    ======================================== */
-
-    function openFilePicker() {
-
-        document
-            .getElementById("resumeFile")
-            .click();
-
-    }
-
-
-
-    /* ========================================
-       HANDLE FILES
-    ======================================== */
-
-    function handleFiles(files) {
-
-        const allowedExtensions = [
-            ".pdf",
-            ".doc",
-            ".docx"
-        ];
-
-
-        const newFiles = Array.from(files);
-
-
-        /* Check extensions */
-
-        for (let file of newFiles) {
-
-            const fileName =
-                file.name.toLowerCase();
-
-
-            const valid =
-                allowedExtensions.some(
-                    extension =>
-                        fileName.endsWith(extension)
-                );
-
-
-            if (!valid) {
-
-                alert(
-                    "Invalid file: " +
-                    file.name +
-                    "\n\nOnly PDF, DOC and DOCX files are allowed."
-                );
-
-                return;
-            }
-
-        }
-
-
-        /* Add files */
-
-        const filesToAdd = [];
-
-
-        newFiles.forEach(file => {
-
-            const duplicate =
-                selectedFiles.some(
-                    existingFile =>
-                        existingFile.name === file.name &&
-                        existingFile.size === file.size
-                );
-
-
-            if (!duplicate) {
-
-                filesToAdd.push(file);
-
-            }
-
-        });
-
-
-        /* Check 10 GB */
-
-        const currentSize =
-            selectedFiles.reduce(
-                (total, file) =>
-                    total + file.size,
-                0
-            );
-
-
-        const newFilesSize =
-            filesToAdd.reduce(
-                (total, file) =>
-                    total + file.size,
-                0
-            );
-
-
-        if (
-            currentSize + newFilesSize >
-            MAX_TOTAL_SIZE
-        ) {
-
-            alert(
-                "The total resume storage cannot exceed 10 GB."
-            );
-
-            return;
-        }
-
-
-        /* Add files */
-
-        selectedFiles =
-            selectedFiles.concat(filesToAdd);
-
-
-        displayFiles();
-
-
-        /*
-         * Reset the input so the same
-         * file can be selected again
-         * after deletion.
-         */
-
-        document.getElementById(
-            "resumeFile"
-        ).value = "";
-
-    }
-
-
-
-    /* ========================================
-       DISPLAY FILES
-    ======================================== */
-
-    function displayFiles() {
-
-        const fileInformation =
-            document.getElementById(
-                "fileInformation"
-            );
-
-
-        const fileList =
-            document.getElementById(
-                "fileList"
-            );
-
-
-        const fileCount =
-            document.getElementById(
-                "fileCount"
-            );
-
-
-        const totalStorage =
-            document.getElementById(
-                "totalStorage"
-            );
-
-
-        const storageWarning =
-            document.getElementById(
-                "storageWarning"
-            );
-
-
-        fileList.innerHTML = "";
-
-
-        /* No files */
-
-        if (selectedFiles.length === 0) {
-
-            fileInformation.classList.remove(
-                "show"
-            );
-
-            return;
-        }
-
-
-        fileInformation.classList.add(
-            "show"
-        );
-
-
-        /* File count */
-
-        fileCount.textContent =
-            selectedFiles.length;
-
-
-        /* Total storage */
-
-        const totalSize =
-            selectedFiles.reduce(
-                (total, file) =>
-                    total + file.size,
-                0
-            );
-
-
-        totalStorage.textContent =
-            formatFileSize(totalSize);
-
-
-        /* Storage warning */
-
-        if (totalSize >= MAX_TOTAL_SIZE) {
-
-            storageWarning.style.display =
-                "block";
-
-        } else {
-
-            storageWarning.style.display =
-                "none";
-
-        }
-
-
-
-        /* ====================================
-           CREATE FILE ROWS
-        ==================================== */
-
-        selectedFiles.forEach(
-            (file, index) => {
-
-                const item =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                item.className =
-                    "file-item";
-
-
-                item.innerHTML = `
-
-                    <div class="file-item-name">
-
-                        <i class="fa-solid fa-file-lines"></i>
-
-                        <span
-                            title="${escapeHTML(file.name)}"
-                        >
-                            ${escapeHTML(file.name)}
-                        </span>
-
-                    </div>
-
-
-                    <span class="file-size">
-
-                        ${formatFileSize(file.size)}
-
-                    </span>
-
-
-                    <button
-                        type="button"
-                        class="delete-file-btn"
-                        title="Delete this resume"
-                        onclick="deleteResume(${index})"
-                    >
-
-                        <i class="fa-solid fa-trash"></i>
-
-                    </button>
-
-                `;
-
-
-                fileList.appendChild(item);
-
-            }
-        );
-
-    }
-
-
-
-    /* ========================================
-       DELETE PARTICULAR RESUME
-    ======================================== */
-
-    function deleteResume(index) {
-
-        if (
-            index < 0 ||
-            index >= selectedFiles.length
-        ) {
-
-            return;
-        }
-
-
-        const fileName =
-            selectedFiles[index].name;
-
-
-        const confirmDelete =
-            confirm(
-                'Delete "' +
-                fileName +
-                '" from the selected resumes?'
-            );
-
-
-        if (!confirmDelete) {
-
-            return;
-        }
-
-
-        /*
-         * Remove only the selected
-         * resume from the array.
-         */
-
-        selectedFiles.splice(
-            index,
-            1
-        );
-
-
-        /* Refresh the display */
-
-        displayFiles();
-
-    }
-
-
-
-    /* ========================================
-       REQUIRED SKILLS
-    ======================================== */
-
+    var resumes = [];        /* saved on the server */
+    var queue = [];          /* uploads in progress / failed: {key, file, status, message, retryable} */
+    var selected = {};       /* resume id -> true (included in the analysis) */
+    var quota = { used_bytes: 0, limit_bytes: 0, max_file_bytes: 5 * 1024 * 1024 };
+    var nextKey = 1, running = 0, MAX_PARALLEL = 2;
+    var loaded = false;
+
+    function $(id) { return document.getElementById(id); }
+    function say(msg, kind) { RIQ.banner("pageMessage", msg, kind); }
+
+    /* ---------- skills ---------- */
     function getRequiredSkills() {
-
-        const input =
-            document.getElementById(
-                "requiredSkills"
-            ).value;
-
-
-        /*
-         * Accept:
-         *
-         * Skill 1, Skill 2, Skill 3
-         *
-         * OR
-         *
-         * Skill 1
-         * Skill 2
-         * Skill 3
-         */
-
-        const skills =
-            input
-                .split(/,|\n/)
-                .map(
-                    skill =>
-                        skill.trim()
-                )
-                .filter(
-                    skill =>
-                        skill.length > 0
-                );
-
-
-        /* Remove duplicates */
-
-        const uniqueSkills = [];
-
-
-        skills.forEach(skill => {
-
-            const exists =
-                uniqueSkills.some(
-                    existing =>
-                        existing.toLowerCase() ===
-                        skill.toLowerCase()
-                );
-
-
-            if (!exists) {
-
-                uniqueSkills.push(skill);
-
-            }
-
+        var seen = {}, out = [];
+        $("requiredSkills").value.split(/,|;|\n/).forEach(function (s) {
+            s = s.replace(/\s+/g, " ").trim();
+            if (s && !seen[s.toLowerCase()]) { seen[s.toLowerCase()] = true; out.push(s); }
         });
-
-
-        return uniqueSkills;
-
+        return out;
     }
-
-
-
-    /* ========================================
-       SKILLS PREVIEW
-    ======================================== */
 
     function updateSkillsPreview() {
+        var skills = getRequiredSkills();
+        $("skillsPreview").innerHTML = "<strong>Required Skills:</strong> " +
+            (skills.length ? skills.length + " skill(s): " + skills.map(RIQ.escapeHTML).join(", ") : "No skills entered yet.");
+    }
+    $("requiredSkills").addEventListener("input", updateSkillsPreview);
 
-        const skills =
-            getRequiredSkills();
+    /* ---------- rendering ---------- */
+    function render() {
+        $("fileCount").textContent = resumes.length;
+        $("totalStorage").textContent = RIQ.formatBytes(quota.used_bytes);
+        $("storageLimit").textContent = quota.limit_bytes ? RIQ.formatBytes(quota.limit_bytes) : "\u2014";
+        $("uploadHelp").textContent = "Upload PDF or DOCX resumes, up to " + RIQ.formatBytes(quota.max_file_bytes) + " each.";
+        $("storageWarning").style.display = quota.limit_bytes && quota.used_bytes >= quota.limit_bytes * 0.9 ? "block" : "none";
+        $("clearButton").style.display = resumes.length ? "" : "none";
 
-
-        const preview =
-            document.getElementById(
-                "skillsPreview"
-            );
-
-
-        if (skills.length === 0) {
-
-            preview.innerHTML = `
-                <strong>Required Skills:</strong>
-                No skills entered yet.
-            `;
-
-            return;
-        }
-
-
-        preview.innerHTML = `
-            <strong>Required Skills:</strong>
-            ${skills.length} skill(s) entered.
-        `;
-
+        var html = "";
+        queue.forEach(function (q) {
+            var failed = q.status === "failed";
+            html += '<div class="file-item' + (failed ? " failed" : "") + '">' +
+                '<div class="file-item-name"><i class="fa-solid fa-file-lines"></i><span title="' + RIQ.escapeHTML(q.file.name) + '">' + RIQ.escapeHTML(q.file.name) + "</span></div>" +
+                '<span class="file-size">' + RIQ.formatBytes(q.file.size) + "</span>" +
+                '<span class="file-status' + (failed ? " failed" : "") + '">' +
+                (failed ? RIQ.escapeHTML(q.message) : '<span class="riq-spinner"></span> ' + (q.status === "queued" ? "Waiting..." : "Uploading...")) + "</span>" +
+                (failed && q.retryable ? '<button type="button" class="mini-btn" data-retry="' + q.key + '">Retry</button>' : "") +
+                (failed ? '<button type="button" class="mini-btn" data-dismiss="' + q.key + '">Dismiss</button>' : "") +
+                "</div>";
+        });
+        resumes.forEach(function (r) {
+            html += '<div class="file-item">' +
+                '<input type="checkbox" data-select="' + r.id + '" aria-label="Include ' + RIQ.escapeHTML(r.filename) + ' in analysis"' + (selected[r.id] ? " checked" : "") + ">" +
+                '<div class="file-item-name"><i class="fa-solid fa-file-lines"></i><span title="' + RIQ.escapeHTML(r.filename) + '">' + RIQ.escapeHTML(r.filename) + "</span></div>" +
+                '<span class="file-size">' + RIQ.formatBytes(r.size_bytes) + "</span>" +
+                '<button type="button" class="delete-file-btn" title="Delete this resume" aria-label="Delete ' + RIQ.escapeHTML(r.filename) + '" data-delete="' + r.id + '"><i class="fa-solid fa-trash"></i></button>' +
+                "</div>";
+        });
+        if (!html) html = '<div class="empty-note">' + (loaded ? "No resumes uploaded yet. Upload PDF or DOCX files to get started." : "Loading your resumes...") + "</div>";
+        $("fileList").innerHTML = html;
     }
 
+    /* ---------- loading saved resumes ---------- */
+    function applyServerState(data) {
+        if (data.resumes) {
+            var known = {};
+            resumes = data.resumes;
+            resumes.forEach(function (r) { known[r.id] = true; });
+            Object.keys(selected).forEach(function (id) { if (!known[id]) delete selected[id]; });
+        }
+        if (data.quota) quota = data.quota;
+    }
 
+    function loadResumes() {
+        return RIQ.api("/api/resumes").then(function (data) {
+            var first = !loaded;
+            applyServerState(data);
+            if (first) resumes.forEach(function (r) { selected[r.id] = true; });
+            loaded = true;
+            render();
+        }).catch(function (err) {
+            loaded = true; render();
+            if (err.status !== 401) say("Could not load your saved resumes. " + err.message, "error");
+        });
+    }
 
-    /* ========================================
-       START ANALYSIS
-    ======================================== */
+    /* ---------- uploading ---------- */
+    function checkLocally(file) {
+        var ext = file.name.toLowerCase().split(".").pop();
+        if (ext === "doc") return "Legacy .doc files are not supported. Save as .docx or PDF.";
+        if (ext !== "pdf" && ext !== "docx") return "Only PDF and DOCX files are allowed.";
+        if (file.size === 0) return "This file is empty.";
+        if (file.size > quota.max_file_bytes) return "Larger than the " + RIQ.formatBytes(quota.max_file_bytes) + " limit.";
+        return "";
+    }
 
+    function handleFiles(fileList) {
+        say("");
+        Array.prototype.slice.call(fileList).forEach(function (file) {
+            var problem = checkLocally(file);
+            var entry = { key: nextKey++, file: file, status: problem ? "failed" : "queued", message: problem, retryable: false };
+            queue.push(entry);
+        });
+        $("resumeFile").value = "";   /* allow choosing the same file again */
+        render();
+        pump();
+    }
+
+    function pump() {
+        queue.forEach(function (q) {
+            if (q.status === "queued" && running < MAX_PARALLEL) { running++; send(q); }
+        });
+    }
+
+    function send(q) {
+        q.status = "uploading"; render();
+        var form = new FormData();
+        form.append("file", q.file, q.file.name);
+        RIQ.api("/api/resumes", { method: "POST", form: form }).then(function (data) {
+            queue = queue.filter(function (x) { return x !== q; });
+            resumes.unshift(data.resume);
+            selected[data.resume.id] = true;
+            quota = data.quota;
+        }).catch(function (err) {
+            q.status = "failed";
+            q.message = err.code === "duplicate_file" ? "Already uploaded." : err.message;
+            /* network drops and 5xx are safe to retry: the server rejects duplicate content, so no double saves */
+            q.retryable = err.code === "network" || err.status >= 500;
+        }).then(function () {
+            running--; render(); pump();
+        });
+    }
+
+    $("uploadButton").addEventListener("click", function () { $("resumeFile").click(); });
+    $("resumeFile").addEventListener("change", function () { handleFiles(this.files); });
+
+    /* ---------- list actions (event delegation) ---------- */
+    $("fileList").addEventListener("click", function (e) {
+        var el = e.target.closest("[data-delete],[data-retry],[data-dismiss]");
+        if (!el) return;
+        if (el.dataset.retry) {
+            var q = queue.filter(function (x) { return String(x.key) === el.dataset.retry; })[0];
+            if (q) { q.status = "queued"; render(); pump(); }
+        } else if (el.dataset.dismiss) {
+            queue = queue.filter(function (x) { return String(x.key) !== el.dataset.dismiss; });
+            render();
+        } else if (el.dataset["delete"]) {
+            var id = el.dataset["delete"];
+            var r = resumes.filter(function (x) { return String(x.id) === id; })[0];
+            if (!r || !confirm('Delete "' + r.filename + '"?')) return;
+            RIQ.api("/api/resumes/" + id, { method: "DELETE" }).then(function (data) {
+                resumes = resumes.filter(function (x) { return String(x.id) !== id; });
+                delete selected[id]; quota = data.quota; render();
+            }).catch(function (err) { say(err.message, "error"); });
+        }
+    });
+    $("fileList").addEventListener("change", function (e) {
+        var id = e.target.dataset && e.target.dataset.select;
+        if (id) { if (e.target.checked) selected[id] = true; else delete selected[id]; }
+    });
+
+    $("clearButton").addEventListener("click", function () {
+        if (!confirm("Delete all " + resumes.length + " saved resumes? This cannot be undone.")) return;
+        RIQ.api("/api/resumes", { method: "DELETE" }).then(function (data) {
+            resumes = []; selected = {}; quota = data.quota; render();
+            say("All resumes deleted.", "success");
+        }).catch(function (err) { say(err.message, "error"); });
+    });
+
+    /* ---------- get started: save the job setup ---------- */
     function startAnalysis() {
-
-        /* Check resume */
-
-        if (
-            selectedFiles.length === 0
-        ) {
-
-            alert(
-                "Please upload at least one resume before starting the analysis."
-            );
-
-            return;
+        say("");
+        var ids = resumes.filter(function (r) { return selected[r.id]; }).map(function (r) { return r.id; });
+        var skills = getRequiredSkills();
+        if (queue.some(function (q) { return q.status === "queued" || q.status === "uploading"; })) {
+            return say("Please wait for the uploads to finish.", "info");
         }
+        if (!resumes.length) return say("Please upload at least one resume before starting the analysis.", "error");
+        if (!ids.length) return say("Select at least one saved resume to analyze.", "error");
+        if (!skills.length) { $("requiredSkills").focus(); return say("Please enter at least one required skill.", "error"); }
 
+        var button = $("startButton");
+        RIQ.setBusy(button, true, "Saving...");
+        RIQ.api("/api/jobs", { method: "POST", json: {
+            title: $("jobTitle").value, description: $("jobDescription").value, required_skills: skills
+        } }).then(function (data) {
+            RIQ.setBusy(button, false);
+            onJobSaved(data.job, ids);
+        }).catch(function (err) {
+            RIQ.setBusy(button, false);
+            say(err.message, "error");
+        });
+    }
+    $("startButton").addEventListener("click", startAnalysis);
 
-        /* Get skills */
-
-        const requiredSkills =
-            getRequiredSkills();
-
-
-        /* Check skills */
-
-        if (
-            requiredSkills.length === 0
-        ) {
-
-            alert(
-                "Please enter at least one required skill."
-            );
-
-            return;
-        }
-
-
-        /* Save skills */
-
-        localStorage.setItem(
-            "requiredSkills",
-            JSON.stringify(
-                requiredSkills
-            )
-        );
-
-
-        /* Save count */
-
-        localStorage.setItem(
-            "resumeCount",
-            selectedFiles.length
-        );
-
-
-        /* Console */
-
-        console.log(
-            "Selected Resumes:",
-            selectedFiles
-        );
-
-
-        console.log(
-            "Required Skills:",
-            requiredSkills
-        );
-
-
-        /*
-         * Later this information
-         * can be sent to Flask
-         * using FormData.
-         */
-
-        alert(
-
-            "Analysis setup completed!\n\n" +
-
-            "Resumes: " +
-            selectedFiles.length +
-
-            "\n\nRequired Skills:\n" +
-
-            requiredSkills.join(", ")
-
-        );
-
+    function onJobSaved(job, resumeIds) {
+        say("Job setup saved (" + job.required_skills.length + " skills, " + resumeIds.length + " resume(s) selected).", "success");
     }
 
-
-
-    /* ========================================
-       CLEAR ALL RESUMES
-    ======================================== */
-
-    function clearFileList() {
-
-        const confirmClear =
-            confirm(
-                "Delete all selected resumes?"
-            );
-
-
-        if (!confirmClear) {
-
-            return;
-        }
-
-
-        selectedFiles = [];
-
-
-        document.getElementById(
-            "resumeFile"
-        ).value = "";
-
-
-        displayFiles();
-
-    }
-
-
-
-    /* ========================================
-       FORMAT FILE SIZE
-    ======================================== */
-
-    function formatFileSize(bytes) {
-
-        if (bytes === 0) {
-
-            return "0 Bytes";
-
-        }
-
-
-        const units = [
-            "Bytes",
-            "KB",
-            "MB",
-            "GB",
-            "TB"
-        ];
-
-
-        const i =
-            Math.floor(
-                Math.log(bytes) /
-                Math.log(1024)
-            );
-
-
-        return (
-
-            parseFloat(
-
-                (
-                    bytes /
-                    Math.pow(1024, i)
-
-                ).toFixed(2)
-
-            )
-
-            +
-
-            " " +
-
-            units[i]
-
-        );
-
-    }
-
-
-
-    /* ========================================
-       ESCAPE HTML
-    ======================================== */
-
-    function escapeHTML(value) {
-
-        return value
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
-    }
-
-
-
-    /* ========================================
-       INITIALIZE
-    ======================================== */
-
+    /* ---------- init ---------- */
     updateSkillsPreview();
-
+    render();
+    loadResumes();
 </script>
-
 </body>
 </html>

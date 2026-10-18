@@ -26,16 +26,27 @@ def live_server(app):
     srv.shutdown()
 
 
-def run_suite(base_url: str, pattern: str):
+@pytest.fixture(scope="module")
+def fixtures_dir(tmp_path_factory):
+    from files import SAMPLE_LINES, make_blank_pdf, make_docx, make_pdf
+
+    d = tmp_path_factory.mktemp("fixtures")
+    (d / "rahul.pdf").write_bytes(make_pdf(SAMPLE_LINES))
+    (d / "priya.docx").write_bytes(make_docx(["Priya Sharma", "priya@example.com", "Skills", "Java, SQL, Git, HTML, CSS"]))
+    (d / "scanned.pdf").write_bytes(make_blank_pdf())
+    return d
+
+
+def run_suite(base_url: str, pattern: str, fixtures: Path):
     import os
 
-    env = {**os.environ, "BASE_URL": base_url}
+    env = {**os.environ, "BASE_URL": base_url, "FIXTURES_DIR": str(fixtures)}
     r = subprocess.run(["node", "--test", "--test-reporter=spec", pattern], cwd=JS_DIR, env=env,
                        capture_output=True, text=True, timeout=300)
     assert r.returncode == 0, r.stdout[-6000:] + r.stderr[-2000:]
 
 
 @needs_node
-@pytest.mark.parametrize("suite", ["phase2.test.mjs"])
-def test_frontend_suite(live_server, suite):
-    run_suite(live_server, suite)
+@pytest.mark.parametrize("suite", ["phase2.test.mjs", "phase3.test.mjs"])
+def test_frontend_suite(live_server, fixtures_dir, suite):
+    run_suite(live_server, suite, fixtures_dir)
