@@ -6,7 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Resume IQ - Features</title>
+    <title>Resume IQ | Features</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <meta name="theme-color" content="#04131b">
 
     <!-- Font Awesome -->
     <link
@@ -86,7 +88,7 @@
             display: grid;
 
             grid-template-columns:
-                repeat(4, 1fr);
+                repeat(3, 1fr);
 
             gap: 25px;
         }
@@ -281,19 +283,14 @@
 
     </style>
 
+    <link rel="stylesheet" href="/assets/css/shared.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 
 
 <body>
 
-<div class="header">
-
-        <button class="back-btn" onclick="goBack()">
-            ←
-        </button>
-
-    </div>
-    <!-- =========================
+<!-- =========================
          FEATURES SECTION
     ========================= -->
 
@@ -315,91 +312,49 @@
 
         <div class="features-grid">
 
-
-            <!-- FEATURE 1 -->
-
             <div class="feature-card">
-
-                <i class="fa-solid fa-robot"></i>
-
-                <h3>
-                    AI Analysis
-                </h3>
-
-                <p>
-                    Analyze your resume using
-                    intelligent AI-powered techniques.
-                </p>
-
+                <i class="fa-solid fa-bullseye"></i>
+                <h3>Skill Matching</h3>
+                <p>Checks every required skill against each resume, including common spellings such as JS and JavaScript.</p>
             </div>
 
-
-            <!-- FEATURE 2 -->
-
             <div class="feature-card">
-
                 <i class="fa-solid fa-chart-line"></i>
-
-                <h3>
-                    Resume Score
-                </h3>
-
-                <p>
-                    Get an easy-to-understand score
-                    for your resume.
-                </p>
-
+                <h3>Explainable Score</h3>
+                <p>A weighted ATS score with a breakdown showing exactly how every point was earned.</p>
             </div>
 
-            
-            <!-- FEATURE 3 -->
-
             <div class="feature-card">
-
                 <i class="fa-solid fa-key"></i>
-
-                <h3>
-                    ATS Keywords
-                </h3>
-
-                <p>
-                    Find missing keywords that can
-                    improve ATS compatibility.
-                </p>
-
+                <h3>Missing Skills &amp; Keywords</h3>
+                <p>See which required skills and job-description keywords a resume does not mention.</p>
             </div>
-
-
-            <!-- FEATURE 4 -->
 
             <div class="feature-card">
-
                 <i class="fa-solid fa-file-circle-check"></i>
-
-                <h3>
-                   Mutli-Tasking
-                </h3>
-
-                <p>
-                    Analyze  upto 10GB Resumes at a time 
-                </p>
-
+                <h3>Bulk Screening</h3>
+                <p>Upload many PDF and DOCX resumes and analyze them against one job in a single run.</p>
             </div>
 
+            <div class="feature-card">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <h3>Run History</h3>
+                <p>Every analysis is saved. Reopen past runs, search, sort and compare applicants any time.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fa-solid fa-lock"></i>
+                <h3>Private by Design</h3>
+                <p>Resumes are stored privately for your company account only, and you can delete them at any time.</p>
+            </div>
 
         </div>
-
     </section>
 
 
+<script src="/assets/js/riq.js"></script>
+<script src="/assets/js/site.js"></script>
 </body>
 
 
-<script>
-      function goBack() {
-
-            window.history.back();
-
-        }
-</script>
 </html>

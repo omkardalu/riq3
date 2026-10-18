@@ -1,0 +1,49 @@
+/* Shared top navigation + footer for the public content pages (features, how-it-works). */
+.site-nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 5%;
+  background: rgba(4, 19, 27, .94); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(120, 160, 175, .2);
+}
+.site-logo { color: #fff; font-weight: 700; letter-spacing: 2px; text-decoration: none; font-size: 20px; }
+.site-logo span { color: #0df0ad; }
+.site-links { display: flex; gap: 26px; flex-wrap: wrap; }
+.site-links a {
+  color: #cfe0e5; text-decoration: none; padding: 6px 2px; font-size: 15px;
+  border-bottom: 2px solid transparent; transition: .2s;
+}
+.site-links a:hover, .site-links a.active { color: #0df0ad; border-bottom-color: #0df0ad; }
+
+.site-account { position: relative; display: flex; align-items: center; gap: 16px; font-size: 15px; }
+.site-account > a { color: #0df0ad; text-decoration: none; }
+.site-account > a:hover { text-decoration: underline; }
+.site-menu-btn {
+  display: flex; flex-direction: column; gap: 5px; padding: 9px; cursor: pointer;
+  background: transparent; border: 1px solid rgba(120, 160, 175, .35); border-radius: 10px;
+}
+.site-menu-btn span { display: block; width: 22px; height: 2px; background: #fff; }
+.site-account .dropdown {
+  display: none; position: absolute; right: 0; top: calc(100% + 10px); min-width: 160px; z-index: 60;
+  background: #071f29; border: 1px solid #164655; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+}
+.site-account .dropdown button {
+  display: block; width: 100%; padding: 13px 18px; text-align: left; cursor: pointer;
+  background: transparent; color: #fff; border: 0; font: inherit;
+}
+.site-account .dropdown button:hover { background: rgba(13, 240, 173, .12); color: #0df0ad; }
+
+.site-footer { padding: 54px 20px 34px; text-align: center; background: #020c12; color: #9cafb6; margin-top: 40px; }
+.site-footer-logo { font-size: 24px; font-weight: 700; letter-spacing: 3px; color: #fff; margin-bottom: 8px; }
+.site-footer-logo span { color: #0df0ad; }
+.site-footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 24px; margin: 22px 0; }
+.site-footer-links a { color: #cfe0e5; text-decoration: none; font-size: 14px; }
+.site-footer-links a:hover { color: #0df0ad; text-decoration: underline; }
+.site-footer p { margin: 6px 0; font-size: 14px; }
+.site-footer .copyright { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(120, 160, 175, .2); font-size: 13px; }
+
+@media (max-width: 700px) {
+  .site-nav { flex-wrap: wrap; padding: 12px 18px; }
+  .site-links { order: 3; width: 100%; justify-content: center; gap: 18px; }
+}

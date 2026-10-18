@@ -54,3 +54,19 @@ button:disabled, .riq-disabled { opacity: .6; cursor: not-allowed !important; }
 @media (prefers-reduced-motion: reduce) {
   .riq-spinner { animation-duration: 3s; }
 }
+
+/* Skip link (keyboard users) */
+.riq-skip {
+  position: absolute; left: 12px; top: -60px; z-index: 100000;
+  background: var(--riq-accent); color: #04131b; font-weight: 700;
+  padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: top .15s;
+}
+.riq-skip:focus { top: 12px; }
+[tabindex="-1"]:focus { outline: none; }
+
+/* Skill chips (used on upload preview) */
+.skill-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.skill-chip {
+  background: rgba(13, 240, 173, .10); border: 1px solid rgba(13, 240, 173, .45); color: #0df0ad;
+  padding: 5px 12px; border-radius: 16px; font-size: 13px; overflow-wrap: anywhere;
+}

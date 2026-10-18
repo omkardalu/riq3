@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Resume IQ | How It Works</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <meta name="theme-color" content="#04131b">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -674,19 +676,13 @@ body::after {
             color: #04131b;
         }
 </style>
+    <link rel="stylesheet" href="/assets/css/shared.css">
+    <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 
 
 <body>
 
-
-<div class="header">
-
-        <button class="back-btn" onclick="goBack()">
-            ←
-        </button>
-
-    </div>
 
 <!-- =========================
      MAIN CONTENT
@@ -767,9 +763,9 @@ body::after {
 
                 <p>
                     No need to open and check resumes one at a time.
-                    Upload your entire collection of resumes in one go.
-                    There is no fixed file-count limit — the total upload
-                    can be up to <span class="highlight">10 GB</span>.
+                    Upload many PDF or DOCX resumes in one go, up to
+                    <span class="highlight">5 MB</span> each. They stay saved
+                    in your account, so you can reuse them for another job.
                 </p>
 
             </div>
@@ -793,10 +789,11 @@ body::after {
                 </h2>
 
                 <p>
-                    Once the resumes are uploaded, Resume IQ goes through
-                    them and checks the information against your requirements.
-                    Skills, experience, education, projects, and relevant
-                    keywords are taken into account.
+                    Resume IQ reads each resume and checks it against your
+                    requirements: your required skills, the key terms of the
+                    job description, and whether the resume has the standard
+                    sections and contact details. The scoring rules are fixed,
+                    so the same resume always gets the same score.
                 </p>
 
             </div>
@@ -877,7 +874,8 @@ body::after {
                     Want to know more about someone? Select their profile
                     to see the details found in their resume — including
                     education, experience, projects, strengths, missing
-                    skills, weaknesses, and suggestions.
+                    skills, weaknesses and recommendations, plus a breakdown
+                    of how the score was calculated.
                 </p>
 
             </div>
@@ -946,27 +944,7 @@ body::after {
      FOOTER
 ========================= -->
 
-<footer class="footer">
-
-    <div class="footer-logo">
-        RESUME <span>IQ</span>
-    </div>
-
-    <div>
-         Resume Screening
-    </div>
-
-</footer>
-
-
-
-<script>
-
-     function goBack() {
-
-            window.history.back();
-
-        }
-</script>
+<script src="/assets/js/riq.js"></script>
+<script src="/assets/js/site.js"></script>
 </body>
 </html>

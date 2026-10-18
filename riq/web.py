@@ -19,6 +19,11 @@ def index():
     return redirect("/homepage.html" if current_user() else "/login.html")
 
 
+@web_bp.get("/favicon.ico")
+def favicon():
+    return send_from_directory(current_app.static_folder + "/img", "favicon.svg", mimetype="image/svg+xml", max_age=86400)
+
+
 @web_bp.get("/<page>.html")
 def page(page: str):
     if page not in PUBLIC_PAGES | PROTECTED_PAGES:

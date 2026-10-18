@@ -33,9 +33,42 @@ class _Collector(HTMLParser):
         self._in_script = False
         self._buf: list[str] = []
         self.empty_links: list[str] = []
+        # accessibility bookkeeping
+        self.html_lang = None
+        self.has_viewport = False
+        self.has_icon = False
+        self.title = ""
+        self._in_title = False
+        self.imgs_without_alt: list[str] = []
+        self.controls: list[dict] = []          # form controls needing a label
+        self.label_for: set[str] = set()
+        self._label_depth = 0
+        self._named: list[dict] = []            # buttons / links needing an accessible name
+        self._cur_named: dict | None = None
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        if tag == "html":
+            self.html_lang = a.get("lang")
+        if tag == "meta" and a.get("name") == "viewport":
+            self.has_viewport = True
+        if tag == "link" and "icon" in (a.get("rel") or ""):
+            self.has_icon = True
+        if tag == "title":
+            self._in_title = True
+        if tag == "img" and "alt" not in a:
+            self.imgs_without_alt.append(a.get("src", "?"))
+        if tag == "label":
+            self._label_depth += 1
+            if a.get("for"):
+                self.label_for.add(a["for"])
+        if tag in ("input", "select", "textarea") and a.get("type") not in ("hidden", "submit", "button", "reset", "image"):
+            self.controls.append({"tag": tag, "id": a.get("id"), "type": a.get("type"),
+                                  "named": bool(a.get("aria-label") or a.get("aria-labelledby") or a.get("title")),
+                                  "in_label": self._label_depth > 0})
+        if tag in ("button", "a") and not (tag == "a" and not a.get("href")):
+            self._cur_named = {"tag": tag, "id": a.get("id") or a.get("href") or "?",
+                               "named": bool(a.get("aria-label") or a.get("title")), "text": ""}
         if "id" in a:
             self.ids.append(a["id"])
         if tag == "a":
@@ -53,6 +86,13 @@ class _Collector(HTMLParser):
             self._buf = []
 
     def handle_endtag(self, tag):
+        if tag == "title":
+            self._in_title = False
+        if tag == "label" and self._label_depth:
+            self._label_depth -= 1
+        if tag in ("button", "a") and self._cur_named is not None:
+            self._named.append(self._cur_named)
+            self._cur_named = None
         if tag == "script" and self._in_script:
             self.scripts.append("".join(self._buf))
             self._in_script = False
@@ -60,6 +100,10 @@ class _Collector(HTMLParser):
     def handle_data(self, data):
         if self._in_script:
             self._buf.append(data)
+        if self._in_title:
+            self.title += data
+        if self._cur_named is not None:
+            self._cur_named["text"] += data
 
 
 EXTERNAL = re.compile(r"^(https?:)?//|^mailto:|^tel:|^javascript:|^data:|^#")
@@ -94,6 +138,24 @@ def audit_page(path: Path, known: set[str]) -> list[str]:
             problems.append(f"{name}: broken JS navigation target '{target}'")
     for el in c.empty_links:
         problems.append(f"{name}: empty link {el}")
+
+    # ---- consistency + accessibility
+    if not c.html_lang:
+        problems.append(f"{name}: <html> needs a lang attribute")
+    if not c.has_viewport:
+        problems.append(f"{name}: missing viewport meta tag")
+    if not c.has_icon:
+        problems.append(f"{name}: missing favicon link")
+    if not c.title.strip().startswith("Resume IQ"):
+        problems.append(f"{name}: title should start with 'Resume IQ' (got {c.title.strip()!r})")
+    for src in c.imgs_without_alt:
+        problems.append(f"{name}: <img {src}> has no alt text")
+    for ctl in c.controls:
+        if not (ctl["named"] or ctl["in_label"] or (ctl["id"] and ctl["id"] in c.label_for)):
+            problems.append(f"{name}: form control #{ctl['id']} ({ctl['tag']}) has no label")
+    for el in c._named:
+        if not (el["named"] or el["text"].strip()):
+            problems.append(f"{name}: <{el['tag']} {el['id']}> has no accessible name")
 
     dup = [i for i, n in Counter(c.ids).items() if n > 1]
     for i in dup:

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RESUME IQ | Resume Analyzer</title>
+    <title>Resume IQ | Upload Resumes</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <meta name="theme-color" content="#04131b">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -913,7 +915,7 @@ Machine Learning"></textarea>
                 <h2>UPLOAD RESUMES</h2>
                 <p id="uploadHelp">Upload PDF or DOCX resumes.</p>
 
-                <input type="file" id="resumeFile" multiple accept=".pdf,.docx" hidden>
+                <input type="file" id="resumeFile" multiple accept=".pdf,.docx" hidden aria-label="Choose resume files (PDF or DOCX)">
                 <button type="button" class="upload-btn" id="uploadButton">
                     <i class="fa-solid fa-folder-open"></i>
                     Upload Resumes
@@ -986,7 +988,8 @@ Machine Learning"></textarea>
     function updateSkillsPreview() {
         var skills = getRequiredSkills();
         $("skillsPreview").innerHTML = "<strong>Required Skills:</strong> " +
-            (skills.length ? skills.length + " skill(s): " + skills.map(RIQ.escapeHTML).join(", ") : "No skills entered yet.");
+            (skills.length ? skills.length + " skill(s)" : "No skills entered yet.") +
+            (skills.length ? '<div class="skill-chips">' + skills.map(function (s) { return '<span class="skill-chip">' + RIQ.escapeHTML(s) + "</span>"; }).join("") + "</div>" : "");
     }
     $("requiredSkills").addEventListener("input", updateSkillsPreview);
 

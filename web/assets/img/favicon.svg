@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Resume IQ">
+  <rect width="64" height="64" rx="14" fill="#04131b"/>
+  <path d="M16 10h22l10 10v18H16z" fill="none" stroke="#0df0ad" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M38 10v10h10" fill="none" stroke="#0df0ad" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="34" cy="40" r="9" fill="#04131b" stroke="#0df0ad" stroke-width="4"/>
+  <path d="M41 47l9 9" stroke="#0df0ad" stroke-width="5" stroke-linecap="round"/>
+</svg>

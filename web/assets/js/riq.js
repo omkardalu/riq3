@@ -212,5 +212,30 @@
     setTimeout(function () { el.remove(); }, 4000);
   };
 
+  /* ---------- accessibility basics: main landmark + skip link on every page ---------- */
+  RIQ.initA11y = function () {
+    var body = document.body;
+    if (!body || document.querySelector(".riq-skip")) return;
+    var main = document.querySelector("main, [role='main']");
+    if (!main) {
+      var kids = body.children;
+      for (var i = 0; i < kids.length; i++) {
+        var k = kids[i], tag = k.tagName;
+        if ((tag === "DIV" || tag === "SECTION") && !k.matches(".riq-toast, .riq-skip")) { main = k; break; }
+      }
+    }
+    if (!main) return;
+    if (main.tagName !== "MAIN") main.setAttribute("role", "main");
+    if (!main.id) main.id = "main";
+    main.setAttribute("tabindex", "-1");
+    var skip = document.createElement("a");
+    skip.className = "riq-skip";
+    skip.href = "#" + main.id;
+    skip.textContent = "Skip to main content";
+    body.insertBefore(skip, body.firstChild);
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", RIQ.initA11y);
+  else RIQ.initA11y();
+
   global.RIQ = RIQ;
 })(window);

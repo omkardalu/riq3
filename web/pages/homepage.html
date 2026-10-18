@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Resume IQ | Resume Analyzer</title>
+<title>Resume IQ | Home</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <meta name="theme-color" content="#04131b">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1242,6 +1244,27 @@ footer {
 }
 
 
+
+.sample-note { margin-top: 14px; text-align: center; font-size: 12px; letter-spacing: 1px; color: #7f98a1; text-transform: uppercase; }
+
+/* FAQ section */
+.faq-section { padding: 90px 20px 40px; text-align: center; }
+.faq-section .small-title { margin-bottom: 10px; }
+.faq-section h2 { font-size: 40px; margin-bottom: 40px; }
+.faq button:focus-visible { outline: 2px solid #0df0ad; outline-offset: -2px; }
+.faq button span { text-align: left; padding-right: 14px; }
+
+/* footer links */
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 24px; margin: 22px 0 10px; }
+.footer-links a { color: #cfe0e5; text-decoration: none; font-size: 14px; }
+.footer-links a:hover { color: #0df0ad; text-decoration: underline; }
+
+@media (max-width: 650px) {
+    .nav-links { flex-wrap: wrap; justify-content: center; }
+    .faq-section h2 { font-size: 30px; }
+    .faq button { padding: 18px 18px; font-size: 16px; }
+    .faq p { padding: 0 18px 18px; }
+}
 </style>
     <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
@@ -1285,6 +1308,15 @@ footer {
             How It Works
         </a>
 
+        <a href="#faq">
+            FAQ
+        </a>
+
+        <a href="ats-score.html">
+            Results
+        </a>
+
+
     </nav>
     <!-- =====================================================
     lines
@@ -1293,7 +1325,7 @@ footer {
  
         <div class="menu">
 
-            <button class="menu-button" id="menuButton">
+            <button type="button" class="menu-button" id="menuButton" aria-label="Account menu">
 
                  <span></span>
                   <span></span>
@@ -1304,11 +1336,11 @@ footer {
 
     <div class="dropdown" id="dropdown">
 
-        <button id="profileButton">
+        <button type="button" id="profileButton">
             Profile
         </button>
 
-        <button  id="logoutButton">
+        <button type="button" id="logoutButton">
             Logout
         </button>
 
@@ -1546,108 +1578,48 @@ footer {
             <!-- CONTENT -->
 
             <div class="score-item">
-
                 <div>
-
                     <span>
-                        Content
+                        Required skills
                     </span>
-
-                    <strong>
-                        85/100
-                    </strong>
-
-                </div>
-
-
-                <div class="progress">
-
-                    <span style="width:85%"></span>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- SKILLS -->
-
-            <div class="score-item">
-
-                <div>
-
-                    <span>
-                        Skills
-                    </span>
-
                     <strong>
                         88/100
                     </strong>
-
                 </div>
-
-
                 <div class="progress">
-
                     <span style="width:88%"></span>
-
                 </div>
-
             </div>
 
-
-
-            <!-- FORMATTING -->
-
             <div class="score-item">
-
                 <div>
-
                     <span>
-                        Formatting
+                        Job keywords
                     </span>
-
-                    <strong>
-                        90/100
-                    </strong>
-
-                </div>
-
-
-                <div class="progress">
-
-                    <span style="width:90%"></span>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- KEYWORDS -->
-
-            <div class="score-item">
-
-                <div>
-
-                    <span>
-                        Keywords
-                    </span>
-
                     <strong>
                         82/100
                     </strong>
-
                 </div>
-
-
                 <div class="progress">
-
                     <span style="width:82%"></span>
-
                 </div>
-
             </div>
+
+            <div class="score-item">
+                <div>
+                    <span>
+                        Completeness
+                    </span>
+                    <strong>
+                        90/100
+                    </strong>
+                </div>
+                <div class="progress">
+                    <span style="width:90%"></span>
+                </div>
+            </div>
+
+            <p class="sample-note">Sample preview</p>
 
         </div>
 
@@ -1668,6 +1640,56 @@ footer {
      FOOTER
 ===================================================== -->
 
+<section class="faq-section" id="faq">
+    <p class="small-title">FAQ</p>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-container">
+        <div class="faq">
+            <button type="button" aria-expanded="false" aria-controls="faq-a1">
+                <span>Which file types can I upload?</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <p id="faq-a1">PDF and DOCX resumes, up to 5 MB each. Older .doc files are not supported: save them as DOCX or PDF first.</p>
+        </div>
+        <div class="faq">
+            <button type="button" aria-expanded="false" aria-controls="faq-a2">
+                <span>How is the ATS score calculated?</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <p id="faq-a2">Each resume is checked for your required skills (70% of the score), the key terms of your job description (20%) and whether it has contact details and the standard sections (10%). Without a job description, skills count for 90%. Every applicant page shows the full breakdown.</p>
+        </div>
+        <div class="faq">
+            <button type="button" aria-expanded="false" aria-controls="faq-a3">
+                <span>Is the score decided by AI?</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <p id="faq-a3">No. Scoring is rule-based and fixed, so the same resume with the same job requirements always gets the same score, and you can see exactly why.</p>
+        </div>
+        <div class="faq">
+            <button type="button" aria-expanded="false" aria-controls="faq-a4">
+                <span>Why was my resume marked Unsupported?</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <p id="faq-a4">Scanned or image-only PDFs have no text to read, and OCR is not supported yet, so no score is given instead of guessing. Export the resume as a text-based PDF or upload the DOCX.</p>
+        </div>
+        <div class="faq">
+            <button type="button" aria-expanded="false" aria-controls="faq-a5">
+                <span>Can I screen the same resumes for another job?</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <p id="faq-a5">Yes. Uploaded resumes stay saved in your account. Start a new analysis with different skills and every run is kept in your results history.</p>
+        </div>
+        <div class="faq">
+            <button type="button" aria-expanded="false" aria-controls="faq-a6">
+                <span>Who can see my resumes?</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <p id="faq-a6">Only your company account. Files are stored privately, are never publicly linked, and you can delete any resume or the whole collection whenever you like.</p>
+        </div>
+    </div>
+</section>
+</main>
+
 <footer>
 
     <div class="footer-logo">
@@ -1676,8 +1698,18 @@ footer {
 
 
     <p>
-        AI-powered resume analyzer.
+        Rule-based resume screening.
     </p>
+
+    <nav class="footer-links" aria-label="Footer">
+        <a href="homepage.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="upload.html">Upload Resumes</a>
+        <a href="ats-score.html">Results</a>
+        <a href="profile.html">Profile</a>
+    </nav>
     <br>
     <p>DEVELOPED BY</p>
     <p>
@@ -1707,6 +1739,15 @@ function goToUploadPage() {
 
 /* PROFILE MENU (open/close, outside click, Escape, Profile, Logout) */
 RIQ.initMenu();
+
+/* FAQ accordion */
+document.querySelectorAll(".faq button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        var item = btn.parentElement;
+        var open = item.classList.toggle("open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+});
 </script>
 </body>
 </html>

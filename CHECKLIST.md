@@ -21,3 +21,14 @@ Run top to bottom after any change. Automated coverage lives in `tests/`.
 - [ ] Upload a duplicate / .txt / oversized file → clear error each time
 - [ ] Analyze → results on `ats-score.html`; refresh → results still there
 - [ ] A scanned (image-only) PDF is reported as unsupported, not scored
+
+## Responsive / visual pass (Phase 6) - do this in a real browser
+Automated tests verify structure (viewport tags, landmarks, links, ARIA state) but cannot see pixels.
+Check each page at **360 px (phone)**, **768 px (tablet)** and **1280 px (desktop)**:
+- [ ] No horizontal scrolling on any page (login box, tables on `ats-score.html`, FAQ, footer links)
+- [ ] `homepage.html`: nav links wrap neatly, account menu opens/closes (tap outside, Esc), FAQ opens/closes, footer links wrap
+- [ ] `features.html` / `how-it-works.html`: shared nav + footer, 3 -> 2 -> 1 feature columns
+- [ ] `upload.html`: skill chips wrap, file rows do not overflow, result rows readable
+- [ ] `ats-score.html`: toolbar stacks, table scrolls inside its card, detail cards stack to one column
+- [ ] Keyboard only: Tab shows a visible focus ring everywhere; the "Skip to main content" link appears on first Tab
+- [ ] Zoom to 200%: nothing is cut off

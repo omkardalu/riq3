@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RIQ | Login</title>
+    <title>Resume IQ | Login</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <meta name="theme-color" content="#04131b">
 
     <style>
         * {
@@ -30,6 +32,7 @@
 
         .login-box {
             width: 380px;
+            max-width: 100%;
             padding: 40px 35px;
             background: rgba(7, 31, 41, 0.92);
             border: 1px solid #164655;
@@ -178,6 +181,12 @@
             text-decoration: underline;
         }
 
+    
+        body { padding: 16px; }
+        @media (max-width: 480px) {
+            .login-box { padding: 32px 22px; }
+            .logo { font-size: 28px; letter-spacing: 3px; }
+        }
     </style>
     <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
