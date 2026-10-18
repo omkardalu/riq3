@@ -3,5 +3,5 @@
   "private": true,
   "type": "module",
   "scripts": { "smoke": "node smoke.mjs" },
-  "devDependencies": { "jsdom": "^26.0.0" }
+  "devDependencies": { "jsdom": "^30.0.0" }
 }

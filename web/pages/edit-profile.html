@@ -168,6 +168,29 @@
             box-shadow: 0 0 0 2px rgba(13, 240, 173, 0.08);
         }
 
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 15px;
+            background: #04131b;
+            color: white;
+            border: 1px solid #173b46;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .form-group textarea { min-height: 90px; resize: vertical; }
+        .form-group select option { background: #071f29; color: white; }
+
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #0df0ad;
+            box-shadow: 0 0 0 2px rgba(13, 240, 173, 0.08);
+        }
+
         .form-group input::placeholder {
             color: #607982;
         }
@@ -313,6 +336,7 @@
         }
 
     </style>
+    <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
 
 <body>
@@ -344,16 +368,16 @@
 
         <div class="profile-top">
 
-            <div class="company-icon">
-                C
+            <div class="company-icon" id="companyIcon">
+                &nbsp;
             </div>
 
             <div class="company-name" id="companyTitle">
-                ABC Technologies
+                Loading...
             </div>
 
             <div class="username" id="usernameTitle">
-                @abctech
+                &nbsp;
             </div>
 
         </div>
@@ -376,8 +400,9 @@
                 <input
                     type="text"
                     id="companyName"
-                    value="ABC Technologies"
                     placeholder="Enter company name"
+                    maxlength="120"
+                    disabled
                 >
 
             </div>
@@ -394,8 +419,10 @@
                 <input
                     type="text"
                     id="username"
-                    value="@abctech"
                     placeholder="Enter username"
+                    maxlength="31"
+                    autocomplete="username"
+                    disabled
                 >
 
             </div>
@@ -412,8 +439,9 @@
                 <input
                     type="email"
                     id="email"
-                    value="company@example.com"
                     placeholder="Enter company email"
+                    autocomplete="email"
+                    disabled
                 >
 
             </div>
@@ -430,13 +458,44 @@
                 <input
                     type="tel"
                     id="phone"
-                    value="+91 98765 43210"
                     placeholder="Enter phone number"
+                    autocomplete="tel"
+                    disabled
                 >
 
             </div>
 
 
+            <!-- ADDRESS -->
+            <div class="form-group">
+                <label for="address">
+                    Company Address
+                </label>
+                <textarea
+                    id="address"
+                    placeholder="Enter complete company address"
+                    maxlength="500"
+                    disabled
+                ></textarea>
+            </div>
+            <!-- INDUSTRY -->
+            <div class="form-group">
+                <label for="industry">
+                    Industry
+                </label>
+                <select id="industry" disabled>
+                    <option value="">Select industry</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="Software">Software</option>
+                    <option value="Finance">Finance &amp; Banking</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Education">Education</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Telecommunications">Telecommunications</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
             <!-- ACCOUNT STATUS -->
 
             <div class="status-row">
@@ -459,14 +518,18 @@
             <div class="buttons">
 
                 <button
+                    type="button"
                     class="cancel-btn"
                     onclick="cancelEdit()">
                     Cancel
                 </button>
 
                 <button
+                    type="button"
                     class="save-btn"
-                    onclick="saveProfile()">
+                    id="saveButton"
+                    onclick="saveProfile()"
+                    disabled>
                     Save Changes
                 </button>
 
@@ -489,237 +552,86 @@
          JAVASCRIPT
     ========================= -->
 
+    <script src="/assets/js/riq.js"></script>
     <script>
+        var FIELDS = {
+            company_name: "companyName",
+            username: "username",
+            email: "email",
+            phone: "phone",
+            address: "address",
+            industry: "industry"
+        };
+        var message = document.getElementById("message");
 
-        /* =========================
-           BACK
-        ========================= */
+        function el(name) { return document.getElementById(FIELDS[name]); }
 
         function goBack() {
-
-            window.history.back();
-
+            RIQ.goBack("profile.html");
         }
-
-
-        /* =========================
-           CANCEL EDIT
-        ========================= */
 
         function cancelEdit() {
-
             window.location.href = "profile.html";
-
         }
 
+        function showMessage(text, kind) {
+            message.textContent = text;
+            message.className = "message " + kind;
+            message.style.display = "block";
+        }
 
-        /* =========================
-           SAVE PROFILE
-        ========================= */
+        function renderHeader(user) {
+            document.getElementById("companyIcon").textContent = user.company_name.charAt(0).toUpperCase();
+            document.getElementById("companyTitle").textContent = user.company_name;
+            document.getElementById("usernameTitle").textContent = "@" + user.username;
+        }
 
         function saveProfile() {
-
-            const companyName =
-                document.getElementById("companyName").value.trim();
-
-            const username =
-                document.getElementById("username").value.trim();
-
-            const email =
-                document.getElementById("email").value.trim();
-
-            const phone =
-                document.getElementById("phone").value.trim();
-
-            const message =
-                document.getElementById("message");
-
-
-            /* CLEAR OLD MESSAGE */
-
+            var form = document.querySelector(".form-section");
+            RIQ.clearErrors(form);
             message.style.display = "none";
-            message.className = "message";
 
+            var payload = {};
+            Object.keys(FIELDS).forEach(function (name) { payload[name] = el(name).value.trim(); });
 
-            /* VALIDATION */
-
-            if (companyName === "") {
-
-                showError("Please enter company name.");
+            /* quick client-side checks; the server validates everything again */
+            var problems = {};
+            if (!payload.company_name) problems.company_name = "Please enter company name.";
+            if (!payload.username) problems.username = "Please enter username.";
+            if (!payload.email) problems.email = "Please enter email address.";
+            else if (payload.email.indexOf("@") < 1) problems.email = "Please enter a valid email address.";
+            if (!payload.phone) problems.phone = "Please enter phone number.";
+            if (Object.keys(problems).length) {
+                Object.keys(problems).forEach(function (n) { RIQ.fieldError(el(n), problems[n]); });
                 return;
-
             }
 
-
-            if (username === "") {
-
-                showError("Please enter username.");
-                return;
-
-            }
-
-
-            if (email === "") {
-
-                showError("Please enter email address.");
-                return;
-
-            }
-
-
-            if (!email.includes("@")) {
-
-                showError("Please enter a valid email address.");
-                return;
-
-            }
-
-
-            if (phone === "") {
-
-                showError("Please enter phone number.");
-                return;
-
-            }
-
-
-            /* UPDATE HEADER */
-
-            document.getElementById("companyTitle").textContent =
-                companyName;
-
-            document.getElementById("usernameTitle").textContent =
-                username.startsWith("@")
-                    ? username
-                    : "@" + username;
-
-
-            /* SUCCESS MESSAGE */
-
-            message.textContent =
-                "Profile updated successfully.";
-
-            message.classList.add("success");
-            message.style.display = "block";
-
-
-            /*
-                Demo storage.
-
-                This saves the edited values in the browser.
-                Later, your database/backend can replace this.
-            */
-
-            localStorage.setItem(
-                "companyName",
-                companyName
-            );
-
-            localStorage.setItem(
-                "username",
-                username
-            );
-
-            localStorage.setItem(
-                "email",
-                email
-            );
-
-            localStorage.setItem(
-                "phone",
-                phone
-            );
-
-
-            /* GO BACK AFTER SHORT DELAY */
-
-            setTimeout(function () {
-
-                window.location.href = "profile.html";
-
-            }, 1200);
-
+            var button = document.getElementById("saveButton");
+            RIQ.setBusy(button, true, "Saving...");
+            RIQ.api("/api/profile", { method: "PUT", json: payload }).then(function (data) {
+                renderHeader(data.user);
+                showMessage("Profile updated successfully.", "success");
+                setTimeout(function () { window.location.href = "profile.html"; }, 1200);
+            }).catch(function (err) {
+                RIQ.setBusy(button, false);
+                var inputs = {};
+                Object.keys(FIELDS).forEach(function (n) { inputs[n] = el(n); });
+                var orphans = RIQ.showFieldErrors(err.fields, inputs);
+                if (!Object.keys(err.fields).length || orphans.length) showMessage(orphans[0] || err.message, "error");
+            });
         }
 
-
-        /* =========================
-           ERROR MESSAGE
-        ========================= */
-
-        function showError(text) {
-
-            const message =
-                document.getElementById("message");
-
-            message.textContent = text;
-
-            message.classList.add("error");
-
-            message.style.display = "block";
-
-        }
-
-
-        /* =========================
-           LOAD SAVED DATA
-        ========================= */
-
-        window.onload = function () {
-
-            const savedCompany =
-                localStorage.getItem("companyName");
-
-            const savedUsername =
-                localStorage.getItem("username");
-
-            const savedEmail =
-                localStorage.getItem("email");
-
-            const savedPhone =
-                localStorage.getItem("phone");
-
-
-            if (savedCompany) {
-
-                document.getElementById("companyName").value =
-                    savedCompany;
-
-                document.getElementById("companyTitle").textContent =
-                    savedCompany;
-
-            }
-
-
-            if (savedUsername) {
-
-                document.getElementById("username").value =
-                    savedUsername;
-
-                document.getElementById("usernameTitle").textContent =
-                    savedUsername.startsWith("@")
-                        ? savedUsername
-                        : "@" + savedUsername;
-
-            }
-
-
-            if (savedEmail) {
-
-                document.getElementById("email").value =
-                    savedEmail;
-
-            }
-
-
-            if (savedPhone) {
-
-                document.getElementById("phone").value =
-                    savedPhone;
-
-            }
-
-        };
-
+        RIQ.requireUser().then(function (user) {
+            renderHeader(user);
+            Object.keys(FIELDS).forEach(function (name) {
+                var input = el(name);
+                input.value = user[name] || "";
+                input.disabled = false;
+            });
+            document.getElementById("saveButton").disabled = false;
+        }).catch(function (err) {
+            if (err.status !== 401) showMessage(err.message, "error");
+        });
     </script>
 
 </body>

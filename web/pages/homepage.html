@@ -1243,6 +1243,7 @@ footer {
 
 
 </style>
+    <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
 
 
@@ -1697,29 +1698,15 @@ footer {
      JAVASCRIPT
 ===================================================== -->
 
+<script src="/assets/js/riq.js"></script>
 <script>
 /* NAVIGATION */
 function goToUploadPage() {
     window.location.href = "upload.html";
 }
 
-/* PROFILE MENU */
-const menuButton = document.getElementById("menuButton");
-const dropdown = document.getElementById("dropdown");
-
-menuButton.addEventListener("click", function () {
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-});
-
-document.getElementById("profileButton").addEventListener("click", function () {
-    window.location.href = "profile.html";
-});
-
-document.getElementById("logoutButton").addEventListener("click", function () {
-    if (confirm("Are you sure you want to logout?")) {
-        window.location.href = "login.html";
-    }
-});
+/* PROFILE MENU (open/close, outside click, Escape, Profile, Logout) */
+RIQ.initMenu();
 </script>
 </body>
 </html>

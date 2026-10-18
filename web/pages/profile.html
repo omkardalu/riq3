@@ -341,6 +341,7 @@
 
     </style>
 
+    <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
 
 
@@ -376,16 +377,16 @@
 
         <div class="profile-top">
 
-            <div class="company-icon">
-                C
+            <div class="company-icon" id="companyIcon">
+                &nbsp;
             </div>
 
             <h2 class="company-name" id="companyName">
-                ABC Technologies
+                Loading...
             </h2>
 
             <p class="username" id="username">
-                @abctech
+                &nbsp;
             </p>
 
         </div>
@@ -406,7 +407,7 @@
                 </span>
 
                 <span class="detail-value" id="companyNameDetail">
-                    ABC Technologies
+                    &mdash;
                 </span>
 
             </div>
@@ -421,7 +422,7 @@
                 </span>
 
                 <span class="detail-value" id="usernameDetail">
-                    @abctech
+                    &mdash;
                 </span>
 
             </div>
@@ -436,7 +437,7 @@
                 </span>
 
                 <span class="detail-value" id="email">
-                    company@example.com
+                    &mdash;
                 </span>
 
             </div>
@@ -451,7 +452,37 @@
                 </span>
 
                 <span class="detail-value" id="phone">
-                    +91 98765 43210
+                    &mdash;
+                </span>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Address
+                </span>
+
+                <span class="detail-value" id="address">
+                    &mdash;
+                </span>
+
+            </div>
+
+
+            <!-- INDUSTRY -->
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Industry
+                </span>
+
+                <span class="detail-value" id="industry">
+                    &mdash;
                 </span>
 
             </div>
@@ -499,33 +530,53 @@
          JAVASCRIPT
     ========================= -->
 
+    <script src="/assets/js/riq.js"></script>
     <script>
 
         /* BACK BUTTON */
 
         function goBack() {
-
-            window.history.back();
-
+            RIQ.goBack("homepage.html");
         }
 
 
         /* EDIT PROFILE */
 
         function editProfile() {
-
             window.location.href = "edit-profile.html";
-
         }
 
 
         /* CHANGE PASSWORD */
 
         function changePassword() {
-
             window.location.href = "change-password.html";
-
         }
+
+
+        /* LOAD THE SIGNED-IN COMPANY */
+
+        function show(id, value) {
+            document.getElementById(id).textContent = value || "\u2014";
+        }
+
+        RIQ.requireUser().then(function (user) {
+            document.title = "Resume IQ | " + user.company_name;
+            document.getElementById("companyIcon").textContent = user.company_name.charAt(0).toUpperCase();
+            show("companyName", user.company_name);
+            show("username", "@" + user.username);
+            show("companyNameDetail", user.company_name);
+            show("usernameDetail", "@" + user.username);
+            show("email", user.email);
+            show("phone", user.phone);
+            show("address", user.address);
+            show("industry", user.industry);
+        }).catch(function (err) {
+            if (err.status !== 401) {
+                show("companyName", "Could not load your profile");
+                RIQ.toast(err.message, "error");
+            }
+        });
 
     </script>
 
