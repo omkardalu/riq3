@@ -30,6 +30,12 @@ gunicorn -c gunicorn.conf.py app:app          # a Procfile with release + web co
 ```
 Health check for the platform / load balancer: `GET /api/health` -> 200 `{"status":"ok","database":"ok"}`, or 503 when the database is unreachable.
 
+## Before each release
+```bash
+pip install pip-audit && pip-audit -r requirements.txt   # known-vulnerability scan (last run: no known vulnerabilities)
+bash scripts/verify.sh                                     # migrations, drift, lint, page audit, all tests
+```
+
 ## Operations
 - **Logs** go to stdout/stderr. Every line carries a request id (`[a1b2c3d4e5f6]`); the same id is returned in the
   `X-Request-ID` header and in the JSON body of any 5xx error, so a user report can be matched to a log line.

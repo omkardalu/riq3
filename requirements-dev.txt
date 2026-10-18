@@ -1,3 +1,4 @@
 -r requirements.txt
 pytest==9.1.1
 reportlab==4.4.10
+pyflakes==4.0.3
