@@ -33,7 +33,7 @@ Then follow [DEMO.md](DEMO.md) (5 minutes, with the exact results to expect).
 
 ## Tests
 ```bash
-./scripts/verify.sh                          # migrations, drift check, lint, page audit, full suite
+bash scripts/verify.sh                          # migrations, drift check, lint, page audit, full suite
 cd tests/js && npm install && cd ../..       # once, enables the browser (jsdom) end-to-end tests
 pytest                                       # everything, every phase
 ```

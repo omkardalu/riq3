@@ -1,6 +1,6 @@
 # Regression map: every phase has tests that run on every change
 
-Run all of it with `./scripts/verify.sh` (or `pytest`).
+Run all of it with `bash scripts/verify.sh` (or `pytest`).
 
 | Phase | Exit criterion (from `phases.md`) | Proven by |
 |---|---|---|
