@@ -71,6 +71,9 @@ def test_no_secrets_committed_to_the_repository():
     assert not any(f.endswith((".pem", ".key", ".sqlite", ".db")) for f in out)
     env_example = (BASE_DIR / ".env.example").read_text()
     assert "change-me" in env_example                       # placeholder, not a real secret
+    active = [ln for ln in env_example.splitlines() if ln.strip() and not ln.lstrip().startswith("#")]
+    assert not any(ln.startswith(("SESSION_COOKIE_SECURE", "TRUST_PROXY")) for ln in active), \
+        "production-only settings must stay commented out, or login breaks over http in development"
     assert ".env" in (BASE_DIR / ".gitignore").read_text()
 
 
