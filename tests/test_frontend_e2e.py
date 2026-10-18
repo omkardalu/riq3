@@ -33,6 +33,7 @@ def fixtures_dir(tmp_path_factory):
     d = tmp_path_factory.mktemp("fixtures")
     (d / "rahul.pdf").write_bytes(make_pdf(SAMPLE_LINES))
     (d / "priya.docx").write_bytes(make_docx(["Priya Sharma", "priya@example.com", "Skills", "Java, SQL, Git, HTML, CSS"]))
+    (d / "arjun.docx").write_bytes(make_docx(["Arjun Reddy", "arjun@example.com  +91 99887 66554", "Skills", "Python, Docker, AWS, SQL, Git", "Experience", "Cloud intern 4 months", "Education", "B.Tech CSE"]))
     (d / "scanned.pdf").write_bytes(make_blank_pdf())
     return d
 
@@ -47,6 +48,6 @@ def run_suite(base_url: str, pattern: str, fixtures: Path):
 
 
 @needs_node
-@pytest.mark.parametrize("suite", ["phase2.test.mjs", "phase3.test.mjs", "phase4.test.mjs"])
+@pytest.mark.parametrize("suite", ["phase2.test.mjs", "phase3.test.mjs", "phase4.test.mjs", "phase5.test.mjs"])
 def test_frontend_suite(live_server, fixtures_dir, suite):
     run_suite(live_server, suite, fixtures_dir)

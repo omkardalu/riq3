@@ -1171,7 +1171,7 @@ Machine Learning"></textarea>
                     (ok ? '<span class="file-status">' + r.matched + " of " + job.required_skills.length + " skills</span>" : '<span class="result-note">' + RIQ.escapeHTML(r.note) + "</span>") +
                     "</div>";
             });
-            if (final) html += '<div class="result-links"><a href="ats-score.html">Open the results page &rarr;</a></div>';
+            if (final) html += '<div class="result-links"><a href="ats-score.html?job=' + job.id + '">Open the results page &rarr;</a></div>';
             box.innerHTML = html;
         }
 

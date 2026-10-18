@@ -416,1188 +416,515 @@ td {
 
 }
 
+
+/* ===== Phase 5: live results (toolbar, states, badges, breakdown) ===== */
+.riq-nav { display: flex; gap: 18px; font-size: 14px; align-items: center; flex-wrap: wrap; }
+.riq-nav a { color: #0df0ad; text-decoration: none; }
+.riq-nav a:hover { text-decoration: underline; }
+.riq-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+
+.toolbar { width: 90%; margin: 20px auto 0; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.toolbar .field { display: flex; flex-direction: column; gap: 5px; flex: 1 1 180px; min-width: 150px; }
+.toolbar label { font-size: 12px; letter-spacing: .5px; text-transform: uppercase; color: #8fb3a8; }
+.toolbar select, .toolbar input[type="search"] {
+    background: #08232d; color: #fff; border: 1px solid #23414b; border-radius: 10px;
+    padding: 11px 12px; font-size: 14px; font-family: inherit; outline: none; width: 100%;
+}
+.toolbar select:focus, .toolbar input[type="search"]:focus { border-color: #0df0ad; }
+.toolbar .field.wide { flex: 2 1 260px; }
+.toolbar-btn { background: transparent; color: #ff9d9d; border: 1px solid rgba(255,119,119,.5); border-radius: 10px;
+    padding: 11px 14px; cursor: pointer; font-size: 13px; }
+.toolbar-btn:hover { background: rgba(255,119,119,.12); }
+.result-count { width: 90%; margin: 10px auto 0; font-size: 13px; color: #8fb3a8; min-height: 18px; }
+
+.state-box { width: 90%; margin: 25px auto; padding: 46px 24px; text-align: center; background: #08232d; border-radius: 15px; border: 1px dashed #23414b; }
+.state-box h3 { color: #0df0ad; margin-bottom: 8px; font-size: 20px; }
+.state-box p { color: #a8c2ba; margin-bottom: 16px; line-height: 1.5; }
+.state-box a, .state-box button { display: inline-block; background: #0df0ad; color: #04131b; font-weight: 700; border: 0; border-radius: 10px;
+    padding: 11px 20px; text-decoration: none; cursor: pointer; font-size: 14px; }
+
+.badge { display: inline-block; margin-left: 8px; padding: 2px 9px; border-radius: 12px; font-size: 11px; font-weight: 600; vertical-align: middle; }
+.badge.unsupported { background: rgba(255,193,77,.12); color: #ffc14d; border: 1px solid rgba(255,193,77,.5); }
+.badge.failed { background: rgba(255,107,107,.12); color: #ff8a8a; border: 1px solid rgba(255,107,107,.5); }
+.muted { color: #6f8f87; font-weight: normal; }
+.load-more { display: block; margin: 0 auto 30px; }
+
+.notice { margin: 0 0 22px; padding: 14px 16px; border-radius: 12px; background: rgba(255,193,77,.10); border: 1px solid rgba(255,193,77,.5); color: #ffd88a; line-height: 1.5; }
+.info-card ul { margin: 6px 0 0 18px; line-height: 1.7; color: #d6e4df; }
+.info-card .none { color: #6f8f87; font-style: italic; }
+.breakdown { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+.breakdown th { background: transparent; color: #8fb3a8; font-size: 12px; text-transform: uppercase; padding: 6px 4px; text-align: left; }
+.breakdown td { padding: 8px 4px; text-align: left; border-bottom: 1px solid #23414b; }
+.breakdown td:last-child, .breakdown th:last-child { text-align: right; }
+.breakdown tfoot td { font-weight: 700; color: #0df0ad; border-bottom: 0; }
+.explain { margin-top: 10px; font-size: 13px; color: #8fb3a8; line-height: 1.5; }
+.detail-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 6px 0 10px; }
+.detail-actions a { color: #0df0ad; font-size: 14px; }
+.info-card.span2 { grid-column: 1 / -1; }
 </style>
 
+    <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
 
 
 <body>
 
-
 <!-- ===================================================== -->
 <!-- APPLICANT LIST -->
 <!-- ===================================================== -->
-
 <section id="applicantList">
 
-
     <div class="riq-header">
-
         <div>
-
             <h1 class="riq-title">
                 Applicant <span>Analysis</span>
             </h1>
-
             <div class="riq-subtitle">
                 &nbsp;&nbsp;Click an applicant to view complete resume analysis
             </div>
-
         </div>
-
+        <nav class="riq-nav" aria-label="Page navigation">
+            <a href="homepage.html">&larr; Home</a>
+            <a href="upload.html">Upload resumes</a>
+        </nav>
     </div>
 
+    <div id="pageMessage" class="riq-banner" style="width:90%;margin:16px auto 0"></div>
 
-    <div class="table-container">
+    <div class="toolbar" id="toolbar" style="display:none">
+        <div class="field wide">
+            <label for="jobSelect">Job / analysis run</label>
+            <select id="jobSelect"></select>
+        </div>
+        <div class="field">
+            <label for="searchBox">Search applicants</label>
+            <input type="search" id="searchBox" placeholder="Name or file name" autocomplete="off">
+        </div>
+        <div class="field">
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter">
+                <option value="">All</option>
+                <option value="completed">Scored</option>
+                <option value="unsupported">Unsupported</option>
+                <option value="failed">Failed</option>
+            </select>
+        </div>
+        <div class="field">
+            <label for="sortSelect">Sort by</label>
+            <select id="sortSelect">
+                <option value="score:desc">Score: high to low</option>
+                <option value="score:asc">Score: low to high</option>
+                <option value="name:asc">Name: A to Z</option>
+                <option value="date:desc">Newest first</option>
+            </select>
+        </div>
+        <button type="button" class="toolbar-btn" id="deleteJobBtn">Delete this run</button>
+    </div>
+    <div class="result-count" id="resultCount" aria-live="polite"></div>
 
+    <div id="stateBox" class="state-box"><p style="margin:0">Loading results...</p></div>
+
+    <div class="table-container" id="tableWrap" style="display:none">
         <table>
-
             <thead>
-
                 <tr>
-
                     <th>Applicant Name</th>
                     <th>ATS Score</th>
                     <th>Matched Percentage</th>
                     <th>Unmatched Percentage</th>
                     <th>Action</th>
-
                 </tr>
-
             </thead>
-
-
-            <tbody>
-
-
-                <!-- ================================================= -->
-                <!-- RAHUL -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Rahul Kumar"
-                    data-email="rahul@example.com"
-                    data-phone="+91 98765 43210"
-                    data-location="Hyderabad, Telangana"
-
-                    data-score="92%"
-                    data-matched="88%"
-                    data-unmatched="12%"
-
-                    data-education="B.Tech in Computer Science | XYZ Engineering College | Graduation: 2027"
-
-                    data-experience="Frontend Developer Intern | 6 Months Experience | Worked on responsive web applications and UI development."
-
-                    data-projects="AI Resume Analyzer | Student Management System | E-Commerce Website"
-
-                    data-strengths="Strong technical skills | Good project experience | Relevant educational background"
-
-                    data-weaknesses="Missing some required keywords | Limited professional experience | Resume formatting can be improved"
-
-                    data-suggestions="Add more job-specific keywords, quantify project achievements, and improve the professional summary."
-
-                    data-matched-skills="Python,HTML,CSS,JavaScript,SQL,Git,REST API"
-
-                    data-missing-skills="React,Docker,AWS,TypeScript">
-
-
-                    <td>Rahul Kumar</td>
-
-                    <td class="ats">92%</td>
-
-                    <td class="matched">88%</td>
-
-                    <td class="unmatched">12%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- PRIYA -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Priya Sharma"
-                    data-email="priya@example.com"
-                    data-phone="+91 98765 12345"
-                    data-location="Bengaluru, Karnataka"
-
-                    data-score="87%"
-                    data-matched="82%"
-                    data-unmatched="18%"
-
-                    data-education="B.Tech in Information Technology | ABC Engineering College | Graduation: 2027"
-
-                    data-experience="Java Developer Intern | 8 Months Experience | Worked on backend applications and database integration."
-
-                    data-projects="Student Management System | Banking Application | Library Management System"
-
-                    data-strengths="Good Java knowledge | Strong SQL skills | Good database understanding"
-
-                    data-weaknesses="Limited React experience | Missing cloud technologies | Needs more frontend experience"
-
-                    data-suggestions="Add Spring Boot and cloud-related skills. Include measurable achievements from projects."
-
-                    data-matched-skills="Java,HTML,CSS,SQL,Git"
-
-                    data-missing-skills="Spring Boot,React,Docker,AWS">
-
-
-                    <td>Priya Sharma</td>
-
-                    <td class="ats">87%</td>
-
-                    <td class="matched">82%</td>
-
-                    <td class="unmatched">18%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- ARJUN -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Arjun Reddy"
-                    data-email="arjun@example.com"
-                    data-phone="+91 99887 66554"
-                    data-location="Hyderabad, Telangana"
-
-                    data-score="81%"
-                    data-matched="76%"
-                    data-unmatched="24%"
-
-                    data-education="B.Tech in Computer Science | DEF University | Graduation: 2027"
-
-                    data-experience="Web Developer Intern | 5 Months Experience | Developed responsive websites and JavaScript applications."
-
-                    data-projects="Portfolio Website | Online Shopping Website | Task Management App"
-
-                    data-strengths="Good JavaScript skills | Strong Git knowledge | Good web development fundamentals"
-
-                    data-weaknesses="Missing backend technologies | Limited cloud experience | Needs more React knowledge"
-
-                    data-suggestions="Learn React and Node.js and add backend projects to the resume."
-
-                    data-matched-skills="Python,JavaScript,SQL,Git"
-
-                    data-missing-skills="React,Node.js,Docker,AWS">
-
-
-                    <td>Arjun Reddy</td>
-
-                    <td class="ats">81%</td>
-
-                    <td class="matched">76%</td>
-
-                    <td class="unmatched">24%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- SNEHA -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Sneha Patel"
-                    data-email="sneha@example.com"
-                    data-phone="+91 91234 56789"
-                    data-location="Mumbai, Maharashtra"
-
-                    data-score="95%"
-                    data-matched="91%"
-                    data-unmatched="9%"
-
-                    data-education="B.Tech in Computer Science | XYZ Institute of Technology | Graduation: 2027"
-
-                    data-experience="Full Stack Developer Intern | 1 Year Experience | Developed full-stack web applications."
-
-                    data-projects="AI Resume Analyzer | E-Commerce Platform | Job Portal"
-
-                    data-strengths="Excellent technical skills | Strong project portfolio | Good full-stack knowledge"
-
-                    data-weaknesses="Limited AWS experience | Needs more DevOps knowledge"
-
-                    data-suggestions="Add AWS certification and demonstrate deployment experience."
-
-                    data-matched-skills="Python,HTML,CSS,JavaScript,React,SQL,Git"
-
-                    data-missing-skills="Docker,AWS">
-
-
-                    <td>Sneha Patel</td>
-
-                    <td class="ats">95%</td>
-
-                    <td class="matched">91%</td>
-
-                    <td class="unmatched">9%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- VIKRAM -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Vikram Singh"
-                    data-email="vikram@example.com"
-                    data-phone="+91 90000 12345"
-                    data-location="Delhi, India"
-
-                    data-score="73%"
-                    data-matched="68%"
-                    data-unmatched="32%"
-
-                    data-education="B.Tech in Information Technology | ABC University | Graduation: 2027"
-
-                    data-experience="Web Development Intern | 4 Months Experience | Worked on HTML, CSS and JavaScript projects."
-
-                    data-projects="Personal Portfolio | College Management Website"
-
-                    data-strengths="Good HTML and CSS skills | Basic JavaScript knowledge"
-
-                    data-weaknesses="Missing Python | Missing React | Limited backend experience"
-
-                    data-suggestions="Learn Python, React and Node.js and build full-stack projects."
-
-                    data-matched-skills="HTML,CSS,JavaScript,SQL"
-
-                    data-missing-skills="React,Python,Node.js,Docker,AWS">
-
-
-                    <td>Vikram Singh</td>
-
-                    <td class="ats">73%</td>
-
-                    <td class="matched">68%</td>
-
-                    <td class="unmatched">32%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- ANANYA -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Ananya Rao"
-                    data-email="ananya@example.com"
-                    data-phone="+91 93456 78901"
-                    data-location="Chennai, Tamil Nadu"
-
-                    data-score="89%"
-                    data-matched="85%"
-                    data-unmatched="15%"
-
-                    data-education="B.Tech in Computer Science | LMN College | Graduation: 2027"
-
-                    data-experience="Frontend Developer Intern | 7 Months Experience | Developed responsive React applications."
-
-                    data-projects="Food Delivery Website | Resume Builder | Portfolio Website"
-
-                    data-strengths="Strong React knowledge | Good UI development skills | Good JavaScript skills"
-
-                    data-weaknesses="Limited backend experience | Limited cloud knowledge"
-
-                    data-suggestions="Add backend technologies and cloud deployment projects."
-
-                    data-matched-skills="Python,React,HTML,CSS,SQL,Git"
-
-                    data-missing-skills="Docker,AWS,TypeScript">
-
-
-                    <td>Ananya Rao</td>
-
-                    <td class="ats">89%</td>
-
-                    <td class="matched">85%</td>
-
-                    <td class="unmatched">15%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- KARTHIK -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Karthik Naidu"
-                    data-email="karthik@example.com"
-                    data-phone="+91 87654 32109"
-                    data-location="Vijayawada, Andhra Pradesh"
-
-                    data-score="78%"
-                    data-matched="71%"
-                    data-unmatched="29%"
-
-                    data-education="B.Tech in Computer Science | PQR Engineering College | Graduation: 2027"
-
-                    data-experience="C++ Developer Intern | 6 Months Experience | Worked on software development projects."
-
-                    data-projects="Inventory Management System | Banking System"
-
-                    data-strengths="Strong C++ knowledge | Good SQL skills | Good problem-solving skills"
-
-                    data-weaknesses="Limited Python | Missing React | Missing cloud technologies"
-
-                    data-suggestions="Learn Python, React and cloud technologies and add web projects."
-
-                    data-matched-skills="C++,HTML,CSS,SQL,Git"
-
-                    data-missing-skills="Python,React,Node.js,Docker,AWS">
-
-
-                    <td>Karthik Naidu</td>
-
-                    <td class="ats">78%</td>
-
-                    <td class="matched">71%</td>
-
-                    <td class="unmatched">29%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- MEERA -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Meera Das"
-                    data-email="meera@example.com"
-                    data-phone="+91 98761 23456"
-                    data-location="Kolkata, West Bengal"
-
-                    data-score="93%"
-                    data-matched="89%"
-                    data-unmatched="11%"
-
-                    data-education="B.Tech in Computer Science | STU University | Graduation: 2027"
-
-                    data-experience="Full Stack Developer Intern | 10 Months Experience | Developed web applications using React and Python."
-
-                    data-projects="AI Resume Analyzer | E-Commerce Platform | Chat Application"
-
-                    data-strengths="Excellent React skills | Strong Python knowledge | Good database skills"
-
-                    data-weaknesses="Limited AWS knowledge | Limited DevOps experience"
-
-                    data-suggestions="Add Docker and AWS deployment experience to improve the resume."
-
-                    data-matched-skills="Python,JavaScript,React,SQL,Git,HTML,CSS"
-
-                    data-missing-skills="Docker,AWS">
-
-
-                    <td>Meera Das</td>
-
-                    <td class="ats">93%</td>
-
-                    <td class="matched">89%</td>
-
-                    <td class="unmatched">11%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- ADITYA -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Aditya Verma"
-                    data-email="aditya@example.com"
-                    data-phone="+91 90909 11223"
-                    data-location="Pune, Maharashtra"
-
-                    data-score="84%"
-                    data-matched="79%"
-                    data-unmatched="21%"
-
-                    data-education="B.Tech in Computer Engineering | UVW College | Graduation: 2027"
-
-                    data-experience="Java Developer Intern | 6 Months Experience | Developed Java applications and database systems."
-
-                    data-projects="Banking Application | Employee Management System | Library System"
-
-                    data-strengths="Good Java skills | Good Python knowledge | Strong SQL knowledge"
-
-                    data-weaknesses="Missing React | Limited Spring Boot experience | Limited cloud knowledge"
-
-                    data-suggestions="Learn React and Spring Boot and add cloud deployment projects."
-
-                    data-matched-skills="Java,Python,HTML,CSS,SQL"
-
-                    data-missing-skills="React,Spring Boot,Docker,AWS">
-
-
-                    <td>Aditya Verma</td>
-
-                    <td class="ats">84%</td>
-
-                    <td class="matched">79%</td>
-
-                    <td class="unmatched">21%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- NEHA -->
-                <!-- ================================================= -->
-
-                <tr class="applicant-row"
-
-                    data-name="Neha Reddy"
-                    data-email="neha@example.com"
-                    data-phone="+91 95555 66778"
-                    data-location="Warangal, Telangana"
-
-                    data-score="90%"
-                    data-matched="86%"
-                    data-unmatched="14%"
-
-                    data-education="B.Tech in Computer Science | RST Engineering College | Graduation: 2027"
-
-                    data-experience="Frontend Developer Intern | 9 Months Experience | Developed responsive websites and JavaScript applications."
-
-                    data-projects="Resume Builder | Online Store | Student Portal"
-
-                    data-strengths="Strong frontend skills | Good JavaScript knowledge | Good SQL knowledge"
-
-                    data-weaknesses="Limited React experience | Limited AWS knowledge"
-
-                    data-suggestions="Add React, TypeScript and AWS projects to strengthen the resume."
-
-                    data-matched-skills="Python,HTML,CSS,JavaScript,SQL,Git"
-
-                    data-missing-skills="React,Docker,AWS,TypeScript">
-
-
-                    <td>Neha Reddy</td>
-
-                    <td class="ats">90%</td>
-
-                    <td class="matched">86%</td>
-
-                    <td class="unmatched">14%</td>
-
-                    <td>
-                        <button class="view-btn">
-                            View
-                        </button>
-                    </td>
-
-                </tr>
-
-
-            </tbody>
-
+            <tbody id="resultsBody"></tbody>
         </table>
-
     </div>
-
+    <button type="button" class="view-btn load-more" id="loadMore" style="display:none">Show more</button>
 
 </section>
-
 
 
 <!-- ===================================================== -->
 <!-- APPLICANT DETAILS -->
 <!-- ===================================================== -->
-
 <section class="details" id="applicantDetails">
 
-
-    <button class="back-btn" id="backBtn">
-        ← Back to Applicants
+    <button class="back-btn" id="backBtn" type="button">
+        &larr; Back to Applicants
     </button>
 
+    <div id="detailNotice" class="notice" style="display:none"></div>
 
     <!-- PROFILE -->
-
     <div class="profile-header">
-
-        <div class="avatar" id="avatar">
-            RK
-        </div>
-
+        <div class="avatar" id="avatar">?</div>
         <div>
-
-            <h2 class="profile-name" id="detailName">
-                Applicant
-            </h2>
-
-            <div class="profile-email" id="detailEmail">
-                applicant@example.com
-            </div>
-
+            <h2 class="profile-name" id="detailName">Applicant</h2>
+            <div class="profile-email" id="detailEmail"></div>
         </div>
-
     </div>
-
 
     <!-- SCORE -->
-
     <div class="score-grid">
-
-
         <div class="score-card">
-
             <p>ATS Score</p>
-
-            <div class="big-score" id="detailScore">
-                0%
-            </div>
-
+            <div class="big-score" id="detailScore">&mdash;</div>
         </div>
-
-
         <div class="score-card">
-
             <p>Matched Percentage</p>
-
-            <div class="big-score" id="detailMatched">
-                0%
-            </div>
-
+            <div class="big-score" id="detailMatched">&mdash;</div>
         </div>
-
-
         <div class="score-card">
-
             <p>Unmatched Percentage</p>
-
-            <div class="big-score" id="detailUnmatched">
-                0%
-            </div>
-
+            <div class="big-score" id="detailUnmatched">&mdash;</div>
         </div>
-
-
     </div>
 
-
+    <div class="detail-actions" id="detailActions"></div>
 
     <!-- INFORMATION GRID -->
-
     <div class="info-grid">
 
-
-        <!-- PERSONAL -->
-
         <div class="info-card">
-
             <h3>👤 Personal Information</h3>
-
             <p>
-
-                <strong>Name:</strong>
-                <span id="infoName"></span>
-
-                <br>
-
-                <strong>Email:</strong>
-                <span id="infoEmail"></span>
-
-                <br>
-
-                <strong>Phone:</strong>
-                <span id="infoPhone"></span>
-
-                <br>
-
-                <strong>Location:</strong>
-                <span id="infoLocation"></span>
-
+                <strong>Name:</strong> <span id="infoName"></span><br>
+                <strong>Email:</strong> <span id="infoEmail"></span><br>
+                <strong>Phone:</strong> <span id="infoPhone"></span><br>
+                <strong>File:</strong> <span id="infoFile"></span>
             </p>
-
         </div>
 
-
-
-        <!-- EDUCATION -->
-
         <div class="info-card">
-
             <h3>🎓 Education</h3>
-
-            <p id="infoEducation"></p>
-
+            <div id="infoEducation"></div>
         </div>
 
-
-
-        <!-- MATCHED -->
-
         <div class="info-card">
-
             <h3>✓ Matched Skills</h3>
-
-            <div class="skill-heading">
-                Skills found in the applicant's resume
-            </div>
-
+            <div class="skill-heading">Skills found in the applicant's resume</div>
             <div class="skills" id="matchedSkills"></div>
-
         </div>
 
-
-
-        <!-- MISSING -->
-
         <div class="info-card">
-
             <h3>✕ Mismatched / Missing Skills</h3>
-
-            <div class="skill-heading">
-                Required skills not found in the resume
-            </div>
-
+            <div class="skill-heading">Required skills not found in the resume</div>
             <div class="skills" id="missingSkills"></div>
-
         </div>
 
-
-
-        <!-- EXPERIENCE -->
-
         <div class="info-card">
-
             <h3>💼 Experience</h3>
-
-            <p id="infoExperience"></p>
-
+            <div id="infoExperience"></div>
         </div>
 
-
-
-        <!-- PROJECTS -->
-
         <div class="info-card">
-
             <h3>🚀 Projects</h3>
-
-            <p id="infoProjects"></p>
-
+            <div id="infoProjects"></div>
         </div>
 
-
-
-        <!-- WEAKNESSES -->
-
         <div class="info-card">
-
             <h3>⚠️ Weaknesses</h3>
-
-            <p id="infoWeaknesses"></p>
-
+            <div id="infoWeaknesses"></div>
         </div>
 
-
-
-        <!-- STRENGTHS -->
-
         <div class="info-card">
-
             <h3>💪 Strengths</h3>
-
-            <p id="infoStrengths"></p>
-
+            <div id="infoStrengths"></div>
         </div>
-
-
-
-        <!-- AI SUGGESTIONS -->
 
         <div class="info-card">
-
-            <h3>🤖 AI Suggestions</h3>
-
-            <p id="infoSuggestions"></p>
-
+            <h3>💡 Recommendations</h3>
+            <div id="infoSuggestions"></div>
         </div>
 
+        <div class="info-card">
+            <h3>📊 How this score was calculated</h3>
+            <div id="infoBreakdown"></div>
+        </div>
 
     </div>
-
 
     <!-- UPLOAD MORE -->
-
     <div class="upload-more-container">
-
-        <button
-            class="upload-more-btn"
-            onclick="goToUploadPage()">
-
+        <button class="upload-more-btn" type="button" onclick="goToUploadPage()">
             Upload More Resumes
-
         </button>
-
     </div>
-
 
 </section>
 
 
-
-<!-- ===================================================== -->
-<!-- JAVASCRIPT -->
-<!-- ===================================================== -->
-
+<script src="/assets/js/riq.js"></script>
 <script>
-
-
 /* =====================================================
-   GET ELEMENTS
+   STATE
 ===================================================== */
-
-const rows =
-    document.querySelectorAll(".applicant-row");
-
-const applicantList =
-    document.getElementById("applicantList");
-
-const applicantDetails =
-    document.getElementById("applicantDetails");
-
-
-const detailName =
-    document.getElementById("detailName");
-
-const detailEmail =
-    document.getElementById("detailEmail");
-
-const detailScore =
-    document.getElementById("detailScore");
-
-const detailMatched =
-    document.getElementById("detailMatched");
-
-const detailUnmatched =
-    document.getElementById("detailUnmatched");
-
-
-const infoName =
-    document.getElementById("infoName");
-
-const infoEmail =
-    document.getElementById("infoEmail");
-
-const infoPhone =
-    document.getElementById("infoPhone");
-
-const infoLocation =
-    document.getElementById("infoLocation");
-
-const infoEducation =
-    document.getElementById("infoEducation");
-
-const infoExperience =
-    document.getElementById("infoExperience");
-
-const infoProjects =
-    document.getElementById("infoProjects");
-
-const infoStrengths =
-    document.getElementById("infoStrengths");
-
-const infoWeaknesses =
-    document.getElementById("infoWeaknesses");
-
-const infoSuggestions =
-    document.getElementById("infoSuggestions");
-
-
-const avatar =
-    document.getElementById("avatar");
-
-
-const matchedSkills =
-    document.getElementById("matchedSkills");
-
-const missingSkills =
-    document.getElementById("missingSkills");
-
-
-
-/* =====================================================
-   CLICK APPLICANT
-===================================================== */
-
-rows.forEach(row => {
-
-
-    row.addEventListener("click", function(event) {
-
-
-        /* =============================================
-           GET APPLICANT DATA
-        ============================================= */
-
-        const name =
-            this.dataset.name;
-
-        const email =
-            this.dataset.email;
-
-        const phone =
-            this.dataset.phone;
-
-        const location =
-            this.dataset.location;
-
-        const score =
-            this.dataset.score;
-
-        const matched =
-            this.dataset.matched;
-
-        const unmatched =
-            this.dataset.unmatched;
-
-        const education =
-            this.dataset.education;
-
-        const experience =
-            this.dataset.experience;
-
-        const projects =
-            this.dataset.projects;
-
-        const strengths =
-            this.dataset.strengths;
-
-        const weaknesses =
-            this.dataset.weaknesses;
-
-        const suggestions =
-            this.dataset.suggestions;
-
-
-
-        /* =============================================
-           BASIC DETAILS
-        ============================================= */
-
-        detailName.textContent =
-            name;
-
-        detailEmail.textContent =
-            email;
-
-        detailScore.textContent =
-            score;
-
-        detailMatched.textContent =
-            matched;
-
-        detailUnmatched.textContent =
-            unmatched;
-
-
-
-        /* =============================================
-           PERSONAL INFORMATION
-        ============================================= */
-
-        infoName.textContent =
-            name;
-
-        infoEmail.textContent =
-            email;
-
-        infoPhone.textContent =
-            phone;
-
-        infoLocation.textContent =
-            location;
-
-
-
-        /* =============================================
-           EDUCATION
-        ============================================= */
-
-        infoEducation.innerHTML =
-            education.replace(/\|/g, "<br>");
-
-
-
-        /* =============================================
-           EXPERIENCE
-        ============================================= */
-
-        infoExperience.innerHTML =
-            experience.replace(/\|/g, "<br>");
-
-
-
-        /* =============================================
-           PROJECTS
-        ============================================= */
-
-        infoProjects.innerHTML =
-            projects.replace(/\|/g, "<br>• ");
-
-
-
-        /* =============================================
-           STRENGTHS
-        ============================================= */
-
-        infoStrengths.innerHTML =
-            strengths.replace(/\|/g, "<br>• ");
-
-
-
-        /* =============================================
-           WEAKNESSES
-        ============================================= */
-
-        infoWeaknesses.innerHTML =
-            weaknesses.replace(/\|/g, "<br>• ");
-
-
-
-        /* =============================================
-           AI SUGGESTIONS
-        ============================================= */
-
-        infoSuggestions.textContent =
-            suggestions;
-
-
-
-        /* =============================================
-           AVATAR
-        ============================================= */
-
-        avatar.textContent =
-            name
-            .split(" ")
-            .map(word => word[0])
-            .join("")
-            .substring(0, 2)
-            .toUpperCase();
-
-
-
-        /* =============================================
-           MATCHED SKILLS
-        ============================================= */
-
-        matchedSkills.innerHTML = "";
-
-
-        const matchedList =
-            this.dataset.matchedSkills
-            .split(",");
-
-
-        matchedList.forEach(skill => {
-
-
-            if (skill.trim() === "") {
-                return;
-            }
-
-
-            const skillElement =
-                document.createElement("span");
-
-
-            skillElement.className =
-                "matched-skill";
-
-
-            skillElement.textContent =
-                "✓ " + skill.trim();
-
-
-            matchedSkills.appendChild(
-                skillElement
-            );
-
-        });
-
-
-
-        /* =============================================
-           MISSING SKILLS
-        ============================================= */
-
-        missingSkills.innerHTML = "";
-
-
-        const missingList =
-            this.dataset.missingSkills
-            .split(",");
-
-
-        missingList.forEach(skill => {
-
-
-            if (skill.trim() === "") {
-                return;
-            }
-
-
-            const skillElement =
-                document.createElement("span");
-
-
-            skillElement.className =
-                "missing-skill";
-
-
-            skillElement.textContent =
-                "✕ " + skill.trim();
-
-
-            missingSkills.appendChild(
-                skillElement
-            );
-
-        });
-
-
-
-        /* =============================================
-           SHOW DETAILS
-        ============================================= */
-
-        applicantList.style.display =
-            "none";
-
-
-        applicantDetails.style.display =
-            "block";
-
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-
-    });
-
-});
-
-
-
-/* =====================================================
-   BACK BUTTON
-===================================================== */
-
-document
-.getElementById("backBtn")
-.addEventListener("click", function() {
-
-
-    applicantDetails.style.display =
-        "none";
-
-
-    applicantList.style.display =
-        "block";
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-
-});
-
-
-
-/* =====================================================
-   UPLOAD MORE RESUMES
-===================================================== */
-
-function goToUploadPage() {
-
-    window.location.href =
-        "upload.html";
-
+var PAGE = 50;
+var state = { jobs: [], jobId: null, rows: [], total: 0, seq: 0, openId: null };
+var $ = function (id) { return document.getElementById(id); };
+var list = $("applicantList"), details = $("applicantDetails");
+
+function say(msg, kind) { RIQ.banner("pageMessage", msg, kind); }
+function pct(v) { return v == null ? "\u2014" : (Math.round(v * 10) / 10) + "%"; }
+function initials(name) {
+    var parts = String(name || "?").trim().split(/\s+/);
+    return ((parts[0] || "?").charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : "")).toUpperCase();
+}
+function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
 }
 
+/* A box for empty / error / loading states */
+function showState(title, text, action) {
+    var box = $("stateBox");
+    box.innerHTML = "";
+    if (title) box.appendChild(el("h3", "", title));
+    if (text) box.appendChild(el("p", "", text));
+    if (action) box.appendChild(action);
+    box.style.display = "block";
+    $("tableWrap").style.display = "none";
+    $("loadMore").style.display = "none";
+}
+function link(href, label) { var a = el("a", "", label); a.href = href; return a; }
+function retryBtn(fn) { var b = el("button", "", "Try again"); b.type = "button"; b.addEventListener("click", fn); return b; }
+
+/* =====================================================
+   LOAD JOBS (history) -> pick one -> load its results
+===================================================== */
+function loadJobs() {
+    showState("", "Loading results...");
+    return RIQ.api("/api/jobs").then(function (data) {
+        state.jobs = data.jobs;
+        if (!state.jobs.length) {
+            $("toolbar").style.display = "none";
+            $("resultCount").textContent = "";
+            return showState("No analyses yet", "Upload resumes, enter the skills you need and run an analysis. Results will appear here.", link("upload.html", "Upload resumes"));
+        }
+        var wanted = Number(new URLSearchParams(location.search).get("job"));
+        var pick = state.jobs.filter(function (j) { return j.id === wanted; })[0] ||
+                   state.jobs.filter(function (j) { return j.analysis_count > 0; })[0] || state.jobs[0];
+        state.jobId = pick.id;
+        renderJobSelect();
+        $("toolbar").style.display = "flex";
+        return loadResults(true).then(function () {
+            var open = Number(new URLSearchParams(location.search).get("a"));
+            if (open) openApplicant(open);
+        });
+    }).catch(function (err) {
+        if (err.status === 401) return;
+        $("toolbar").style.display = "none";
+        showState("Could not load results", err.message, retryBtn(loadJobs));
+    });
+}
+
+function renderJobSelect() {
+    var sel = $("jobSelect");
+    sel.innerHTML = "";
+    state.jobs.forEach(function (j) {
+        var o = el("option", "", j.title + " \u2014 " + RIQ.formatDate(j.created_at) + " (" + j.analysis_count + " resume" + (j.analysis_count === 1 ? "" : "s") + ")");
+        o.value = j.id;
+        if (j.id === state.jobId) o.selected = true;
+        sel.appendChild(o);
+    });
+}
+
+/* =====================================================
+   LOAD RESULTS (server-side search / filter / sort)
+===================================================== */
+function query(offset) {
+    var parts = $("sortSelect").value.split(":");
+    var qs = new URLSearchParams({ job_id: state.jobId, sort: parts[0], order: parts[1], limit: PAGE, offset: offset });
+    if ($("searchBox").value.trim()) qs.set("q", $("searchBox").value.trim());
+    if ($("statusFilter").value) qs.set("status", $("statusFilter").value);
+    return "/api/analyses?" + qs.toString();
+}
+
+function loadResults(reset) {
+    var mine = ++state.seq;                       /* ignore out-of-order responses */
+    var offset = reset ? 0 : state.rows.length;
+    return RIQ.api(query(offset)).then(function (data) {
+        if (mine !== state.seq) return;
+        state.rows = reset ? data.analyses : state.rows.concat(data.analyses);
+        state.total = data.total;
+        renderRows();
+    }).catch(function (err) {
+        if (mine !== state.seq || err.status === 401) return;
+        showState("Could not load results", err.message, retryBtn(function () { loadResults(true); }));
+    });
+}
+
+function renderRows() {
+    var filtering = $("searchBox").value.trim() || $("statusFilter").value;
+    var job = state.jobs.filter(function (j) { return j.id === state.jobId; })[0];
+    $("resultCount").textContent = state.total ? "Showing " + state.rows.length + " of " + state.total + " applicant" + (state.total === 1 ? "" : "s") : "";
+
+    if (!state.rows.length) {
+        if (filtering) return showState("No matching applicants", "Nothing matches your search or filter. Try clearing them.");
+        return showState("No resumes analyzed for this job yet", "This run has no results. Go to the upload page to analyze resumes against it.", link("upload.html", "Upload resumes"));
+    }
+    $("stateBox").style.display = "none";
+    $("tableWrap").style.display = "";
+
+    var body = $("resultsBody");
+    body.innerHTML = "";
+    state.rows.forEach(function (a) {
+        var ok = a.status === "completed";
+        var tr = el("tr", "applicant-row");
+        tr.tabIndex = 0;
+        tr.setAttribute("role", "button");
+        var nameTd = el("td", "", a.candidate_name || a.filename);
+        if (!ok) nameTd.appendChild(el("span", "badge " + a.status, a.status === "unsupported" ? "Unsupported" : "Failed"));
+        tr.appendChild(nameTd);
+        tr.appendChild(el("td", "ats", ok ? pct(a.score) : "\u2014"));
+        tr.appendChild(el("td", "matched", ok ? pct(a.matched_percentage) : "\u2014"));
+        tr.appendChild(el("td", "unmatched", ok ? pct(a.unmatched_percentage) : "\u2014"));
+        var act = el("td");
+        var btn = el("button", "view-btn", "View");
+        btn.type = "button";
+        act.appendChild(btn);
+        tr.appendChild(act);
+        var open = function () { openApplicant(a.id); };
+        tr.addEventListener("click", open);
+        tr.addEventListener("keydown", function (e) { if (e.key === "Enter") open(); });
+        body.appendChild(tr);
+    });
+    $("loadMore").style.display = state.rows.length < state.total ? "block" : "none";
+}
+
+/* =====================================================
+   APPLICANT DETAILS
+===================================================== */
+function fillList(id, items, emptyText) {
+    var box = $(id);
+    box.innerHTML = "";
+    if (!items || !items.length) return box.appendChild(el("p", "none", emptyText));
+    var ul = el("ul");
+    items.forEach(function (s) { ul.appendChild(el("li", "", s)); });
+    box.appendChild(ul);
+}
+function fillChips(id, items, cls, emptyText) {
+    var box = $(id);
+    box.innerHTML = "";
+    if (!items || !items.length) return box.appendChild(el("span", "muted", emptyText));
+    items.forEach(function (s) { box.appendChild(el("span", cls, s)); });
+}
+
+function openApplicant(id) {
+    RIQ.api("/api/analyses/" + id).then(function (data) {
+        var a = data.analysis, d = a.details || {}, c = d.candidate || {};
+        var ok = a.status === "completed";
+        state.openId = id;
+
+        var notice = $("detailNotice");
+        if (!ok) {
+            notice.textContent = (a.status === "unsupported" ? "This resume could not be analyzed: " : "Analysis failed: ") + (a.error_message || "unknown reason") + " No score was calculated.";
+            notice.style.display = "block";
+        } else notice.style.display = "none";
+
+        var name = c.name || a.filename;
+        $("avatar").textContent = initials(name);
+        $("detailName").textContent = name;
+        $("detailEmail").textContent = c.email || "Email not detected";
+        $("detailScore").textContent = ok ? pct(a.score) : "\u2014";
+        $("detailMatched").textContent = ok ? pct(a.matched_percentage) : "\u2014";
+        $("detailUnmatched").textContent = ok ? pct(a.unmatched_percentage) : "\u2014";
+
+        $("infoName").textContent = name;
+        $("infoEmail").textContent = c.email || "Not detected";
+        $("infoPhone").textContent = c.phone || "Not detected";
+        $("infoFile").textContent = a.filename;
+
+        var actions = $("detailActions");
+        actions.innerHTML = "";
+        var dl = el("a", "", "Download original resume");
+        dl.href = "/api/resumes/" + a.resume_id + "/file";
+        actions.appendChild(dl);
+
+        var none = "Not detected in the resume";
+        fillList("infoEducation", c.education, none);
+        fillList("infoExperience", c.experience, none);
+        fillList("infoProjects", c.projects, none);
+        fillChips("matchedSkills", a.matched_skills, "matched-skill", ok ? "None of the required skills were found" : "Not analyzed");
+        fillChips("missingSkills", a.missing_skills, "missing-skill", ok ? "All required skills were found" : "Not analyzed");
+        fillList("infoStrengths", d.strengths, ok ? "No notable strengths found against these requirements" : "Not analyzed");
+        fillList("infoWeaknesses", d.weaknesses, ok ? "No weaknesses found" : "Not analyzed");
+        fillList("infoSuggestions", d.recommendations, ok ? "No recommendations" : "Not analyzed");
+        renderBreakdown(a, d, ok);
+
+        list.style.display = "none";
+        details.style.display = "block";
+        history.replaceState(null, "", "?job=" + a.job_id + "&a=" + a.id);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }).catch(function (err) {
+        if (err.status !== 401) say(err.message, "error");
+    });
+}
+
+function renderBreakdown(a, d, ok) {
+    var box = $("infoBreakdown");
+    box.innerHTML = "";
+    if (!ok || !d.components) return box.appendChild(el("p", "none", "No score was calculated for this resume."));
+    var table = el("table", "breakdown");
+    table.innerHTML = "<thead><tr><th>Component</th><th>Found</th><th>Weight</th><th>Points</th></tr></thead>";
+    var tb = el("tbody");
+    d.components.forEach(function (c) {
+        var tr = el("tr");
+        [c.label, c.coverage + "%", Math.round(c.weight * 100) + "%", String(c.points)].forEach(function (v) { tr.appendChild(el("td", "", v)); });
+        tb.appendChild(tr);
+    });
+    table.appendChild(tb);
+    var tf = el("tfoot"), trf = el("tr");
+    trf.appendChild(el("td", "", "Total"));
+    trf.appendChild(el("td", "", ""));
+    trf.appendChild(el("td", "", ""));
+    trf.appendChild(el("td", "", a.score + " / 100"));
+    tf.appendChild(trf);
+    table.appendChild(tf);
+    box.appendChild(table);
+    box.appendChild(el("p", "explain", "Rule-based scoring (version " + a.scoring_version + "): the same resume and job always give the same score. This is not an AI judgement."));
+    var found = (d.jd_terms || []).filter(function (x) { return x.matched; }).map(function (x) { return x.term; });
+    if ((d.jd_terms || []).length) box.appendChild(el("p", "explain", "Job description keywords found: " + (found.length ? found.join(", ") : "none") + "."));
+}
+
+$("backBtn").addEventListener("click", function () {
+    details.style.display = "none";
+    list.style.display = "block";
+    state.openId = null;
+    history.replaceState(null, "", "?job=" + state.jobId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* =====================================================
+   CONTROLS
+===================================================== */
+var searchTimer = null;
+$("searchBox").addEventListener("input", function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function () { loadResults(true); }, 250);
+});
+$("statusFilter").addEventListener("change", function () { loadResults(true); });
+$("sortSelect").addEventListener("change", function () { loadResults(true); });
+$("loadMore").addEventListener("click", function () { loadResults(false); });
+$("jobSelect").addEventListener("change", function () {
+    state.jobId = Number(this.value);
+    history.replaceState(null, "", "?job=" + state.jobId);
+    loadResults(true);
+});
+$("deleteJobBtn").addEventListener("click", function () {
+    var job = state.jobs.filter(function (j) { return j.id === state.jobId; })[0];
+    if (!job || !confirm('Delete the run "' + job.title + '" and all its ' + job.analysis_count + " result(s)? Your uploaded resumes are kept.")) return;
+    RIQ.api("/api/jobs/" + job.id, { method: "DELETE" }).then(function () {
+        history.replaceState(null, "", location.pathname);
+        say("Run deleted.", "success");
+        return loadJobs();
+    }).catch(function (err) { say(err.message, "error"); });
+});
+
+function goToUploadPage() { window.location.href = "upload.html"; }
+
+loadJobs();
 </script>
-
-
 </body>
-
 </html>
-
