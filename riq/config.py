@@ -44,7 +44,12 @@ class Config:
     SQLALCHEMY_DATABASE_URI = _normalize_db_url(
         os.environ.get("DATABASE_URL", "postgresql://riq:riq@localhost:5432/riq")
     )
-    SQLALCHEMY_ENGINE_OPTIONS = {"pool_pre_ping": True}
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_pre_ping": True,   # drop dead connections (e.g. a serverless database that suspended while idle)
+        "pool_recycle": 300,     # never reuse a connection older than 5 minutes
+        # works behind PgBouncer-style poolers (Neon's "-pooler" host) that do not keep prepared statements
+        "connect_args": {"prepare_threshold": None},
+    }
 
     # --- sessions / cookies
     SESSION_COOKIE_NAME = "riq_session"

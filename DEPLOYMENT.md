@@ -36,6 +36,27 @@ pip install pip-audit && pip-audit -r requirements.txt   # known-vulnerability s
 bash scripts/verify.sh                                     # migrations, drift, lint, page audit, all tests
 ```
 
+## Using Neon (serverless PostgreSQL)
+Neon is standard PostgreSQL, so nothing else changes. The app already sets what Neon needs
+(`pool_pre_ping`, short connection recycling, no server-side prepared statements for the pooled host).
+
+1. In the Neon console create a project, then copy the connection string (Dashboard -> *Connect*).
+   It looks like `postgresql://USER:PASSWORD@ep-xxxx.REGION.aws.neon.tech/neondb?sslmode=require`.
+2. Put it in `.env` (or your host's environment) as `DATABASE_URL`. Keep `?sslmode=require` and anything else Neon adds.
+3. Create the tables once: `flask --app app db upgrade`.
+   Prefer the **direct** (non-pooled) connection string for migrations; either works for the running app.
+4. Start the app as usual (`flask --app app run`, or gunicorn in production).
+
+Good to know:
+- **Tests erase data.** Never point `TEST_DATABASE_URL` at the database you actually use. In Neon create a second
+  *branch* (e.g. `test`) or database and use its string for `TEST_DATABASE_URL`, or keep running tests against local PostgreSQL.
+- **First request after idle can be slow** (about a second) because Neon wakes a suspended compute; later requests are normal.
+  `/api/health` reports 503 only if the database is genuinely unreachable.
+- **Uploaded resumes are files, not database rows.** Neon stores users, jobs and results; the PDF/DOCX files stay in
+  `UPLOAD_FOLDER` on the machine running the app. On hosts with an ephemeral disk (many serverless/PaaS platforms) mount a
+  persistent volume there, or uploaded files disappear on redeploy while their database records remain.
+- Neon is not tested in this project's own test run (it runs on local PostgreSQL 16); only the connection-string handling is covered by a test.
+
 ## Operations
 - **Logs** go to stdout/stderr. Every line carries a request id (`[a1b2c3d4e5f6]`); the same id is returned in the
   `X-Request-ID` header and in the JSON body of any 5xx error, so a user report can be matched to a log line.

@@ -190,3 +190,21 @@ def test_the_placeholder_secret_from_env_example_is_rejected_in_production(monke
     monkeypatch.setattr(ProductionConfig, "SESSION_COOKIE_SECURE", True)
     with pytest.raises(RuntimeError, match="placeholder"):
         ProductionConfig.validate()
+
+
+def test_neon_style_connection_strings_are_understood():
+    """Neon URLs carry sslmode / channel_binding and may use the pooled '-pooler' host."""
+    from sqlalchemy.engine import make_url
+    from sqlalchemy.dialects import postgresql
+
+    from riq.config import Config, _normalize_db_url
+
+    raw = "postgresql://neondb_owner:p%40ss@ep-cool-sky-123456-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+    url = make_url(_normalize_db_url(raw))
+    assert url.drivername == "postgresql+psycopg"
+    args, kwargs = postgresql.psycopg.dialect().create_connect_args(url)
+    assert kwargs["sslmode"] == "require" and kwargs["channel_binding"] == "require"
+    assert kwargs["password"] == "p@ss" and kwargs["host"].endswith("neon.tech")
+    assert _normalize_db_url("postgres://u:p@h/db").startswith("postgresql+psycopg://")
+    opts = Config.SQLALCHEMY_ENGINE_OPTIONS
+    assert opts["pool_pre_ping"] and opts["pool_recycle"] <= 300 and opts["connect_args"]["prepare_threshold"] is None
